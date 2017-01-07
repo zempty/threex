@@ -38,7 +38,7 @@ public class RouterKit {
                                         addRoute(clzz, cls, urlMapping, route);
                                     }
                                 }
-                            } else if (clzz.getName().contains("Config$")) {//如果是这种情况，就是中心路由器
+                            } else if (clzz.getName().contains("Config$")) {//如果是这种情况，就是中心路由器。中心路由对象Config的一个匿名对象。它的class对象居然不是Routes，真是的。
                                 if (Routes.class.isAssignableFrom(clz[z]) && clz[z].isAssignableFrom(Routes.class)) {//保证是Routes本身类
                                     addRoute(clzz, cls, urlMapping, route);
                                 }
