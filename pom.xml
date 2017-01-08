@@ -1,0 +1,136 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>wang.threex</groupId>
+	<artifactId>threex</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<properties>
+		<jdk.version>1.8</jdk.version>
+		<jfinal.version>2.2</jfinal.version>
+		<druid.version>1.0.26</druid.version>
+		<freemarker.version>2.3.23</freemarker.version>
+		<servlet.api.version>3.1.0</servlet.api.version>
+		<jfinal-mail-plugin.version>2.2</jfinal-mail-plugin.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.jfinal</groupId>
+			<artifactId>jfinal</artifactId>
+			<version>${jfinal.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.fsdev</groupId>
+			<artifactId>jfinal-mail-plugin</artifactId>
+			<version>${jfinal-mail-plugin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jpress</groupId>
+			<artifactId>jpress-message</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/config</directory>
+				<!-- 此处只需把config下的文件作为资源文件，不包括它的子文件夹。因为这些子文件夹的资源文件是根据环境选择其中一套 -->
+				<excludes>
+				    <exclude>production/*</exclude>
+				    <exclude>development/*</exclude>
+				</excludes>
+			</resource>
+			<resource>
+			    <directory>src/main/config/${profiles.active}</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<attachClasses>true</attachClasses>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>9090</port>
+					<!-- <path>/</path> -->
+					<!-- <url>http://localhost:9090/manager/text</url> -->
+					<!-- <server>tomcat8</server> -->
+					<!-- <contextReloadable>false</contextReloadable> -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- 配置文件，可根据环境选择 -->
+	<profiles>
+	    <!-- 开发环境 -->
+		<profile>
+			<id>development</id>
+			<activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+		</profile>
+		<!-- 生产环境 -->
+		<profile>
+            <id>production</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+	</profiles>
+</project>
