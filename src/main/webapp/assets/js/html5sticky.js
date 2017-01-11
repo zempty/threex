@@ -81,7 +81,7 @@ html5sticky.addNote = function(){
 
 // no html5 ?
 html5sticky.nohtml5 = function(){
-   alert('Your browser does not support html5, please upgrade your browser.');
+   alert('您的浏览器不支持html5，赶紧升级吧！不升级就要被淘汰了！');
 };
 
 
@@ -121,7 +121,7 @@ html5sticky.saveNote = function(el){
       $('[id^=idf_' + identifier + ']').closest('.note_common').find('h2').text(htext);
       $('[id^=idf_' + identifier + ']').closest('.note_common').find('p').html(ptext);
 
-      alert('Sticky Note Saved :)');
+      alert('便笺已保存 :)');
 
    }
    else {
@@ -149,7 +149,7 @@ html5sticky.getIdentifier = function(el){
 
 // delete note
 html5sticky.deleteNote = function(el){
-    if (confirm('Are you sure you want to delete this sticky note ?')){
+    if (confirm('您确定要删除这张便笺吗？三思哦！')){
 
          // delete from storage also
          if (Modernizr.localstorage){
@@ -177,7 +177,7 @@ html5sticky.deleteNote = function(el){
 
 // delete all notes
 html5sticky.deleteAllNotes = function(){
-    if (confirm('Are you sure you want to delete ALL sticky note ?')){
+    if (confirm('您确定要删除所有的便笺吗？三思哦！')){
          $('.note_common').fadeOut('slow', function(){
             $('.note_common').remove();
             localStorage.clear();
@@ -481,7 +481,7 @@ html5sticky.enlargeNote = function(el){
          dateStr = dateTime.split('|')[0];
          dateAgo = prettyDate(dateTime.split('|')[1]);
 
-         dateStr = (dateStr.length > 0) ? 'Created on: ' + dateStr : '';
+         dateStr = (dateStr.length > 0) ? '创建于: ' + dateStr : '';
          dateAgo = (dateAgo.length > 0) ? ' (' + dateAgo + ')' : '';
          timeImg = (dateStr.length > 0) ? timeImg : '';
          

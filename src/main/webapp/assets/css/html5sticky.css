@@ -23,14 +23,25 @@ body{background:url("../img/bg.png");color:#fff;padding:10px 30px 10px 30px;}
 #head nav{float:right;}
 #head nav li{display:inline;}
 
-#addnote{display:block;margin:20px;width:auto;float:left}
-#removenotes{display:block;margin:20px;width:auto;float:left}
+#addnote{display:inline-block;margin:0 50px 0 20px;width:auto;float:right;}
+#removenotes{display:inline-block;margin:0px;width:auto;float:right;}
 
-#main{margin:auto;padding-bottom:50px;}
+#navtop {
+	position:fixed;
+	width:100%;
+	height:0;
+	top:0;
+	z-index:99;
+}
+
+#main{
+	margin:50px auto;
+	position:relative;
+}
 
 .left{float:left;}
 .right{float:right;}
-.clear{clear:both;}
+.clear{clear:both;height:0;}
 
 
 footer{
