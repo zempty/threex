@@ -9,7 +9,7 @@
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
-		<jfinal.version>2.2</jfinal.version>
+		<jfinal.version>3.0</jfinal.version>
 		<druid.version>1.0.26</druid.version>
 		<profiles.active>development</profiles.active>
 		<freemarker.version>2.3.23</freemarker.version>
