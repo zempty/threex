@@ -43,7 +43,6 @@ body{background:url("../img/bg.png");color:#fff;padding:10px 30px 10px 30px;}
 .right{float:right;}
 .clear{clear:both;height:0;}
 
-
 footer{
    margin:auto;
    width:300px;
@@ -154,7 +153,7 @@ footer{
     overflow-x:hidden;
     line-height:18px;
     text-align:left;
-    font-family: 'Architects Daughter', cursive;
+    font-family: 'SimHei', cursive;
 }
 
 .inset{
@@ -166,7 +165,7 @@ footer{
    padding:5px;
    font-size:0.9em;
    border:1px solid #e7e7e7;
-   font-family: 'Architects Daughter', cursive;
+   font-family: 'SimHei', cursive;
 }
 
 input:focus,textarea:focus,select:focus{border:1px solid #fafafa;-webkit-box-shadow:0 0 6px #000;-moz-box-shadow:0 0 5px #000;box-shadow:0 0 5px #000;}

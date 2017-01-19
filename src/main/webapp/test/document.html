@@ -3,24 +3,36 @@
 <head>
     <meta charset="utf-8">
     <title>html学习测试</title>
+    <link rel="stylesheet" href="${CP0!}/assets/css/test.css" />
     <link rel="icon" type="image/png" href="${CP0!}/favicon.png">
 </head>
 <body>
-    <link rel="stylesheet" href="${CP0!}/assets/css/main.css?version=1" />
     <div id="item" width="100px" height="100px">
         你好
     </div>
     <script type="text/javascript">
-        /* var item = document.getElementById("item");
-        while(true){
-            console.log(1);
+        var item = document.getElementById("item");
+        var i = 10000;
+        function a() {
+	        while(i>0){
+	            console.log(1);
+	            i--;
+	        }
+        }
+        
+        /* window.alert(mm);
+        var mm = 3;
+        window.alert(mm); */
+        
+        /* window.onload = function () {
+        	alert(1);
         } */
         
-        (function() {
+        /* ;(function() {
             test1();
             test2();
-        })();
-        function test1() {
+        })(); */
+        /* function test1() {
             var xhr = new XMLHttpRequest();
             xhr.open("post", "https://www.google.com/");
             xhr.send(null);
@@ -29,7 +41,11 @@
             var xhr = new XMLHttpRequest();
             xhr.open("post", "https://www.baidu.com/");
             xhr.send(null);
-        }
+        } */
     </script>
+    <!-- <link rel="stylesheet" href="${CP0!}/superbig.css" /> -->
+    <div id="item2">
+        黄金版
+    </div>
 </body>
 </html>

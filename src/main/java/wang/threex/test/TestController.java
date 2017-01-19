@@ -10,4 +10,9 @@ public class TestController extends Controller {
         render("document.html");
     }
 
+    @ActionKey("/waterfall")
+    public void showWaterfall() {
+        render("waterfall.html");
+    }
+
 }
