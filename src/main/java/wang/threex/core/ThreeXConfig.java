@@ -7,6 +7,7 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.kit.PropKit;
+import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
 
 import wang.threex.test.TestController;
@@ -38,5 +39,10 @@ public class ThreeXConfig extends JFinalConfig {
 	public void configHandler(Handlers h) {
 		h.add(new ThreeXHandler());
 	}
+
+    @Override
+    public void configEngine(Engine me) {
+        
+    }
 
 }
