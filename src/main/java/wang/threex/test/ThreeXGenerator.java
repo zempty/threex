@@ -2,6 +2,7 @@ package wang.threex.test;
 
 import javax.sql.DataSource;
 
+import com.jfinal.kit.LogKit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
@@ -31,6 +32,7 @@ public class ThreeXGenerator {
         generator.setGenerateDataDictionary(true);
         //生成
         generator.generate();
+        LogKit.info("你给我去死");
     }
     
     public static DataSource getDataSource() {
