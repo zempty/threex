@@ -10,6 +10,7 @@
 	<properties>
 		<jdk.version>1.8</jdk.version>
 		<jfinal.version>3.0</jfinal.version>
+		<mysql.version>5.1.40</mysql.version>
 		<druid.version>1.0.26</druid.version>
 		<profiles.active>development</profiles.active>
 		<freemarker.version>2.3.23</freemarker.version>
@@ -22,6 +23,11 @@
 			<groupId>com.jfinal</groupId>
 			<artifactId>jfinal</artifactId>
 			<version>${jfinal.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>${mysql.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
