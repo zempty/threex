@@ -32,7 +32,7 @@ public class ThreeXGenerator {
         generator.setGenerateDataDictionary(true);
         //生成
         generator.generate();
-        LogKit.info("你给我去死");
+        LogKit.info("魔导生成完成。");
     }
     
     public static DataSource getDataSource() {

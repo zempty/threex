@@ -7,6 +7,7 @@ public class TestController extends Controller {
 
     @ActionKey("/htmltest")
     public void showDocPage() {
+
         render("document.html");
     }
 

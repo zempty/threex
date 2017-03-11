@@ -7,7 +7,7 @@ public class ProcessTaskTest {
     public static void main(String[] args) {
         ProcessTask task = new ProcessTask(new String[]{"C:\\Windows\\System32\\notepad.exe", "D:\\file.txt"});
         Scheduler scheduler = new Scheduler();
-        scheduler.schedule("* * * * *", task);
+        scheduler.schedule("* * 3 * *", task);
         scheduler.start();
     }
 }

@@ -12,13 +12,16 @@ import com.jfinal.handler.Handler;
 import com.jfinal.kit.HandlerKit;
 import com.jfinal.kit.LogKit;
 import com.jfinal.kit.StrKit;
+import com.jfinal.log.Log;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
 
 /**
  * 替代 StatViewServlet
  */
 public class DruidStatViewHandler extends Handler {
-    
+
+    private static final Log log = Log.getLog(DruidStatViewHandler.class);
+
     private IDruidStatViewAuth auth;
     private String visitPath = "/druid";
     private StatViewServlet servlet = new JFinalStatViewServlet();
@@ -52,7 +55,7 @@ public class DruidStatViewHandler extends Handler {
         int serverPort = request.getServerPort();
         String contextPath = request.getContextPath();
         String reqUri = request.getRequestURI();
-        LogKit.info(scheme+"://"+serverName+":"+serverPort+reqUri);
+        log.debug(scheme+"://"+serverName+":"+serverPort+reqUri);
         //设置ContextPath到request里面,模板引擎要用
         request.setAttribute("CP0", contextPath);
 
