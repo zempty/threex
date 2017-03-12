@@ -10,7 +10,6 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.jfinal.core.JFinal;
 import com.jfinal.handler.Handler;
 import com.jfinal.kit.HandlerKit;
-import com.jfinal.kit.LogKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
@@ -53,7 +52,6 @@ public class DruidStatViewHandler extends Handler {
         String scheme = request.getScheme();
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();
-        String contextPath = request.getContextPath();
         String reqUri = request.getRequestURI();
         log.debug(scheme+"://"+serverName+":"+serverPort+reqUri);
 
