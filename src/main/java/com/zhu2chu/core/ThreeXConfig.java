@@ -1,4 +1,4 @@
-package wang.threex.core;
+package com.zhu2chu.core;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,10 +13,9 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
-
-import wang.threex.common.handler.DruidStatViewHandler;
-import wang.threex.test.TestController;
-import wang.threex.test.websocket.WebSocketController;
+import com.zhu2chu.common.handler.DruidStatViewHandler;
+import com.zhu2chu.test.TestController;
+import com.zhu2chu.test.websocket.WebSocketController;
 
 public class ThreeXConfig extends JFinalConfig {
 

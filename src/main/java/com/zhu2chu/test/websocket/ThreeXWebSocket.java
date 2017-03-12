@@ -1,4 +1,4 @@
-package wang.threex.test.websocket;
+package com.zhu2chu.test.websocket;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;

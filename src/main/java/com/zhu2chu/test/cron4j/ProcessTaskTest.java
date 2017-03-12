@@ -1,4 +1,4 @@
-package wang.threex.test.cron4j;
+package com.zhu2chu.test.cron4j;
 
 import it.sauronsoftware.cron4j.ProcessTask;
 import it.sauronsoftware.cron4j.Scheduler;

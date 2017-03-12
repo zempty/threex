@@ -1,4 +1,4 @@
-package wang.threex.core;
+package com.zhu2chu.core;
 
 import java.util.ArrayList;
 

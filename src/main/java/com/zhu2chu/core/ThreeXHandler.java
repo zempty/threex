@@ -1,4 +1,4 @@
-package wang.threex.core;
+package com.zhu2chu.core;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package wang.threex.test;
+package com.zhu2chu.test;
 
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
