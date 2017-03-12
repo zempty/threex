@@ -56,8 +56,6 @@ public class DruidStatViewHandler extends Handler {
         String contextPath = request.getContextPath();
         String reqUri = request.getRequestURI();
         log.debug(scheme+"://"+serverName+":"+serverPort+reqUri);
-        //设置ContextPath到request里面,模板引擎要用
-        request.setAttribute("CP0", contextPath);
 
         if (target.startsWith(visitPath)) {
             isHandled[0] = true;
