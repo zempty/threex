@@ -29,6 +29,8 @@ public class ThreeXConfig extends JFinalConfig {
 		r.add("/", IndexController.class);
 		r.add("/test", TestController.class);
 		r.add("/test/websocket", WebSocketController.class);
+
+		
 	}
 
 	@Override
