@@ -13,12 +13,12 @@ public class ThreeXGenerator {
 
     public static void main(String[] args) {
         //BaseModel的包名
-        String baseModelPack = "wang.threex.model.base";
+        String baseModelPack = "com.zhu2chu.common.model.base";
         //BaseModel文件保存路径
-        String baseModelOutputDir = PathKit.getWebRootPath() + "/src/main/java/wang/threex/model/base";
+        String baseModelOutputDir = PathKit.getWebRootPath() + "/src/main/java/com/zhu2chu/common/model/base";
 
         // model 所使用的包名 (MappingKit 默认使用的包名)
-        String modelPackageName = "wang.threex.model";
+        String modelPackageName = "com.zhu2chu.common.model";
         // model 文件保存路径 (MappingKit 与 DataDictionary 文件默认保存路径)
         String modelOutputDir = baseModelOutputDir + "/..";
         

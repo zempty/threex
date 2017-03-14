@@ -8,6 +8,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.core.JFinal;
 import com.jfinal.ext.handler.UrlSkipHandler;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
@@ -60,6 +61,18 @@ public class ThreeXConfig extends JFinalConfig {
     @Override
     public void configEngine(Engine me) {
         
+    }
+
+    public static void main(String[] args) {
+        /**
+         * 特别注意：Eclipse 之下建议的启动方式
+         */
+        JFinal.start("src/main/webapp", 8022, "/", 5);
+        
+        /**
+         * 特别注意：IDEA 之下建议的启动方式，仅比 eclipse 之下少了最后一个参数
+         */
+        // JFinal.start("src/main/webapp", 80, "/");
     }
 
 }

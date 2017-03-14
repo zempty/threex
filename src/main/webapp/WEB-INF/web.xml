@@ -12,7 +12,7 @@
 		<filter-class>com.jfinal.core.JFinalFilter</filter-class>
 		<init-param>
 			<param-name>configClass</param-name>
-			<param-value>wang.threex.core.ThreeXConfig</param-value>
+			<param-value>com.zhu2chu.core.ThreeXConfig</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
