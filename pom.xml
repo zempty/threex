@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<jdk.version>1.7</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		<jfinal.version>3.0</jfinal.version>
 		<mysql.version>5.1.40</mysql.version>
 		<druid.version>1.0.26</druid.version>
@@ -79,6 +79,11 @@
 		    <groupId>joda-time</groupId>
 		    <artifactId>joda-time</artifactId>
 		    <version>${joda.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-math3</artifactId>
+		    <version>3.6.1</version>
 		</dependency>
 	</dependencies>
 
