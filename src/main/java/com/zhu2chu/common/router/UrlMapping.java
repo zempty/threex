@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface RouterMapping {
+public @interface UrlMapping {
 
     String url();
     String viewPath() default "";

@@ -14,6 +14,7 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
+import com.zhu2chu.common.FrontRoutes;
 import com.zhu2chu.common.handler.ConstsHandler;
 import com.zhu2chu.common.handler.DruidStatViewHandler;
 import com.zhu2chu.test.TestController;
@@ -32,7 +33,7 @@ public class ThreeXConfig extends JFinalConfig {
 		r.add("/test", TestController.class);
 		r.add("/test/websocket", WebSocketController.class);
 
-		
+		r.add(new FrontRoutes());
 	}
 
 	@Override

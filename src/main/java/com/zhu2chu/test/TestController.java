@@ -2,7 +2,9 @@ package com.zhu2chu.test;
 
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
+import com.zhu2chu.common.router.UrlMapping;
 
+@UrlMapping(url="/test", viewPath="/test")
 public class TestController extends Controller {
 
     @ActionKey("/htmltest")
