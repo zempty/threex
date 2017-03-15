@@ -1,1 +1,2 @@
 1、club的表login_log的accountId设置为key，没有设置为primary key。所以生成不了BaseModel和Model，必须设置为主键才行
+   但是这是不需要生成主键的，因为这个表不需要生成model。
