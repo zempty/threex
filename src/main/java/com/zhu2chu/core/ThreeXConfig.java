@@ -17,7 +17,6 @@ import com.jfplugin.mail.MailPlugin;
 import com.zhu2chu.common.FrontRoutes;
 import com.zhu2chu.common.handler.ConstsHandler;
 import com.zhu2chu.common.handler.DruidStatViewHandler;
-import com.zhu2chu.test.TestController;
 import com.zhu2chu.test.websocket.WebSocketController;
 
 public class ThreeXConfig extends JFinalConfig {
@@ -29,8 +28,6 @@ public class ThreeXConfig extends JFinalConfig {
 
 	@Override
 	public void configRoute(Routes r) {
-		r.add("/", IndexController.class);
-		r.add("/test", TestController.class);
 		r.add("/test/websocket", WebSocketController.class);
 
 		r.add(new FrontRoutes());
