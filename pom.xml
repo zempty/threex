@@ -13,7 +13,6 @@
 		<mysql.version>5.1.40</mysql.version>
 		<druid.version>1.0.26</druid.version>
 		<profiles.active>development</profiles.active>
-		<freemarker.version>2.3.23</freemarker.version>
 		<servlet.api.version>3.1.0</servlet.api.version>
 		<jfinal-mail-plugin.version>2.2</jfinal-mail-plugin.version>
 		<cron4j.version>2.2.5</cron4j.version>
@@ -36,11 +35,6 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>${freemarker.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -80,10 +74,21 @@
 		    <artifactId>joda-time</artifactId>
 		    <version>${joda.version}</version>
 		</dependency>
+		<!-- apache commons -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.5</version>
+		</dependency>
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-math3</artifactId>
 		    <version>3.6.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
 		</dependency>
 	</dependencies>
 
