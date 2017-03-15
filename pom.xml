@@ -86,7 +86,6 @@
 		    <version>3.6.1</version>
 		</dependency>
 		<dependency>
-<<<<<<< HEAD
 		    <groupId>commons-codec</groupId>
 		    <artifactId>commons-codec</artifactId>
 		    <version>1.10</version>
@@ -97,7 +96,7 @@
 		    <artifactId>log4j</artifactId>
 		    <version>1.2.17</version>
 		</dependency>
-=======
+		<dependency>
             <groupId>com.jfinal</groupId>
             <artifactId>jetty-server</artifactId>
             <version>8.1.8</version>
@@ -106,7 +105,6 @@
             -->
             <scope>compile</scope>
         </dependency>
->>>>>>> remotes/origin/master
 	</dependencies>
 
 	<build>
