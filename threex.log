@@ -156,3 +156,9 @@ java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionPro
 	at com.jfinal.server.Scanner$1.run(Scanner.java:94)
 	at java.util.TimerThread.mainLoop(Timer.java:555)
 	at java.util.TimerThread.run(Timer.java:505)
+
+2017-03-16 17:01:42
+[INFO]-[Thread: main]-[ com.alibaba.druid.pool.DruidDataSource.init(DruidDataSource.java:715)]:com.alibaba.druid.pool.DruidDataSource.init(DruidDataSource.java:715)  {dataSource-1} inited
+
+2017-03-16 17:01:43
+[INFO]-[Thread: main]-[ com.jfinal.kit.LogKit.info(LogKit.java:55)]:com.jfinal.kit.LogKit.info(LogKit.java:55)  魔导生成完成。
