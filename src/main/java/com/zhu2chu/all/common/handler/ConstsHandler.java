@@ -1,4 +1,4 @@
-package com.zhu2chu.common.handler;
+package com.zhu2chu.all.common.handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package com.zhu2chu.core;
+package com.zhu2chu.all.core;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.jfinal.handler.Handler;
 import com.jfinal.kit.HandlerKit;
 
-public class ThreeXHandler extends Handler {
+public class AllHandler extends Handler {
 
 	@Override
 	public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {

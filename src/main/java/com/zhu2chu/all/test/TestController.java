@@ -1,9 +1,9 @@
-package com.zhu2chu.test;
+package com.zhu2chu.all.test;
 
 import com.jfinal.config.Routes;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
-import com.zhu2chu.common.router.UrlMapping;
+import com.zhu2chu.all.common.router.UrlMapping;
 
 @UrlMapping(url="/test", viewPath="/test", routeClass={Routes.class})
 public class TestController extends Controller {

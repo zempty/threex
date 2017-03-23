@@ -1,4 +1,4 @@
-package com.zhu2chu.common.kit;
+package com.zhu2chu.all.common.kit;
 
 import java.lang.reflect.Field;
 

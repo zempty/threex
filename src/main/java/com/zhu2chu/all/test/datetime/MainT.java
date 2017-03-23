@@ -1,4 +1,4 @@
-package com.zhu2chu.test.datetime;
+package com.zhu2chu.all.test.datetime;
 
 import java.util.Locale;
 

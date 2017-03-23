@@ -1,4 +1,4 @@
-package com.zhu2chu.test.websocket;
+package com.zhu2chu.all.test.websocket;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;

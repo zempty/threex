@@ -1,4 +1,4 @@
-package com.zhu2chu.common.router;
+package com.zhu2chu.all.common.router;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

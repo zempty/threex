@@ -1,9 +1,9 @@
-package com.zhu2chu.core;
+package com.zhu2chu.all.core;
 
 import com.jfinal.config.Routes;
 import com.jfinal.core.Controller;
-import com.zhu2chu.common.FrontRoutes;
-import com.zhu2chu.common.router.UrlMapping;
+import com.zhu2chu.all.common.FrontRoutes;
+import com.zhu2chu.all.common.router.UrlMapping;
 
 @UrlMapping(url="/", routeClass={FrontRoutes.class})
 public class IndexController extends Controller {

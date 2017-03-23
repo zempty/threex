@@ -1,4 +1,4 @@
-package com.zhu2chu.test;
+package com.zhu2chu.all.test;
 
 public class MainT {
 

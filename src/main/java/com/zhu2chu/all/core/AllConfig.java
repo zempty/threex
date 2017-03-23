@@ -1,4 +1,4 @@
-package com.zhu2chu.core;
+package com.zhu2chu.all.core;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,12 +14,12 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
-import com.zhu2chu.common.FrontRoutes;
-import com.zhu2chu.common.handler.ConstsHandler;
-import com.zhu2chu.common.handler.DruidStatViewHandler;
-import com.zhu2chu.test.websocket.WebSocketController;
+import com.zhu2chu.all.common.FrontRoutes;
+import com.zhu2chu.all.common.handler.ConstsHandler;
+import com.zhu2chu.all.common.handler.DruidStatViewHandler;
+import com.zhu2chu.all.test.websocket.WebSocketController;
 
-public class ThreeXConfig extends JFinalConfig {
+public class AllConfig extends JFinalConfig {
 
 	@Override
 	public void configConstant(Constants c) {
@@ -45,7 +45,7 @@ public class ThreeXConfig extends JFinalConfig {
 
 	@Override
 	public void configHandler(Handlers h) {
-		h.add(new ThreeXHandler());
+		h.add(new AllHandler());
 		h.add(new ConstsHandler());
 		h.add(new UrlSkipHandler("^/websocket.*", false));
 		h.add(new DruidStatViewHandler("/db/druid", new IDruidStatViewAuth() {

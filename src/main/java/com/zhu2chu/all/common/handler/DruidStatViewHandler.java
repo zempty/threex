@@ -1,4 +1,4 @@
-package com.zhu2chu.common.handler;
+package com.zhu2chu.all.common.handler;
 
 import java.io.IOException;
 

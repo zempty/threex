@@ -1,4 +1,4 @@
-package com.zhu2chu.common;
+package com.zhu2chu.all.common;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.jfinal.config.Routes;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
-import com.zhu2chu.common.router.UrlMapping;
+import com.zhu2chu.all.common.router.UrlMapping;
 
 import io.jpress.utils.ClassUtils;
 
