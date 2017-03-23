@@ -70,3 +70,95 @@ java.lang.IllegalStateException: port: 8022 already in use!
 	at com.jfinal.server.JettyServer.start(JettyServer.java:70)
 	at com.jfinal.core.JFinal.start(JFinal.java:159)
 	at com.zhu2chu.core.ThreeXConfig.main(ThreeXConfig.java:68)
+
+2017-03-15 17:14:10
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:10
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:10
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:45
+[INFO]-[Thread: JFinal-Scanner]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:45
+[INFO]-[Thread: JFinal-Scanner]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:45
+[INFO]-[Thread: JFinal-Scanner]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:55
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:55
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:14:55
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:38)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:43:43
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:42)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:42)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:43:43
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:42)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:42)  com.zhu2chu.common.FrontRoutes
+
+2017-03-15 17:43:43
+[INFO]-[Thread: main]-[ com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:42)]:com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:42)  com.zhu2chu.common.FrontRoutes
+
+2017-03-16 11:38:53
+[ERROR]-[Thread: main]-[ com.jfinal.kit.LogKit.error(LogKit.java:75)]:com.jfinal.kit.LogKit.error(LogKit.java:75)  port: 8022 already in use!
+java.lang.IllegalStateException: port: 8022 already in use!
+	at com.jfinal.server.JettyServer.doStart(JettyServer.java:87)
+	at com.jfinal.server.JettyServer.start(JettyServer.java:70)
+	at com.jfinal.core.JFinal.start(JFinal.java:159)
+	at com.zhu2chu.core.ThreeXConfig.main(ThreeXConfig.java:68)
+
+2017-03-16 11:39:03
+[ERROR]-[Thread: main]-[ com.jfinal.kit.LogKit.error(LogKit.java:75)]:com.jfinal.kit.LogKit.error(LogKit.java:75)  port: 8022 already in use!
+java.lang.IllegalStateException: port: 8022 already in use!
+	at com.jfinal.server.JettyServer.doStart(JettyServer.java:87)
+	at com.jfinal.server.JettyServer.start(JettyServer.java:70)
+	at com.jfinal.core.JFinal.start(JFinal.java:159)
+	at com.zhu2chu.core.ThreeXConfig.main(ThreeXConfig.java:68)
+
+2017-03-16 11:48:01
+[ERROR]-[Thread: JFinal-Scanner]-[ com.jfinal.kit.LogKit.error(LogKit.java:75)]:com.jfinal.kit.LogKit.error(LogKit.java:75)  sun.reflect.annotation.TypeNotPresentExceptionProxy
+java.lang.ArrayStoreException: sun.reflect.annotation.TypeNotPresentExceptionProxy
+	at sun.reflect.annotation.AnnotationParser.parseClassArray(AnnotationParser.java:724)
+	at sun.reflect.annotation.AnnotationParser.parseArray(AnnotationParser.java:531)
+	at sun.reflect.annotation.AnnotationParser.parseMemberValue(AnnotationParser.java:355)
+	at sun.reflect.annotation.AnnotationParser.parseAnnotation2(AnnotationParser.java:286)
+	at sun.reflect.annotation.AnnotationParser.parseAnnotations2(AnnotationParser.java:120)
+	at sun.reflect.annotation.AnnotationParser.parseAnnotations(AnnotationParser.java:72)
+	at java.lang.Class.createAnnotationData(Class.java:3521)
+	at java.lang.Class.annotationData(Class.java:3510)
+	at java.lang.Class.getAnnotation(Class.java:3415)
+	at com.zhu2chu.common.FrontRoutes.config(FrontRoutes.java:31)
+	at com.jfinal.config.Routes.add(Routes.java:49)
+	at com.zhu2chu.core.ThreeXConfig.configRoute(ThreeXConfig.java:33)
+	at com.jfinal.core.Config.configJFinal(Config.java:51)
+	at com.jfinal.core.JFinal.init(JFinal.java:63)
+	at com.jfinal.core.JFinalFilter.init(JFinalFilter.java:49)
+	at org.eclipse.jetty.servlet.FilterHolder.doStart(FilterHolder.java:119)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.servlet.ServletHandler.initialize(ServletHandler.java:724)
+	at org.eclipse.jetty.servlet.ServletContextHandler.startContext(ServletContextHandler.java:265)
+	at org.eclipse.jetty.webapp.WebAppContext.startContext(WebAppContext.java:1250)
+	at org.eclipse.jetty.server.handler.ContextHandler.doStart(ContextHandler.java:706)
+	at org.eclipse.jetty.webapp.WebAppContext.doStart(WebAppContext.java:492)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at com.jfinal.server.JettyServer$1.onChange(JettyServer.java:117)
+	at com.jfinal.server.Scanner.compare(Scanner.java:88)
+	at com.jfinal.server.Scanner.working(Scanner.java:57)
+	at com.jfinal.server.Scanner.access$000(Scanner.java:31)
+	at com.jfinal.server.Scanner$1.run(Scanner.java:94)
+	at java.util.TimerThread.mainLoop(Timer.java:555)
+	at java.util.TimerThread.run(Timer.java:505)
+
+2017-03-16 17:01:42
+[INFO]-[Thread: main]-[ com.alibaba.druid.pool.DruidDataSource.init(DruidDataSource.java:715)]:com.alibaba.druid.pool.DruidDataSource.init(DruidDataSource.java:715)  {dataSource-1} inited
+
+2017-03-16 17:01:43
+[INFO]-[Thread: main]-[ com.jfinal.kit.LogKit.info(LogKit.java:55)]:com.jfinal.kit.LogKit.info(LogKit.java:55)  魔导生成完成。

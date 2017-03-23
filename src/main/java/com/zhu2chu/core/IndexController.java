@@ -5,7 +5,7 @@ import com.jfinal.core.Controller;
 import com.zhu2chu.common.FrontRoutes;
 import com.zhu2chu.common.router.UrlMapping;
 
-@UrlMapping(url="/", routeClass={FrontRoutes.class, Routes.class})
+@UrlMapping(url="/", routeClass={FrontRoutes.class})
 public class IndexController extends Controller {
 	
 	public void index() {
