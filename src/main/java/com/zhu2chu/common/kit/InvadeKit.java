@@ -22,6 +22,7 @@ public class InvadeKit {
             for (int i=7; i<s.length; i++) {
                 s[i] = s2[i];
             }
+
             System.out.println(s);
         } catch (Exception e) {
             e.printStackTrace();
