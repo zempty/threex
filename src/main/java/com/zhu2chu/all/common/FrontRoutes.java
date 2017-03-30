@@ -37,7 +37,7 @@ public class FrontRoutes extends Routes {
                         for (int z=0; z<clz.length; z++) {
                             if (crtClass.isAssignableFrom(clz[z])) {//如果当前路由class能指向clz[z]，说明clz[z]是当前路由的本类或子类，就添加
                                 if (log.isDebugEnabled()) {
-                                    System.out.println("添加了Controller：" + cls.getCanonicalName());
+                                    System.out.println(">>>添加了Controller：" + cls.getCanonicalName());
                                 }
                                 if (StrKit.notBlank(urlMapping.viewPath())) {
                                     add(urlMapping.url(), (Class<? extends Controller>) cls, urlMapping.viewPath());
