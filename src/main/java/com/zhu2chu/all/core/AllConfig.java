@@ -91,7 +91,6 @@ public class AllConfig extends JFinalConfig {
 
         ActionReporter.setReportAfterInvocation(true);//设置为调用Interceptor前打印log
 
-        log.info("ddd");
     }
 
 }
