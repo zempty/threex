@@ -12,15 +12,20 @@ public class MainT {
 
     public static void main(String[] args) {
         Instant ins = new Instant();
-        System.out.println(ins);
+        System.out.println("Instant:" + ins);
+
         LocalDate ld = new LocalDate();
-        System.out.println(ld);
+        System.out.println("LocalDate" + ld);
+
         LocalTime lt = new LocalTime();
-        System.out.println(lt);
+        System.out.println("LocalTime" + lt);
+
         DateTime dt = new DateTime();
-        System.out.println(dt.toString("yyyy-MM-dd HH:mm:ss.SSS"));
+        System.out.println("DateTime" + dt.toString("yyyy-MM-dd HH:mm:ss.SSS"));
+
         LocalDateTime ldt = new LocalDateTime();
-        System.out.println(ldt.toString("yyyy-MM-dd HH:mm:ss.SSS"));
+        System.out.println("LocalDateTime" + ldt.toString("yyyy-MM-dd HH:mm:ss.SSS"));
+
         String mon = dt.monthOfYear().getAsShortText(Locale.CHINA);
         DateTime rounded = dt.dayOfMonth().roundFloorCopy();
         System.out.println(rounded);
