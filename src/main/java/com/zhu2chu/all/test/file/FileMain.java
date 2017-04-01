@@ -6,11 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-<<<<<<< HEAD
-=======
 
 import org.apache.commons.codec.binary.Base64;
->>>>>>> remotes/origin/master
 
 import com.jfinal.log.Log;
 import com.zhu2chu.all.common.kit.FileKit;
@@ -28,9 +25,7 @@ public class FileMain {
         String srcFilename = filePath+File.separator+"desktop"+File.separator+"c10959_mb_pin_definition_manual_cn.pdf";
         String destFilename = filePath+File.separator+"desktop"+File.separator+"sss.pdf";
 
-<<<<<<< HEAD
         FileKit.copyFile(srcFilename, destFilename, false);
-=======
             readFileByBytes(filePath+File.separator+"readme.pdf");
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,7 +64,6 @@ public class FileMain {
         } catch (IOException e) {
             e.printStackTrace();
         }
->>>>>>> remotes/origin/master
     }
 
 }
