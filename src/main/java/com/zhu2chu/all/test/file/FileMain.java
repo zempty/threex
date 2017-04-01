@@ -6,63 +6,25 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import com.jfinal.log.Log;
+import com.zhu2chu.all.common.kit.FileKit;
+import com.zhu2chu.all.common.kit.SystemKit;
 
 public class FileMain {
 
     private static final Log log = Log.getLog(FileMain.class);
 
     public static void main(String[] args) {
-        String filePath = System.getProperty("user.dir");
-        File f = new File(filePath+File.separator+"ss.exe");
+        String filePath = System.getProperty("user.home");
+        File srcFile = new File(filePath+File.separator+"origin.rar");
+        File destFile = new File(filePath+File.separator+"bakbak.rar");
 
-        FileOutputStream fos = null;
-        try {
-            log.info("文件不存在，创建文件...");
-            //boolean yes = f.createNewFile();
-            //if (yes) {
-            //    log.info("创建文件成功。");
-            //}
-            fos = new FileOutputStream(f);
-            log.info("写入内容到文件...");
-            fos.write("我爱你".getBytes("gbk"));
+        String srcFilename = filePath+File.separator+"desktop"+File.separator+"c10959_mb_pin_definition_manual_cn.pdf";
+        String destFilename = filePath+File.separator+"desktop"+File.separator+"sss.pdf";
 
-            readFileByBytes(filePath+File.separator+"readme.pdf");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public static void createFile(File f, boolean isDelete) {
-        try {
-            f.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void readFileByBytes(String filename) {
-        File f = new File(filename);
-        InputStream in = null;
-        System.out.println("以字节为单位读取文件内容，一次读一个字节：");
-        try {
-            in = new FileInputStream(f);
-            int tempByte;
-            while ((tempByte=in.read()) != -1) {
-                System.out.write(tempByte);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileKit.copyFile(srcFilename, destFilename, false);
     }
 
 }

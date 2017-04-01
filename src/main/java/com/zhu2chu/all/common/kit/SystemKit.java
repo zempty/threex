@@ -3,7 +3,7 @@ package com.zhu2chu.all.common.kit;
 import java.util.Enumeration;
 import java.util.Properties;
 
-public class SytemKit {
+public class SystemKit {
 
     /**
      * 输出System中的所有键值对
