@@ -25,6 +25,9 @@ public class FrontRoutes extends Routes {
     public void config() {
         setBaseViewPath("/_pages");
 
+        /**
+         * 自动扫描该路由的Controller并添加到routes里面
+         */
         List<Class<Controller>> controllerClasses = ClassUtils.scanSubClass(Controller.class, true);
         if (controllerClasses != null) {
             for (Class<?> cls : controllerClasses) {
