@@ -25,6 +25,14 @@ public class SystemKit {
         System.getProperties().list(System.out);
     }
 
+    /**
+     * 获取user.home的路径
+     * @return
+     */
+    public static String getSysUserHome() {
+        return System.getProperty("user.home");
+    }
+
     public static void main(String[] args) {
         outputSysProperties(true);
     }

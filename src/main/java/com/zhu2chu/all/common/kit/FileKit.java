@@ -17,17 +17,24 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Arrays;
 
 import javax.swing.JOptionPane;
+
+import org.apache.commons.codec.binary.Base64;
+
+import com.jfinal.log.Log;
 
 public class FileKit {
 
     private static String MESSAGE = "";
 
+    private static final Log log = Log.getLog(FileKit.class);
+
     /**
      * 复制单个文件
-     * @param srcFilename 待复制的文件名
-     * @param destFilename 目标文件名
+     * @param srcFile 待复制的文件
+     * @param destFile 目标文件
      * @param overlay 目标文件存在是否覆盖
      * @return 复制成功返回true，失败返回false。
      */
@@ -66,6 +73,7 @@ public class FileKit {
         int byteread = 0; //读取的字节数
         InputStream in = null;
         OutputStream out = null;
+        long startTime = System.nanoTime();
 
         try {
             in = new FileInputStream(srcFile);
@@ -104,19 +112,47 @@ public class FileKit {
                             e.printStackTrace();
                         }
                     }
+                    long endTime = System.nanoTime();
+                    if (log.isInfoEnabled()) {
+                        log.info("复制文件" + srcFile.getName() + "至" + destFile.getName() + TimeKit.calcTime(startTime/1000000L, endTime/1000000L));
+                    }
                 }
             }
         }
     }
 
-    public static boolean copyFile(String srcFilename, String destFilename, boolean overlay) {
-        return copyFile(new File(srcFilename), new File(destFilename), overlay);
+    /**
+     * 复制单个文件
+     * 
+     * @param srcFilePath
+     * @param destFilePath
+     * @param overlay
+     * @return
+     */
+    public static boolean copyFile(String srcFilePath, String destFilePath, boolean overlay) {
+        return copyFile(new File(srcFilePath), new File(destFilePath), overlay);
     }
 
-    public static boolean copyDirectory(String srcDirName, String destDirName, boolean overlay) {
-        return copyDirectory(new File(srcDirName), new File(destDirName), overlay);
+    /**
+     * 复制目录及子目录下所有文件
+     * 
+     * @param srcDirPath
+     * @param destDirPath
+     * @param overlay
+     * @return
+     */
+    public static boolean copyDirectory(String srcDirPath, String destDirPath, boolean overlay) {
+        return copyDirectory(new File(srcDirPath), new File(destDirPath), overlay);
     }
 
+    /**
+     * 复制目录及子目录下所有文件
+     * 
+     * @param srcDir
+     * @param destDir
+     * @param overlay
+     * @return
+     */
     public static boolean copyDirectory(File srcDir, File destDir, boolean overlay) {
         if (!srcDir.exists()) {
             MESSAGE = "复制目录失败：源目录" + srcDir.getAbsolutePath() + "不存在！";  
@@ -182,16 +218,28 @@ public class FileKit {
     /**
      * 不考虑多线程优化，单线程文件复制最快的方法是(文件越大该方法越有优势，一般比常用方法快30+%)
      * 
+     * @param source 源文件路径
+     * @param target 目标文件路径
+     */
+    public static void nioTransferCopy(String source, String target) {
+        nioTransferCopy(new File(source), new File(target));
+    }
+
+    /**
+     * 不考虑多线程优化，单线程文件复制最快的方法是(文件越大该方法越有优势，一般比常用方法快30+%)
+     * 
      * @param source
      * @param target
      */
-    private static void nioTransferCopy(File source, File target) {
+    public static void nioTransferCopy(File source, File target) {
         FileChannel in = null;
         FileChannel out = null;
         FileInputStream ins = null;
         FileOutputStream outs = null;
 
+        long startTime = System.nanoTime();
         try {
+
             ins = new FileInputStream(source);
             outs = new FileOutputStream(target);
             in = ins.getChannel();
@@ -206,6 +254,11 @@ public class FileKit {
             close(in);
             close(outs);
             close(out);
+
+            long endTime = System.nanoTime();
+            if (log.isInfoEnabled()) {
+                log.info("复制文件" + source.getName() + "至" + target.getName() + TimeKit.calcTime(startTime/1000000L, endTime/1000000L));
+            }
         }
     }
 
@@ -215,7 +268,7 @@ public class FileKit {
      * @param source
      * @param target
      */
-    private static void nioBufferCopy(File source, File target) {
+    public static void nioBufferCopy(File source, File target) {
         FileChannel in = null;
         FileChannel out = null;
         FileInputStream inStream = null;
@@ -247,7 +300,7 @@ public class FileKit {
      * @param source
      * @param target
      */
-    private static void customBufferBufferedStreamCopy(File source, File target) {
+    public static void customBufferBufferedStreamCopy(File source, File target) {
         InputStream fis = null;
         OutputStream fos = null;
         try {
@@ -272,7 +325,7 @@ public class FileKit {
      * @param source
      * @param target
      */
-    private static void customBufferStreamCopy(File source, File target) {
+    public static void customBufferStreamCopy(File source, File target) {
         InputStream fis = null;
         OutputStream fos = null;
         try {  
@@ -301,6 +354,169 @@ public class FileKit {
                 closeable.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 读取文件内容并将其编码成base64保存到文本文件
+     * @param srcFilePath 要编码的源文件路径
+     * @param destFilePath 输出的目标文件路径
+     */
+    public static void writeBase64(String srcFilePath, String destFilePath) {
+        writeBase64(new File(srcFilePath), new File(destFilePath), 1023);
+    }
+
+    /**
+     * 读取文件内容并将其编码成base64保存到文本文件
+     * @param srcFilePath 要编码的源文件路径
+     * @param destFilePath 输出的目标文件路径
+     * @param bufferSize 缓冲区大小
+     */
+    public static void writeBase64(String srcFilePath, String destFilePath, int bufferSize) {
+        writeBase64(new File(srcFilePath), new File(destFilePath), bufferSize);
+    }
+
+    /**
+     * 读取文件内容并将其编码成base64保存到文本文件
+     * 
+     * @param srcFile 要编码的源文件
+     * @param destFile 输出的目标文件
+     * @param bufferSize 缓冲区大小。
+     */
+    public static void writeBase64(File srcFile, File destFile, int bufferSize) {
+        if (!srcFile.exists()) {
+            log.info("源文件不存在！");
+            return;
+        }
+        if (!srcFile.isFile()) {
+            log.info("srcFile不是一文件！");
+            return;
+        }
+
+        long startTime = System.nanoTime();
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            fis = new FileInputStream(srcFile);
+            fos = new FileOutputStream(destFile);
+
+            if (bufferSize < 0) {
+                bufferSize = 1023;
+            }
+            int mo = bufferSize%3;
+            if (mo != 0) {
+                bufferSize -= mo;//保证能被3整除
+            }
+
+            byte[] buf = new byte[bufferSize];//长度必须为能被3整除的整数
+
+            int byteread = 0;//每次读到的字节数
+
+            while ((byteread=fis.read(buf)) != -1) {
+                /**
+                 * 如果读取的字节数小于缓冲区的长度，就取读取的长度。
+                 * 因为当读取最后一波的时候，大部分情况下最后一波字节的长度都会小于缓冲区长度，而此时整个缓冲区极可能都有内容的，
+                 * 会导致写入多余的内容到文件。
+                 */
+                if (byteread < buf.length) {
+                    buf = Arrays.copyOfRange(buf, 0, byteread);
+                }
+                fos.write(Base64.encodeBase64(buf));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            close(fos);
+            close(fis);
+            long endTime = System.nanoTime();
+            if (log.isInfoEnabled()) {
+                log.info("读取文件" + srcFile.getName()+"并base64编码" + TimeKit.calcTime(startTime/1000000L, endTime/1000000L));
+            }
+        }
+    }
+
+    /**
+     * 从文件中读取base64并解码成原始文件
+     * 
+     * @param srcFilePath 待读取的文件路径
+     * @param destFilePath 输出的目标文件路径
+     * @param bufferSize 待缓冲区大小。
+     */
+    public static void readBase64(String srcFilePath, String destFilePath) {
+        readBase64(new File(srcFilePath), new File(destFilePath), 1024);
+    }
+
+    /**
+     * 从文件中读取base64并解码成原始文件
+     * 
+     * @param srcFilePath 待读取的文件路径
+     * @param destFilePath 输出的目标文件路径
+     * @param bufferSize 待缓冲区大小。
+     */
+    public static void readBase64(String srcFilePath, String destFilePath, int bufferSize) {
+        readBase64(new File(srcFilePath), new File(destFilePath), bufferSize);
+    }
+
+    /**
+     * 从文件中读取base64并解码成原始文件
+     * 
+     * @param srcFile 待读取的文件
+     * @param destFile 输出的目标文件
+     * @param bufferSize 待缓冲区大小。需符合 x*6/8余数为0
+     */
+    public static void readBase64(File srcFile, File destFile, int bufferSize) {
+        if (!srcFile.exists()) {
+            log.info("源文件不存在！");
+            return;
+        }
+        if (!srcFile.isFile()) {
+            log.info("srcFile不是一文件！");
+            return;
+        }
+
+        long startTime = System.nanoTime();
+        FileInputStream fis = null;
+        FileOutputStream fos = null;
+        try {
+            fis = new FileInputStream(srcFile);
+            fos = new FileOutputStream(destFile);
+
+            if (bufferSize < 0) {
+                bufferSize = 1024;
+            }
+            int mo = bufferSize*6%8;
+            if (mo != 0) {//如果余数不为0，缓冲区就减掉余数，使之能除尽。
+                bufferSize -= mo;
+            }
+
+            byte[] buf = new byte[bufferSize];//长度必须符合：x*6/8的余数为0
+
+            int byteread = 0;
+
+            while ((byteread=fis.read(buf)) != -1) {
+                /**
+                 * 如果读取的字节数小于缓冲区的长度，就取读取的长度。
+                 * 因为当读取最后一波的时候，大部分情况下最后一波字节的长度都会小于缓冲区长度，而整个缓冲区都有内容的，
+                 * 会导致写入多余的内容到文件。
+                 */
+                if (byteread < buf.length) {
+                    buf = Arrays.copyOfRange(buf, 0, byteread);
+                }
+                fos.write(Base64.decodeBase64(buf));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            close(fos);
+            close(fis);
+            long endTime = System.nanoTime();
+            if (log.isInfoEnabled()) {
+                log.info("读取文件" + srcFile.getName() + "并base64解码" + TimeKit.calcTime(startTime/1000000L, endTime/1000000L));
             }
         }
     }

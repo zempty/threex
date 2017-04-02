@@ -1,12 +1,6 @@
 package com.zhu2chu.all.test.file;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import org.apache.commons.codec.binary.Base64;
 
 import com.jfinal.log.Log;
 import com.zhu2chu.all.common.kit.FileKit;
@@ -17,13 +11,15 @@ public class FileMain {
 
     public static void main(String[] args) {
         String filePath = System.getProperty("user.home");
-        File srcFile = new File(filePath+File.separator+"origin.rar");
-        File destFile = new File(filePath+File.separator+"bakbak.rar");
 
-        String srcFilename = filePath+File.separator+"desktop"+File.separator+"c10959_mb_pin_definition_manual_cn.pdf";
-        String destFilename = filePath+File.separator+"desktop"+File.separator+"sss.pdf";
+        String srcFilename = filePath+File.separator+"desktop"+File.separator+"ddd.mp4";
+        String srcFilename2 = filePath+File.separator+"desktop"+File.separator+"videobase64.txt";
+        String srcFilename3 = filePath+File.separator+"desktop"+File.separator+"videobase64.mp4";
 
-        FileKit.copyFile(srcFilename, destFilename, false);
+        //FileKit.writeBase64(srcFilename, srcFilename2, 1024);
+        //FileKit.readBase64(srcFilename2, srcFilename3);
+
+        FileKit.nioTransferCopy(srcFilename, srcFilename3);
     }
 
 }
