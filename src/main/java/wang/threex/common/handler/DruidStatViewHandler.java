@@ -61,7 +61,7 @@ public class DruidStatViewHandler extends Handler {
             //添加JFinal.me().getContextPath()是为了适应有项目名的情况
             if (target.equals(visitPath) && !target.endsWith("/index.html")) {
                 HandlerKit.redirect(JFinal.me().getContextPath() + (target += "/index.html"), request, response, isHandled);
-                return ;
+                return;
             }
             
             try {
