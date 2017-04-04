@@ -1,5 +1,7 @@
 package wang.threex.core;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -8,9 +10,11 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.ext.handler.UrlSkipHandler;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
 
+import wang.threex.common.handler.DruidStatViewHandler;
 import wang.threex.test.TestController;
 import wang.threex.test.websocket.WebSocketController;
 
@@ -42,6 +46,12 @@ public class ThreeXConfig extends JFinalConfig {
 	public void configHandler(Handlers h) {
 		h.add(new ThreeXHandler());
 		h.add(new UrlSkipHandler("^/websocket.*", false));
+		h.add(new DruidStatViewHandler("/db/druid", new IDruidStatViewAuth() {
+            @Override
+            public boolean isPermitted(HttpServletRequest request) {
+                return true;
+            }
+        }));
 	}
 
     @Override
