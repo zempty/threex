@@ -1,5 +1,7 @@
 package com.zhu2chu.all.core;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.jfinal.config.Constants;
@@ -8,7 +10,9 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.config.Routes.Route;
 import com.jfinal.core.ActionReporter;
+import com.jfinal.core.Controller;
 import com.jfinal.core.JFinal;
 import com.jfinal.ext.handler.UrlSkipHandler;
 import com.jfinal.kit.Prop;
@@ -20,6 +24,7 @@ import com.jfplugin.mail.MailPlugin;
 import com.zhu2chu.all.common.FrontRoutes;
 import com.zhu2chu.all.common.handler.ConstsHandler;
 import com.zhu2chu.all.common.handler.DruidStatViewHandler;
+import com.zhu2chu.all.common.router.RouterKit;
 import com.zhu2chu.all.test.websocket.WebSocketController;
 
 public class AllConfig extends JFinalConfig {
@@ -36,6 +41,17 @@ public class AllConfig extends JFinalConfig {
 	@Override
 	public void configRoute(Routes r) {
 		r.add("/test/websocket", WebSocketController.class);
+		RouterKit.scanController(r.getClass(), r);
+
+		List<Route> centerRoutes = r.getRouteItemList();
+		if (p.getBoolean("devMode")) {//如果是开发模式，我们就打印中心路由的添加信息
+		    for (Route rt : centerRoutes) {
+		        Class<? extends Controller> ctlClass = rt.getControllerClass();
+		        if (log.isDebugEnabled()) {
+		            System.out.println("Config.Routes >>> 添加了Controller：" + ctlClass.getCanonicalName());
+                }
+		    }
+		}
 
 		r.add(new FrontRoutes());
 	}
