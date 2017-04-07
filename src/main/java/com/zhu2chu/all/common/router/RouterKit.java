@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jfinal.config.Routes;
 import com.jfinal.core.Controller;
+import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 
@@ -49,8 +50,10 @@ public class RouterKit {
      */
     private static void addRoute(Class<?> clzz, Class<?> cls, UrlMapping urlMapping, Routes route) {
         String clzzName = clzz.getName();
-        if (log.isDebugEnabled() && !clzzName.contains("Config$")) {//这里不打印中心路由匿名类的添加控制器信息，统一在Config类里打印
-            System.out.println(clzzName + " >>> 添加了Controller：" + cls.getCanonicalName());
+        if (PropKit.getBoolean("devMode")) {
+            if (log.isDebugEnabled() && !clzzName.contains("Config$")) {//这里不打印中心路由匿名类的添加控制器信息，统一在Config类里打印
+                System.out.println(clzzName + " >>> 添加了Controller：" + cls.getCanonicalName());
+            }
         }
         if (StrKit.notBlank(urlMapping.viewPath())) {
             route.add(urlMapping.url(), (Class<? extends Controller>) cls, urlMapping.viewPath());
