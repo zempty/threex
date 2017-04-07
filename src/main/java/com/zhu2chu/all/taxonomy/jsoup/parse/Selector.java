@@ -9,21 +9,25 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.zhu2chu.all.common.kit.PathKit;
+import com.zhu2chu.all.common.kit.SystemKit;
+
 public class Selector {
 
     public static void main(String[] args) {
         Document doc = null;
         try {
             //获取文档。从url获取是最省事的方式
-            doc = Jsoup.connect("http://www.xdemo.org/jsoup-html-parse").get();
+            doc = Jsoup.connect("https://www.google.com").validateTLSCertificates(true).get();
+            System.out.println(doc);
 
             /*****获取单一元素******/
             //与JS类似的根据ID选择的选择器<div id="content"></div>
             Element sidebar = doc.getElementById("sidebar");
             //获取所有的a标签<a href="#"></a>
-            sidebar.getElementsByTag("div");
+            //sidebar.getElementsByTag("a");
             //类选择器<div></div>
-            sidebar.getElementsByClass("clr");
+            //sidebar.getElementsByClass("clr");
             //获取Document的所有元素
             doc.getAllElements();
             //根据属性获取元素<a href="#"></a>
@@ -52,10 +56,10 @@ public class Selector {
             doc.getElementsByIndexLessThan(10);
 
             //遍历标签
-            for (Element link : sidebar.getElementsByTag("a")) {
+            /*for (Element link : sidebar.getElementsByTag("a")) {
                 String linkHref = link.attr("href");
                 String linkText = link.text();
-            }
+            }*/
 
             /**************一些其他常用的方法**************/
             //获取网页标题
@@ -64,16 +68,16 @@ public class Selector {
             doc.text();
 
             //为元素添加一个css class
-            sidebar.addClass("classname");
+            //sidebar.addClass("classname");
             //根据属性选择值
-            sidebar.attr("id");
+            //sidebar.attr("id");
             //获取所有子元素
-            sidebar.children();
+            //sidebar.children();
             //获取元素内所有文本
-            sidebar.text();
+            //sidebar.text();
             //获取同级元素
-            sidebar.siblingElements();
-            FileOutputStream fos = new FileOutputStream("D:\\s.txt");
+            //sidebar.siblingElements();
+            FileOutputStream fos = new FileOutputStream(PathKit.getWinDeskTopDirectory()+"s.txt");
 
             DateTime dt = new DateTime();
             int year = dt.year().get();
@@ -82,6 +86,8 @@ public class Selector {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        SystemKit.outputSysProperties(true);
     }
 
 }

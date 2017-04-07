@@ -23,7 +23,7 @@ public class FrontRoutes extends Routes {
     @SuppressWarnings("unchecked")
     @Override
     public void config() {
-        setBaseViewPath("/_pages");
+        setBaseViewPath("/$0pages");
 
         /**
          * 自动扫描该路由的Controller并添加到routes里面
