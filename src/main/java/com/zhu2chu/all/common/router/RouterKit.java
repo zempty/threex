@@ -13,21 +13,31 @@ import io.jpress.utils.ClassUtils;
 public class RouterKit {
 
     private static final Log log = Log.getLog(RouterKit.class);
+    /**
+     * 写成类变量，这样避免多次扫描
+     */
+    private static final List<Class<Controller>> controllerClasses = ClassUtils.scanSubClass(Controller.class, true);
 
     /**
      * 自动扫描该路由的Controller并添加到routes里面
      */
     public static void scanController(Class<?> clzz, Routes route) {
-        List<Class<Controller>> controllerClasses = ClassUtils.scanSubClass(Controller.class, true);
         if (controllerClasses != null) {
             for (Class<?> cls : controllerClasses) {
                 UrlMapping urlMapping = cls.getAnnotation(UrlMapping.class);
                 if (urlMapping != null && StrKit.notBlank(urlMapping.url())) {
                     Class<?>[] clz = urlMapping.routeClass();
+                    boolean allowSub = urlMapping.allowSub();
                     if (clz.length > 0) {
                         for (int z=0; z<clz.length; z++) {
                             if (clzz.isAssignableFrom(clz[z])) {//如果当前路由class能指向clz[z]，说明clz[z]是当前路由的本类或子类，就添加
-                                addRoute(clzz, cls, urlMapping, route);
+                                if (allowSub) {
+                                    addRoute(clzz, cls, urlMapping, route);
+                                } else {
+                                    if (clz[z].isAssignableFrom(clzz)) {//保证为本身类
+                                        addRoute(clzz, cls, urlMapping, route);
+                                    }
+                                }
                             } else if (clzz.getName().contains("Config$")) {//如果是这种情况，就是中心路由器
                                 if (Routes.class.isAssignableFrom(clz[z]) && clz[z].isAssignableFrom(Routes.class)) {//保证是Routes本身类
                                     addRoute(clzz, cls, urlMapping, route);
