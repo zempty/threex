@@ -122,6 +122,31 @@
 		    <artifactId>zip4j</artifactId>
 		    <version>1.3.2</version>
 		</dependency>
+		<!-- Required in all environments. Slf4j's slf4j-api jar and one of its
+		     binding jars is required. commons-beanutils is required only if using
+		     INI config. -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-core</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
+		<!-- Enables support for web-based applications. -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-web</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
+		<!-- Enables Ehcache-based famework caching. -->
+		<!-- <dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-ehcache</artifactId>
+		    <version>1.3.2</version>
+		</dependency> -->
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.31</version>
+		</dependency>
 	</dependencies>
 
 	<build>
