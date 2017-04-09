@@ -28,7 +28,7 @@ public @interface UrlMapping {
      */
     Class<? extends Routes>[] routeClass() default { Routes.class };
     /**
-     * 是否允许当前Routes对象的子类添加Contoller。false为仅允许本身类
+     * 是否允许添加当前Routes对象的子类Contoller。false为仅允许本身类
      * 如：FrontRoutes.class，子类：Routes2Routes extends FrontRoutes
      * 为true的话，FrontRoutes的对象也能添加注解标记为Routes2Routes.class的Controller。
      * 默认为false，标记哪个就只能添加哪个，这样省事。
