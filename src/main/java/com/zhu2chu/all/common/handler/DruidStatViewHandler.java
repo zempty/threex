@@ -24,7 +24,7 @@ public class DruidStatViewHandler extends Handler {
     private IDruidStatViewAuth auth;
     private String visitPath = "/druid";
     private StatViewServlet servlet = new JFinalStatViewServlet();
-    
+
     public DruidStatViewHandler(String visitPath) {
         this(visitPath,
             new IDruidStatViewAuth(){
@@ -33,20 +33,20 @@ public class DruidStatViewHandler extends Handler {
                 }
             });
     }
-    
+
     public DruidStatViewHandler(String visitPath , IDruidStatViewAuth druidStatViewAuth) {
         if (StrKit.isBlank(visitPath))
             throw new IllegalArgumentException("visitPath can not be blank");
         if (druidStatViewAuth == null)
             throw new IllegalArgumentException("druidStatViewAuth can not be null");
-        
+
         visitPath = visitPath.trim();
         if (! visitPath.startsWith("/"))
             visitPath = "/" + visitPath;
         this.visitPath = visitPath;
         this.auth = druidStatViewAuth;
     }
-    
+
     public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {
         //打印完整的url
         String scheme = request.getScheme();
@@ -62,7 +62,7 @@ public class DruidStatViewHandler extends Handler {
                 HandlerKit.redirect(JFinal.me().getContextPath() + (target += "/index.html"), request, response, isHandled);
                 return;
             }
-            
+
             try {
                 servlet.service(request, response);
             } catch (Exception e) {
@@ -73,7 +73,7 @@ public class DruidStatViewHandler extends Handler {
             next.handle(target, request, response, isHandled);
         }
     }
-    
+
     class JFinalStatViewServlet extends StatViewServlet {
         
         private static final long serialVersionUID = 2898674199964021798L;
@@ -81,7 +81,7 @@ public class DruidStatViewHandler extends Handler {
         public boolean isPermittedRequest(HttpServletRequest request) {
             return auth.isPermitted(request);
         }
-        
+
         public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             String contextPath = request.getContextPath();
             // String servletPath = request.getServletPath();
@@ -162,8 +162,3 @@ public class DruidStatViewHandler extends Handler {
         }
     }
 }
-
-
-
-
-
