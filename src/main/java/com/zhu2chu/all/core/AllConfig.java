@@ -19,6 +19,7 @@ import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
+import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
 import com.zhu2chu.all.common.FrontRoutes;
@@ -59,7 +60,8 @@ public class AllConfig extends JFinalConfig {
 	@Override
 	public void configPlugin(Plugins me) {
 		me.add(new MailPlugin(PropKit.use("mail.properties").getProperties()));
-		
+		me.add(new EhCachePlugin());
+
 		/**
 		 * 事务隔离级别从上(低)往下(高)
 		 * 总结如下

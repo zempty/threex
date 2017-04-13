@@ -10,6 +10,13 @@ import com.jfinal.log.Log;
 
 import io.jpress.utils.ClassUtils;
 
+/**
+ * 2017年4月14日 00:47:00
+ * 
+ * @author ThreeX
+ * @link http://www.zhu2chu.com
+ *
+ */
 public class RouterKit {
 
     private static final Log log = Log.getLog(RouterKit.class);
