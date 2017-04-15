@@ -1,6 +1,5 @@
 package com.zhu2chu.all.core;
 
-import com.jfinal.config.Routes;
 import com.jfinal.core.Controller;
 import com.zhu2chu.all.common.FrontRoutes;
 import com.zhu2chu.all.common.router.UrlMapping;

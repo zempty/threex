@@ -30,8 +30,8 @@ public @interface UrlMapping {
     /**
      * 是否允许添加当前Routes子类对象的Contoller。false为仅允许本身类
      * 如：FrontRoutes.class，子类：Routes2Routes extends FrontRoutes
-     * 为true的话，FrontRoutes的对象也能添加注解标记为Routes2Routes.class的Controller。
-     * 默认为false，标记哪个就只能添加哪个，这样省事。
+     *    为true的话，FrontRoutes的对象也能添加注解标记为Routes2Routes.class的Controller。
+     *    默认为false，标记哪个就只能添加哪个，这样省事。
      * @return
      */
     boolean allowSub() default false;

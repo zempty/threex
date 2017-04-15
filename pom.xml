@@ -157,6 +157,12 @@
 		    <artifactId>javassist</artifactId>
 		    <version>3.21.0-GA</version>
 		</dependency>
+		<!-- 一个网友总结的工具包 -->
+		<dependency>
+		    <groupId>com.xiaoleilu</groupId>
+		    <artifactId>hutool-all</artifactId>
+		    <version>3.0.1</version>
+        </dependency>
 	</dependencies>
 
 	<build>
