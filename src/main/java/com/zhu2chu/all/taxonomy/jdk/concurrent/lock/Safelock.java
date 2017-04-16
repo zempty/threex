@@ -5,6 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * 2017年4月16日 14:09:00
  * 此类出至官方文档。
  * http://docs.oracle.com/javase/tutorial/essential/concurrency/newlocks.html
  * 
