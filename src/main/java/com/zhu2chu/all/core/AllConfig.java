@@ -22,10 +22,10 @@ import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
-import com.zhu2chu.all.common.FrontRoutes;
-import com.zhu2chu.all.common.handler.ConstsHandler;
-import com.zhu2chu.all.common.handler.DruidStatViewHandler;
-import com.zhu2chu.all.common.router.RouterKit;
+import com.zhu2chu.all.bus.handler.ConstsHandler;
+import com.zhu2chu.all.bus.handler.DruidStatViewHandler;
+import com.zhu2chu.all.bus.router.RouterKit;
+import com.zhu2chu.all.front.FrontRoutes;
 import com.zhu2chu.all.test.websocket.WebSocketController;
 
 public class AllConfig extends JFinalConfig {
