@@ -3,7 +3,7 @@ package com.zhu2chu.all.test.file;
 import java.io.File;
 
 import com.jfinal.log.Log;
-import com.zhu2chu.all.common.kit.FileKit;
+import com.zhu2chu.all.bus.kit.FileKit;
 
 public class FileMain {
 

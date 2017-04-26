@@ -9,8 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.zhu2chu.all.common.kit.PathKit;
-import com.zhu2chu.all.common.kit.SystemKit;
+import com.zhu2chu.all.bus.kit.PathKit;
+import com.zhu2chu.all.bus.kit.SystemKit;
 
 public class Selector {
 
