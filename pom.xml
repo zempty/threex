@@ -168,6 +168,11 @@
 		    <artifactId>h2</artifactId>
 		    <version>1.4.194</version>
 		</dependency>
+		<dependency>
+		    <groupId>net.dreamlu</groupId>
+		    <artifactId>JFinal-event</artifactId>
+		    <version>1.5.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
