@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.druid.filter.stat.StatFilter;
+import com.alibaba.druid.wall.WallConfig;
+import com.alibaba.druid.wall.WallFilter;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -18,10 +21,14 @@ import com.jfinal.ext.handler.UrlSkipHandler;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
+import com.mysql.jdbc.Connection;
+import com.zhu2chu.all.bus.dialect.H2Dialect;
 import com.zhu2chu.all.bus.handler.ConstsHandler;
 import com.zhu2chu.all.bus.handler.DruidStatViewHandler;
 import com.zhu2chu.all.bus.router.RouterKit;
@@ -33,6 +40,8 @@ public class AllConfig extends JFinalConfig {
     private static final Log log = Log.getLog(AllConfig.class);
 
     private static Prop p = loadGlobalConfig();
+    private WallFilter wallFilter;
+    private WallConfig wallConfig;
 
 	@Override
 	public void configConstant(Constants c) {
@@ -80,6 +89,28 @@ public class AllConfig extends JFinalConfig {
 		 * 使用越低的事务隔离级别开启一个事务。说明读的权限越大，也越不靠谱。
 		 * 但无论何种事务隔离级别，一个事务都无法更新其它事务已经操作(update、delete、insert)但未提交的数据。
 		 */
+		DruidPlugin dp1 = new DruidPlugin(p.get("h2.jdbcurl"), p.get("h2.username"), p.get("h2.password"));
+		wallFilter = new WallFilter();
+		wallFilter.setDbType("h2");
+
+		wallConfig = new WallConfig();
+		//设置允许多语句执行。如：sql1;sql2;
+		wallConfig.setMultiStatementAllow(true);
+		wallFilter.setConfig(wallConfig);
+
+		dp1.addFilter(wallFilter);
+		dp1.addFilter(new StatFilter());
+		me.add(dp1);
+
+		ActiveRecordPlugin arp1 = new ActiveRecordPlugin(dp1);
+		arp1.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
+		arp1.setDialect(new H2Dialect());
+		me.add(arp1);
+
+		//开发模式下打印sql
+		if (p.getBoolean("devMode", false)) {
+		    arp1.setShowSql(true);
+		}
 	}
 
 	@Override
@@ -89,6 +120,8 @@ public class AllConfig extends JFinalConfig {
 
 	@Override
 	public void configHandler(Handlers h) {
+	    h.add(new DruidStatViewHandler("/assets/druid"));
+
 		h.add(new AllHandler());
 		h.add(new ConstsHandler());
 		h.add(new UrlSkipHandler("^/websocket.*", false));
@@ -126,7 +159,7 @@ public class AllConfig extends JFinalConfig {
     public void afterJFinalStart() {
         super.afterJFinalStart();
 
-        ActionReporter.setReportAfterInvocation(true);//设置为调用Interceptor前打印log
+        ActionReporter.setReportAfterInvocation(false);//设置为调用Interceptor前打印log
 
     }
 
