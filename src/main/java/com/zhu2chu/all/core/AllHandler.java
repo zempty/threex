@@ -15,6 +15,9 @@ public class AllHandler extends Handler {
 		if (uri.endsWith(".html")) {
 			HandlerKit.renderError404(request, response, isHandled);
 			return;
+		} else if (uri.contains("console")) {
+		    isHandled[0] = false;
+		    return;
 		}
 
 		next.handle(target, request, response, isHandled);

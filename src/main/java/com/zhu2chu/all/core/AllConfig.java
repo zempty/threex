@@ -31,6 +31,8 @@ import com.mysql.jdbc.Connection;
 import com.zhu2chu.all.bus.dialect.H2Dialect;
 import com.zhu2chu.all.bus.handler.ConstsHandler;
 import com.zhu2chu.all.bus.handler.DruidStatViewHandler;
+import com.zhu2chu.all.bus.jfplugin.h2.H2ServerHandler;
+import com.zhu2chu.all.bus.jfplugin.h2.H2ServerPlugin;
 import com.zhu2chu.all.bus.router.RouterKit;
 import com.zhu2chu.all.front.FrontRoutes;
 import com.zhu2chu.all.test.websocket.WebSocketController;
@@ -71,6 +73,9 @@ public class AllConfig extends JFinalConfig {
 		me.add(new MailPlugin(PropKit.use("mail.properties").getProperties()));
 		me.add(new EhCachePlugin());
 
+		//启动h2 tcpserver插件。此插件必须放在ActiveRecordPlugin的前面，不然arp启动时就报错。
+		me.add(new H2ServerPlugin());
+
 		/**
 		 * 事务隔离级别从上(低)往下(高)
 		 * 总结如下
@@ -89,7 +94,7 @@ public class AllConfig extends JFinalConfig {
 		 * 使用越低的事务隔离级别开启一个事务。说明读的权限越大，也越不靠谱。
 		 * 但无论何种事务隔离级别，一个事务都无法更新其它事务已经操作(update、delete、insert)但未提交的数据。
 		 */
-		DruidPlugin dp1 = new DruidPlugin(p.get("h2.jdbcurl"), p.get("h2.username"), p.get("h2.password"));
+		DruidPlugin dp1 = new DruidPlugin(p.get("h2.jdbcurl").replace("${h2.tcpPort}", p.get("h2.tcpPort")), p.get("h2.username"), p.get("h2.password"));
 		wallFilter = new WallFilter();
 		wallFilter.setDbType("h2");
 
@@ -107,6 +112,7 @@ public class AllConfig extends JFinalConfig {
 		arp1.setDialect(new H2Dialect());
 		me.add(arp1);
 
+
 		//开发模式下打印sql
 		if (p.getBoolean("devMode", false)) {
 		    arp1.setShowSql(true);
@@ -121,6 +127,7 @@ public class AllConfig extends JFinalConfig {
 	@Override
 	public void configHandler(Handlers h) {
 	    h.add(new DruidStatViewHandler("/assets/druid"));
+	    h.add(new H2ServerHandler());
 
 		h.add(new AllHandler());
 		h.add(new ConstsHandler());
@@ -144,7 +151,7 @@ public class AllConfig extends JFinalConfig {
          * 特别注意：Eclipse 之下建议的启动方式
          */
         JFinal.start("src/main/webapp", 8022, "/", 5);
-        
+
         /**
          * 特别注意：IDEA 之下建议的启动方式，仅比 eclipse 之下少了最后一个参数
          */

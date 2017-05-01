@@ -49,11 +49,11 @@ public class DruidStatViewHandler extends Handler {
 
     public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {
         //打印完整的url
-        String scheme = request.getScheme();
+        /*String scheme = request.getScheme();
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();
         String reqUri = request.getRequestURI();
-        log.debug(scheme+"://"+serverName+":"+serverPort+reqUri);
+        log.debug(scheme+"://"+serverName+":"+serverPort+reqUri);*/
 
         if (target.startsWith(visitPath)) {
             isHandled[0] = true;
