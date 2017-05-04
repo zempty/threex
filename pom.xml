@@ -9,9 +9,9 @@
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
-		<jfinal.version>3.1-SNAPSHOT</jfinal.version>
+		<jfinal.version>3.0</jfinal.version>
 		<mysql.version>5.1.40</mysql.version>
-		<druid.version>1.0.26</druid.version>
+		<druid.version>1.0.29</druid.version>
 		<profiles.active>development</profiles.active>
 		<servlet.api.version>3.1.0</servlet.api.version>
 		<jfinal-mail-plugin.version>2.2</jfinal-mail-plugin.version>
