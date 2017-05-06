@@ -26,27 +26,27 @@ import net.lingala.zip4j.exception.ZipException;
  *
  */
 public class ExtractAllFiles {
-	
-	public ExtractAllFiles() {
-		
-		try {
-			// Initiate ZipFile object with the path/name of the zip file.
-			ZipFile zipFile = new ZipFile("d:\\Zip\\findbugs-3.0.1.zip");
-			
-			// Extracts all files to the path specified
-			zipFile.extractAll("d:\\Zip\\tmp");
-			
-		} catch (ZipException e) {
-			e.printStackTrace();
-		}
-		
-	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		new ExtractAllFiles();
-	}
+    public ExtractAllFiles() {
+
+        try {
+            // Initiate ZipFile object with the path/name of the zip file.
+            ZipFile zipFile = new ZipFile("d:\\Zip\\findbugs-3.0.1.zip");
+
+            // Extracts all files to the path specified
+            zipFile.extractAll("d:\\Zip\\tmp");
+
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        new ExtractAllFiles();
+    }
 
 }

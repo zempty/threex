@@ -5,8 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * 2017年4月18日 18:01:56
- * 此类出自：http://blog.csdn.net/z69183787/article/details/12848685
- * 验证是否数字???
+ * 此类出自：http://blog.csdn.net/z69183787/article/details/12848685 验证是否数字???
  * 
  * @author ThreeX
  *

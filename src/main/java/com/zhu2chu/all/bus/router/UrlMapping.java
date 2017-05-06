@@ -16,22 +16,25 @@ import com.jfinal.config.Routes;
  */
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 public @interface UrlMapping {
 
     String url();
+
     String viewPath() default "";
+
     /**
      * 加入到哪个Routes里。用于路由分类，默认值为Routes.class，这是不分模块路由。
-     * 理论上来讲，这不应该是一个数组，因为同一个controllerKey只能用一次。
-     * 这里先这样，保不准以后会咋样？
+     * 理论上来讲，这不应该是一个数组，因为同一个controllerKey只能用一次。 这里先这样，保不准以后会咋样？
      */
     Class<? extends Routes>[] routeClass() default { Routes.class };
+
     /**
      * 是否允许添加当前Routes子类对象的Contoller。false为仅允许本身类
      * 如：FrontRoutes.class，子类：Routes2Routes extends FrontRoutes
-     *    为true的话，FrontRoutes的对象也能添加注解标记为Routes2Routes.class的Controller。
-     *    默认为false，标记哪个就只能添加哪个，这样省事。
+     * 为true的话，FrontRoutes的对象也能添加注解标记为Routes2Routes.class的Controller。
+     * 默认为false，标记哪个就只能添加哪个，这样省事。
+     * 
      * @return
      */
     boolean allowSub() default false;

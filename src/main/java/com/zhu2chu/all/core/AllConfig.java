@@ -45,104 +45,100 @@ public class AllConfig extends JFinalConfig {
     private WallFilter wallFilter;
     private WallConfig wallConfig;
 
-	@Override
-	public void configConstant(Constants c) {
-		c.setDevMode(p.getBoolean("devMode", false));
-	}
+    @Override
+    public void configConstant(Constants c) {
+        c.setDevMode(p.getBoolean("devMode", false));
+    }
 
-	@Override
-	public void configRoute(Routes r) {
-		r.add("/test/websocket", WebSocketController.class);
-		RouterKit.scanController(r.getClass(), r);
+    @Override
+    public void configRoute(Routes r) {
+        r.add("/test/websocket", WebSocketController.class);
+        RouterKit.scanController(r.getClass(), r);
 
-		List<Route> centerRoutes = r.getRouteItemList();
-		if (p.getBoolean("devMode")) {//如果是开发模式，我们就打印中心路由的添加信息
-		    for (Route rt : centerRoutes) {
-		        Class<? extends Controller> ctlClass = rt.getControllerClass();
-		        if (log.isDebugEnabled()) {
-		            System.out.println("Config.Routes >>> 添加了Controller：" + ctlClass.getCanonicalName());
+        List<Route> centerRoutes = r.getRouteItemList();
+        if (p.getBoolean("devMode")) {// 如果是开发模式，我们就打印中心路由的添加信息
+            for (Route rt : centerRoutes) {
+                Class<? extends Controller> ctlClass = rt.getControllerClass();
+                if (log.isDebugEnabled()) {
+                    System.out.println("Config.Routes >>> 添加了Controller：" + ctlClass.getCanonicalName());
                 }
-		    }
-		}
+            }
+        }
 
-		r.add(new FrontRoutes());
-	}
+        r.add(new FrontRoutes());
+    }
 
-	@Override
-	public void configPlugin(Plugins me) {
-		me.add(new MailPlugin(PropKit.use("mail.properties").getProperties()));
-		me.add(new EhCachePlugin());
+    @Override
+    public void configPlugin(Plugins me) {
+        me.add(new MailPlugin(PropKit.use("mail.properties").getProperties()));
+        me.add(new EhCachePlugin());
 
-		//启动h2 tcpserver插件。此插件必须放在ActiveRecordPlugin的前面，不然arp启动时就报错。
-		me.add(new H2ServerPlugin());
+        // 启动h2 tcpserver插件。此插件必须放在ActiveRecordPlugin的前面，不然arp启动时就报错。
+        me.add(new H2ServerPlugin());
 
-		/**
-		 * 事务隔离级别从上(低)往下(高)
-		 * 总结如下
-		 * 读未提交。无限制，能实时看到数据变化。问题：脏读。读的都是不确定的数据。
-		 * 读已提交。只能读已提交的数据。问题：不可重复读。读着读着，数据被人黑了并提交，也能看到。
-		 * 可重复读。事务开启前读到的已有数据不会改变。问题：幻读。查询后其它事务能对已查数据进行操作提交，
-		 *        但该事务提交前，已有的数据不会看到改变。包括update、insert。在该事务提交后，才会看到其它
-		 *        事务更改的变化。
-		 *        这样引出的问题就是当你commit后，发现数据变了。比如：你金额有1000，然后别人的事务用了500并提交，
-		 *        你这边查还是1000，当你想用600的时候，然后会发现使用不了。因为你还剩500块，但你查还是1000，会
-		 *        感到莫名奇妙。只有提交后你才能看到余额为500块。由此可见，任何跟钱有关的事务应该都是使用序列化的隔离级别
-		 * 序列化。事务会依次执行。
-		 *       1.此级别的事务开启后对某数据进行操作(包括select)未提交，其它事务只能对相同数据进行select操作。任何更新操作都将阻塞。
-		 *       2.若其它事务对某数据更新后未提交，此级别事务任何对相同数据的操作(包括select)都将阻塞。
-		 * 
-		 * 使用越低的事务隔离级别开启一个事务。说明读的权限越大，也越不靠谱。
-		 * 但无论何种事务隔离级别，一个事务都无法更新其它事务已经操作(update、delete、insert)但未提交的数据。
-		 */
-		DruidPlugin dp1 = new DruidPlugin(p.get("h2.jdbcurl").replace("${h2.tcpPort}", p.get("h2.tcpPort")), p.get("h2.username"), p.get("h2.password"));
-		wallFilter = new WallFilter();
-		wallFilter.setDbType("h2");
+        /**
+         * 事务隔离级别从上(低)往下(高) 总结如下 读未提交。无限制，能实时看到数据变化。问题：脏读。读的都是不确定的数据。
+         * 读已提交。只能读已提交的数据。问题：不可重复读。读着读着，数据被人黑了并提交，也能看到。
+         * 可重复读。事务开启前读到的已有数据不会改变。问题：幻读。查询后其它事务能对已查数据进行操作提交，
+         * 但该事务提交前，已有的数据不会看到改变。包括update、insert。在该事务提交后，才会看到其它 事务更改的变化。
+         * 这样引出的问题就是当你commit后，发现数据变了。比如：你金额有1000，然后别人的事务用了500并提交，
+         * 你这边查还是1000，当你想用600的时候，然后会发现使用不了。因为你还剩500块，但你查还是1000，会
+         * 感到莫名奇妙。只有提交后你才能看到余额为500块。由此可见，任何跟钱有关的事务应该都是使用序列化的隔离级别 序列化。事务会依次执行。
+         * 1.此级别的事务开启后对某数据进行操作(包括select)未提交，其它事务只能对相同数据进行select操作。任何更新操作都将阻塞。
+         * 2.若其它事务对某数据更新后未提交，此级别事务任何对相同数据的操作(包括select)都将阻塞。
+         * 
+         * 使用越低的事务隔离级别开启一个事务。说明读的权限越大，也越不靠谱。
+         * 但无论何种事务隔离级别，一个事务都无法更新其它事务已经操作(update、delete、insert)但未提交的数据。
+         */
+        DruidPlugin dp1 = new DruidPlugin(p.get("h2.jdbcurl").replace("${h2.tcpPort}", p.get("h2.tcpPort")),
+                p.get("h2.username"), p.get("h2.password"));
+        wallFilter = new WallFilter();
+        wallFilter.setDbType("h2");
 
-		wallConfig = new WallConfig();
-		//设置允许多语句执行。如：sql1;sql2;
-		wallConfig.setMultiStatementAllow(true);
-		wallFilter.setConfig(wallConfig);
+        wallConfig = new WallConfig();
+        // 设置允许多语句执行。如：sql1;sql2;
+        wallConfig.setMultiStatementAllow(true);
+        wallFilter.setConfig(wallConfig);
 
-		dp1.addFilter(wallFilter);
-		dp1.addFilter(new StatFilter());
-		me.add(dp1);
+        dp1.addFilter(wallFilter);
+        dp1.addFilter(new StatFilter());
+        me.add(dp1);
 
-		ActiveRecordPlugin arp1 = new ActiveRecordPlugin(dp1);
-		arp1.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
-		arp1.setDialect(new H2Dialect());
-		me.add(arp1);
+        ActiveRecordPlugin arp1 = new ActiveRecordPlugin(dp1);
+        arp1.setTransactionLevel(Connection.TRANSACTION_READ_COMMITTED);
+        arp1.setDialect(new H2Dialect());
+        me.add(arp1);
 
+        // 开发模式下打印sql
+        if (p.getBoolean("devMode", false)) {
+            arp1.setShowSql(true);
+        }
+    }
 
-		//开发模式下打印sql
-		if (p.getBoolean("devMode", false)) {
-		    arp1.setShowSql(true);
-		}
-	}
+    @Override
+    public void configInterceptor(Interceptors me) {
 
-	@Override
-	public void configInterceptor(Interceptors me) {
-		
-	}
+    }
 
-	@Override
-	public void configHandler(Handlers h) {
-	    h.add(new DruidStatViewHandler("/assets/druid"));
-	    h.add(new H2ServerHandler());
+    @Override
+    public void configHandler(Handlers h) {
+        h.add(new DruidStatViewHandler("/assets/druid"));
+        h.add(new H2ServerHandler());
 
-		h.add(new AllHandler());
-		h.add(new ConstsHandler());
-		h.add(new UrlSkipHandler("^/websocket.*", false));
-		h.add(new DruidStatViewHandler("/db/druid", new IDruidStatViewAuth() {
+        h.add(new AllHandler());
+        h.add(new ConstsHandler());
+        h.add(new UrlSkipHandler("^/websocket.*", false));
+        h.add(new DruidStatViewHandler("/db/druid", new IDruidStatViewAuth() {
             @Override
             public boolean isPermitted(HttpServletRequest request) {
                 return true;
             }
         }));
-	}
+    }
 
     @Override
     public void configEngine(Engine me) {
-        //模板引擎开发模式。当在生产环境的时候，设置模板引擎为开发模式，可以在不重启应用的情况下刷新页面。
+        // 模板引擎开发模式。当在生产环境的时候，设置模板引擎为开发模式，可以在不重启应用的情况下刷新页面。
         me.setDevMode(p.getBoolean("engDevMode", true));
     }
 
@@ -166,7 +162,7 @@ public class AllConfig extends JFinalConfig {
     public void afterJFinalStart() {
         super.afterJFinalStart();
 
-        ActionReporter.setReportAfterInvocation(false);//设置为调用Interceptor前打印log
+        ActionReporter.setReportAfterInvocation(false);// 设置为调用Interceptor前打印log
 
     }
 

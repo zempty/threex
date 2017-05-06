@@ -12,8 +12,7 @@ import com.jfinal.plugin.activerecord.Table;
 import com.jfinal.plugin.activerecord.dialect.Dialect;
 
 /**
- * 2017年4月30日 12:46:11
- * 摘自：http://www.w2bc.com/article/136204
+ * 2017年4月30日 12:46:11 摘自：http://www.w2bc.com/article/136204
  * 
  * @author ThreeX
  * @link http://www.zhu2chu.com
@@ -45,7 +44,7 @@ public class H2Dialect extends Dialect {
         sql.append(table.getName());
         sql.append(" where ");
         String[] pKeys = table.getPrimaryKey();
-        for (int i=0; i<pKeys.length; i++) {
+        for (int i = 0; i < pKeys.length; i++) {
             if (i > 0) {
                 sql.append(" and ");
             }
@@ -61,7 +60,7 @@ public class H2Dialect extends Dialect {
         sql.append("delete from ");
         sql.append(table.getName());
         sql.append(" where ");
-        for (int i=0; i<pKeys.length; i++) {
+        for (int i = 0; i < pKeys.length; i++) {
             if (i > 0) {
                 sql.append(" and ");
             }
@@ -76,7 +75,7 @@ public class H2Dialect extends Dialect {
         StringBuilder temp = new StringBuilder(") values(");
         String[] pKeys = table.getPrimaryKey();
         int count = 0;
-        for (Entry<String, Object> e: attrs.entrySet()) {
+        for (Entry<String, Object> e : attrs.entrySet()) {
             String colName = e.getKey();
             if (table.hasColumnLabel(colName)) {
                 if (count++ > 0) {
@@ -85,7 +84,7 @@ public class H2Dialect extends Dialect {
                 }
                 sql.append(colName);
                 Object value = e.getValue();
-                if (value instanceof String && isPrimaryKey(colName, pKeys) && ((String)value).endsWith(".nextval")) {
+                if (value instanceof String && isPrimaryKey(colName, pKeys) && ((String) value).endsWith(".nextval")) {
                     temp.append(value);
                 } else {
                     temp.append("?");
@@ -112,7 +111,7 @@ public class H2Dialect extends Dialect {
             }
         }
         sql.append(" where ");
-        for (int i=0; i<pKeys.length; i++) {
+        for (int i = 0; i < pKeys.length; i++) {
             if (i > 0) {
                 sql.append(" and ");
             }
@@ -127,7 +126,7 @@ public class H2Dialect extends Dialect {
         trimPrimaryKeys(pKeys);
 
         StringBuilder sql = new StringBuilder("select * from ").append(tableName).append(" where ");
-        for (int i=0; i<pKeys.length; i++) {
+        for (int i = 0; i < pKeys.length; i++) {
             if (i > 0) {
                 sql.append(" and ");
             }
@@ -142,7 +141,7 @@ public class H2Dialect extends Dialect {
         trimPrimaryKeys(pKeys);
 
         StringBuilder sql = new StringBuilder("delete from ").append(tableName).append(" where ");
-        for (int i=0; i<pKeys.length; i++) {
+        for (int i = 0; i < pKeys.length; i++) {
             if (i > 0) {
                 sql.append(" and ");
             }
@@ -162,7 +161,7 @@ public class H2Dialect extends Dialect {
         temp.append(") values(");
 
         int count = 0;
-        for (Entry<String, Object> e: record.getColumns().entrySet()) {
+        for (Entry<String, Object> e : record.getColumns().entrySet()) {
             String colName = e.getKey();
             if (count++ > 0) {
                 sql.append(", ");
@@ -171,7 +170,7 @@ public class H2Dialect extends Dialect {
             sql.append(colName);
 
             Object value = e.getValue();
-            if (value instanceof String && isPrimaryKey(colName, pKeys) && ((String)value).endsWith(".nextval")) {
+            if (value instanceof String && isPrimaryKey(colName, pKeys) && ((String) value).endsWith(".nextval")) {
                 temp.append(value);
             } else {
                 temp.append("?");
@@ -188,7 +187,7 @@ public class H2Dialect extends Dialect {
         trimPrimaryKeys(pKeys);
 
         sql.append("update ").append(tableName).append(" set ");
-        for (Entry<String, Object> e: record.getColumns().entrySet()) {
+        for (Entry<String, Object> e : record.getColumns().entrySet()) {
             String colName = e.getKey();
             if (!isPrimaryKey(colName, pKeys)) {
                 if (paras.size() > 0) {
@@ -199,7 +198,7 @@ public class H2Dialect extends Dialect {
             }
         }
         sql.append(" where ");
-        for (int i=0; i<pKeys.length; i++) {
+        for (int i = 0; i < pKeys.length; i++) {
             if (i > 0) {
                 sql.append(" and ");
             }
@@ -214,12 +213,12 @@ public class H2Dialect extends Dialect {
 
     @Override
     public void fillStatement(PreparedStatement pst, List<Object> paras) throws SQLException {
-        for (int i=0, size=paras.size(); i<size; i++) {
+        for (int i = 0, size = paras.size(); i < size; i++) {
             Object value = paras.get(i);
             if (value instanceof java.sql.Date) {
-                pst.setDate(i + 1, (java.sql.Date)value);
+                pst.setDate(i + 1, (java.sql.Date) value);
             } else if (value instanceof java.sql.Timestamp) {
-                pst.setTimestamp(i + 1, (java.sql.Timestamp)value);
+                pst.setTimestamp(i + 1, (java.sql.Timestamp) value);
             } else {
                 pst.setObject(i + 1, value);
             }
@@ -228,12 +227,12 @@ public class H2Dialect extends Dialect {
 
     @Override
     public void fillStatement(PreparedStatement pst, Object... paras) throws SQLException {
-        for (int i=0; i<paras.length; i++) {
+        for (int i = 0; i < paras.length; i++) {
             Object value = paras[i];
             if (value instanceof java.sql.Date) {
-                pst.setDate(i + 1, (java.sql.Date)value);
+                pst.setDate(i + 1, (java.sql.Date) value);
             } else if (value instanceof java.sql.Timestamp) {
-                pst.setTimestamp(i + 1, (java.sql.Timestamp)value);
+                pst.setTimestamp(i + 1, (java.sql.Timestamp) value);
             } else {
                 pst.setObject(i + 1, value);
             }

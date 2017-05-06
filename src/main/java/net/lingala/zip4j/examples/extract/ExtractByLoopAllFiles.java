@@ -23,8 +23,8 @@ import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.FileHeader;
 
 /**
- * Demonstrates extraction of files from a zip file by looping through
- * all the files in the zip file
+ * Demonstrates extraction of files from a zip file by looping through all the
+ * files in the zip file
  * 
  * @author Srikanth Reddy Lingala
  *
@@ -32,40 +32,40 @@ import net.lingala.zip4j.model.FileHeader;
 
 public class ExtractByLoopAllFiles {
 
-	public ExtractByLoopAllFiles() {
-		
-		try {
-			// Initiate ZipFile object with the path/name of the zip file.
-			ZipFile zipFile = new ZipFile("c:\\ZipTest\\ExtractByLoopAllFiles.zip");
-			
-			// Check to see if the zip file is password protected 
-			if (zipFile.isEncrypted()) {
-				// if yes, then set the password for the zip file
-				zipFile.setPassword("test123!");
-			}
-			
-			// Get the list of file headers from the zip file
-			List fileHeaderList = zipFile.getFileHeaders();
-			
-			// Loop through the file headers
-			for (int i = 0; i < fileHeaderList.size(); i++) {
-				FileHeader fileHeader = (FileHeader)fileHeaderList.get(i);
-				// Extract the file to the specified destination
-				zipFile.extractFile(fileHeader, "c:\\ZipTest\\");
-			}
-			
-		} catch (ZipException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		new ExtractByLoopAllFiles();
+    public ExtractByLoopAllFiles() {
 
-	}
+        try {
+            // Initiate ZipFile object with the path/name of the zip file.
+            ZipFile zipFile = new ZipFile("c:\\ZipTest\\ExtractByLoopAllFiles.zip");
+
+            // Check to see if the zip file is password protected
+            if (zipFile.isEncrypted()) {
+                // if yes, then set the password for the zip file
+                zipFile.setPassword("test123!");
+            }
+
+            // Get the list of file headers from the zip file
+            List fileHeaderList = zipFile.getFileHeaders();
+
+            // Loop through the file headers
+            for (int i = 0; i < fileHeaderList.size(); i++) {
+                FileHeader fileHeader = (FileHeader) fileHeaderList.get(i);
+                // Extract the file to the specified destination
+                zipFile.extractFile(fileHeader, "c:\\ZipTest\\");
+            }
+
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        new ExtractByLoopAllFiles();
+
+    }
 
 }

@@ -36,11 +36,11 @@ public class TimeKit {
         if (s > 0L) {
             msg.append(s + "秒");
         }
-        if (hour>0L || min>0L || s>0L) {
+        if (hour > 0L || min > 0L || s > 0L) {
             msg.append("。");
         }
 
-        msg.append("共" +lt +"毫秒");
+        msg.append("共" + lt + "毫秒");
 
         return msg.toString();
     }

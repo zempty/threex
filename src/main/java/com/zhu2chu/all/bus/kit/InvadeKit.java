@@ -15,11 +15,11 @@ public class InvadeKit {
         try {
             Class<?> cc = Class.forName("com.jfinal.captcha.CaptchaRender");
 
-            Field f = cc.getDeclaredField("charArray");//还有个getField(xx)的方法，它用于获取public修饰的变量
+            Field f = cc.getDeclaredField("charArray");// 还有个getField(xx)的方法，它用于获取public修饰的变量
             f.setAccessible(true);
             char[] s = (char[]) f.get(null);
             char[] s2 = "3456789abcdefghjkmnpqrstuvwxy".toCharArray();
-            for (int i=7; i<s.length; i++) {
+            for (int i = 7; i < s.length; i++) {
                 s[i] = s2[i];
             }
 

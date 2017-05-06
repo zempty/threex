@@ -36,17 +36,17 @@ public class RouterKit {
                     Class<?>[] clz = urlMapping.routeClass();
                     boolean allowSub = urlMapping.allowSub();
                     if (clz.length > 0) {
-                        for (int z=0; z<clz.length; z++) {
-                            if (clzz.isAssignableFrom(clz[z])) {//如果当前路由class能指向clz[z]，说明clz[z]是当前路由的本类或子类，就添加
+                        for (int z = 0; z < clz.length; z++) {
+                            if (clzz.isAssignableFrom(clz[z])) {// 如果当前路由class能指向clz[z]，说明clz[z]是当前路由的本类或子类，就添加
                                 if (allowSub) {
                                     addRoute(clzz, cls, urlMapping, route);
                                 } else {
-                                    if (clz[z].isAssignableFrom(clzz)) {//保证为本身类
+                                    if (clz[z].isAssignableFrom(clzz)) {// 保证为本身类
                                         addRoute(clzz, cls, urlMapping, route);
                                     }
                                 }
-                            } else if (clzz.getName().contains("Config$")) {//如果是这种情况，就是中心路由器。中心路由对象是Config的一个匿名对象。它的class对象居然不是Routes.class，真是的。
-                                if (Routes.class.isAssignableFrom(clz[z]) && clz[z].isAssignableFrom(Routes.class)) {//保证是Routes本身类
+                            } else if (clzz.getName().contains("Config$")) {// 如果是这种情况，就是中心路由器。中心路由对象是Config的一个匿名对象。它的class对象居然不是Routes.class，真是的。
+                                if (Routes.class.isAssignableFrom(clz[z]) && clz[z].isAssignableFrom(Routes.class)) {// 保证是Routes本身类
                                     addRoute(clzz, cls, urlMapping, route);
                                 }
                             }
@@ -60,15 +60,19 @@ public class RouterKit {
     /**
      * 方法提取出来，为了减少代码冗余
      * 
-     * @param clzz Routes的class对象
-     * @param cls Controller的class对象
-     * @param urlMapping 注解
-     * @param route Routes的具体对象
+     * @param clzz
+     *            Routes的class对象
+     * @param cls
+     *            Controller的class对象
+     * @param urlMapping
+     *            注解
+     * @param route
+     *            Routes的具体对象
      */
     private static void addRoute(Class<?> clzz, Class<?> cls, UrlMapping urlMapping, Routes route) {
         String clzzName = clzz.getName();
         if (PropKit.getBoolean("devMode")) {
-            if (log.isDebugEnabled() && !clzzName.contains("Config$")) {//这里不打印中心路由匿名类的添加控制器信息，统一在Config类里打印
+            if (log.isDebugEnabled() && !clzzName.contains("Config$")) {// 这里不打印中心路由匿名类的添加控制器信息，统一在Config类里打印
                 System.out.println(clzzName + " >>> 添加了Controller：" + cls.getCanonicalName());
             }
         }

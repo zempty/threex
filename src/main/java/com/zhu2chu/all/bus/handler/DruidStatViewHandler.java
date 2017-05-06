@@ -26,40 +26,41 @@ public class DruidStatViewHandler extends Handler {
     private StatViewServlet servlet = new JFinalStatViewServlet();
 
     public DruidStatViewHandler(String visitPath) {
-        this(visitPath,
-            new IDruidStatViewAuth(){
-                public boolean isPermitted(HttpServletRequest request) {
-                    return true;
-                }
-            });
+        this(visitPath, new IDruidStatViewAuth() {
+            public boolean isPermitted(HttpServletRequest request) {
+                return true;
+            }
+        });
     }
 
-    public DruidStatViewHandler(String visitPath , IDruidStatViewAuth druidStatViewAuth) {
+    public DruidStatViewHandler(String visitPath, IDruidStatViewAuth druidStatViewAuth) {
         if (StrKit.isBlank(visitPath))
             throw new IllegalArgumentException("visitPath can not be blank");
         if (druidStatViewAuth == null)
             throw new IllegalArgumentException("druidStatViewAuth can not be null");
 
         visitPath = visitPath.trim();
-        if (! visitPath.startsWith("/"))
+        if (!visitPath.startsWith("/"))
             visitPath = "/" + visitPath;
         this.visitPath = visitPath;
         this.auth = druidStatViewAuth;
     }
 
     public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {
-        //打印完整的url
-        /*String scheme = request.getScheme();
-        String serverName = request.getServerName();
-        int serverPort = request.getServerPort();
-        String reqUri = request.getRequestURI();
-        log.debug(scheme+"://"+serverName+":"+serverPort+reqUri);*/
+        // 打印完整的url
+        /*
+         * String scheme = request.getScheme(); String serverName =
+         * request.getServerName(); int serverPort = request.getServerPort();
+         * String reqUri = request.getRequestURI();
+         * log.debug(scheme+"://"+serverName+":"+serverPort+reqUri);
+         */
 
         if (target.startsWith(visitPath)) {
             isHandled[0] = true;
-            //添加JFinal.me().getContextPath()是为了适应有项目名的情况
+            // 添加JFinal.me().getContextPath()是为了适应有项目名的情况
             if (target.equals(visitPath) && !target.endsWith("/index.html")) {
-                HandlerKit.redirect(JFinal.me().getContextPath() + (target += "/index.html"), request, response, isHandled);
+                HandlerKit.redirect(JFinal.me().getContextPath() + (target += "/index.html"), request, response,
+                        isHandled);
                 return;
             }
 
@@ -68,21 +69,21 @@ public class DruidStatViewHandler extends Handler {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }
-        else {
+        } else {
             next.handle(target, request, response, isHandled);
         }
     }
 
     class JFinalStatViewServlet extends StatViewServlet {
-        
+
         private static final long serialVersionUID = 2898674199964021798L;
-        
+
         public boolean isPermittedRequest(HttpServletRequest request) {
             return auth.isPermitted(request);
         }
 
-        public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        public void service(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
             String contextPath = request.getContextPath();
             // String servletPath = request.getServletPath();
             String requestURI = request.getRequestURI();
@@ -93,7 +94,8 @@ public class DruidStatViewHandler extends Handler {
                 contextPath = "";
             }
             // String uri = contextPath + servletPath;
-            // String path = requestURI.substring(contextPath.length() + servletPath.length());
+            // String path = requestURI.substring(contextPath.length() +
+            // servletPath.length());
             int index = contextPath.length() + visitPath.length();
             String uri = requestURI.substring(0, index);
             String path = requestURI.substring(index);
@@ -117,11 +119,11 @@ public class DruidStatViewHandler extends Handler {
             }
 
             if (isRequireAuth() //
-                && !ContainsUser(request)//
-                && !("/login.html".equals(path) //
-                     || path.startsWith("/css")//
-                     || path.startsWith("/js") //
-                || path.startsWith("/img"))) {
+                    && !ContainsUser(request)//
+                    && !("/login.html".equals(path) //
+                            || path.startsWith("/css")//
+                            || path.startsWith("/js") //
+                            || path.startsWith("/img"))) {
                 if (contextPath == null || contextPath.equals("") || contextPath.equals("/")) {
                     response.sendRedirect("/druid/login.html");
                 } else {

@@ -24,8 +24,7 @@ public class DocumentParser {
     }
 
     /**
-     * 这是一个不安全的方法
-     * 将String转换成html片段，注意防止跨站脚本攻击
+     * 这是一个不安全的方法 将String转换成html片段，注意防止跨站脚本攻击
      * 
      * @param bodyStr
      * @return
@@ -37,36 +36,37 @@ public class DocumentParser {
     }
 
     /**
-     * 这是一个安全的方法
-     * 将String转换成html片段，注意防止跨站脚本攻击
+     * 这是一个安全的方法 将String转换成html片段，注意防止跨站脚本攻击
      * 
      * @param htmlStr
      * @return
      */
     public static Element parseHtmlFragmentSafe(String htmlStr) {
         Whitelist wl = new Whitelist();
-        //比较松散的过滤，包括
-        //"a", "b", "blockquote", "br", "caption", "cite", "code", "col",
-        //"colgroup", "dd", "div", "dl", "dt", "em", "h1", "h2", "h3", "h4", "h5", "h6",
-        //"i", "img", "li", "ol", "p", "pre", "q", "small", "strike", "strong",
-        //"sub", "sup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "u",
-        //"ul"
+        // 比较松散的过滤，包括
+        // "a", "b", "blockquote", "br", "caption", "cite", "code", "col",
+        // "colgroup", "dd", "div", "dl", "dt", "em", "h1", "h2", "h3", "h4",
+        // "h5", "h6",
+        // "i", "img", "li", "ol", "p", "pre", "q", "small", "strike", "strong",
+        // "sub", "sup", "table", "tbody", "td", "tfoot", "th", "thead", "tr",
+        // "u",
+        // "ul"
         Whitelist.relaxed();
-        //没有任何标签，只有文本
+        // 没有任何标签，只有文本
         Whitelist.none();
-        //常规的过滤器
-        //"a", "b", "blockquote", "br", "cite", "code", "dd", "dl", "dt", "em",
-        //"i", "li", "ol", "p", "pre", "q", "small", "strike", "strong", "sub",
-        //"sup", "u", "ul"
+        // 常规的过滤器
+        // "a", "b", "blockquote", "br", "cite", "code", "dd", "dl", "dt", "em",
+        // "i", "li", "ol", "p", "pre", "q", "small", "strike", "strong", "sub",
+        // "sup", "u", "ul"
         Whitelist.basic();
-        //常规的过滤器，多了一个img标签
+        // 常规的过滤器，多了一个img标签
         Whitelist.basicWithImages();
-        //文本类型的标签
-        //"b", "em", "i", "strong", "u"
+        // 文本类型的标签
+        // "b", "em", "i", "strong", "u"
         Whitelist.simpleText();
-        //另外还可以自定义过滤规则,例如
+        // 另外还可以自定义过滤规则,例如
         wl.addTags("a");
-        //执行过滤
+        // 执行过滤
         Jsoup.clean(htmlStr, wl);
 
         Document doc = Jsoup.parseBodyFragment(htmlStr);
@@ -84,22 +84,16 @@ public class DocumentParser {
         Document doc = null;
         try {
             doc = Jsoup.connect(url).get();
-            //获取标题
+            // 获取标题
             String title = doc.title();
 
             /**
-             * data(key,value)是该URL要求的参数
-             * userAgent制定用户使用的代理类型
+             * data(key,value)是该URL要求的参数 userAgent制定用户使用的代理类型
              * cookie带上cookie，如cookie("JSESSIONID","FDE234242342342423432432")
-             * 连接超时时间
-             * post或者get方法
+             * 连接超时时间 post或者get方法
              */
-            doc = Jsoup.connect(url)
-                       .data("query", "java")
-                       .userAgent("Mozilla")
-                       .cookie("auth", "token")
-                       .timeout(3000)
-                       .post();
+            doc = Jsoup.connect(url).data("query", "java").userAgent("Mozilla").cookie("auth", "token").timeout(3000)
+                    .post();
         } catch (IOException e) {
             e.printStackTrace();
         }

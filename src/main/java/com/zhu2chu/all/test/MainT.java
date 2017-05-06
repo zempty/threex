@@ -11,7 +11,7 @@ public class MainT {
 
     public static void main(String[] args) {
         Record s = new Record();
-        Object g = (Object)s;
+        Object g = (Object) s;
 
         System.out.println(g);
 

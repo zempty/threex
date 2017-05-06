@@ -11,7 +11,7 @@ public class SystemKit {
     public static void outputSysProperties() {
         Properties p = System.getProperties();
 
-        for (Enumeration<?> e=p.propertyNames(); e.hasMoreElements();) {
+        for (Enumeration<?> e = p.propertyNames(); e.hasMoreElements();) {
             String key = (String) e.nextElement();
             System.out.println(key + ":" + p.getProperty(key));
         }
@@ -19,6 +19,7 @@ public class SystemKit {
 
     /**
      * jdk自带方法输出
+     * 
      * @param bool
      */
     public static void outputSysProperties(boolean bool) {
@@ -27,6 +28,7 @@ public class SystemKit {
 
     /**
      * 获取user.home的路径
+     * 
      * @return
      */
     public static String getSysUserHome() {
