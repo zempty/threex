@@ -549,4 +549,29 @@ public class FileKit {
         }
     }
 
+    /**
+     * 2017年5月7日 14:50:04
+     * 将内容输出到指定路径的文件
+     * 
+     * @param content
+     * @param filePath
+     */
+    public static void contentToFile(String content, String filePath) {
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(new File(filePath));
+            fos.write(content.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

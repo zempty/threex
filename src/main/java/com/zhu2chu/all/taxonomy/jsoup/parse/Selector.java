@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.zhu2chu.all.bus.kit.PathKit;
 import com.zhu2chu.all.bus.kit.SystemKit;
@@ -56,6 +57,9 @@ public class Selector {
             doc.getElementsByIndexGreaterThan(0);
             // 和上面的正好相反
             doc.getElementsByIndexLessThan(10);
+
+            //获取多个class的元素。如:<div class="item clearfix">
+            Elements links = doc.select("div.item.clearfix");
 
             // 遍历标签
             /*

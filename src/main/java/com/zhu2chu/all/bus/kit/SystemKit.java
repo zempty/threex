@@ -1,8 +1,16 @@
 package com.zhu2chu.all.bus.kit;
 
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 2017年5月6日 10:50:54
+ * System相关工具类
+ * 
+ * @author ThreeX
+ *
+ */
 public class SystemKit {
 
     /**
@@ -33,6 +41,14 @@ public class SystemKit {
      */
     public static String getSysUserHome() {
         return System.getProperty("user.home");
+    }
+
+    /**
+     * 设置系统代理
+     * @param kvs
+     */
+    public static void setSystemProxy(Properties kvs) {
+        System.setProperties(kvs);
     }
 
     public static void main(String[] args) {
