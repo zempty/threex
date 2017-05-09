@@ -9,7 +9,7 @@
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
-		<jfinal.version>3.1-SNAPSHOT</jfinal.version>
+		<jfinal.version>3.1</jfinal.version>
 		<mysql.version>5.1.40</mysql.version>
 		<druid.version>1.0.29</druid.version>
 		<fastjson.version>1.2.31</fastjson.version>

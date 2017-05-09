@@ -25,7 +25,6 @@ public class H2Dialect extends Dialect {
         return "select * from " + tableName + " where rownum < 1";
     }
 
-    @Override
     public String forPaginate(int pageNumber, int pageSize, String select, String sqlExceptSelect) {
         int start = (pageNumber - 1) * pageSize;
         int end = pageNumber * pageSize;
@@ -241,6 +240,12 @@ public class H2Dialect extends Dialect {
 
     public String getDefaultPrimaryKey() {
         return "ID";
+    }
+
+    @Override
+    public String forPaginate(int pageNumber, int pageSize, StringBuilder findSql) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
