@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Days;
 import org.joda.time.Instant;
 import org.joda.time.LocalDate;
@@ -121,6 +122,9 @@ public class MainT {
 
         Calendar calendar = Calendar.getInstance();
         dateTime1 = new DateTime(calendar);
+
+        DateTime l1 = new DateTime(DateTimeZone.forID("Asia/Shanghai"));
+        System.out.println(l1.toString("yyyy-MM-dd HH:mm:sss"));
     }
 
 }

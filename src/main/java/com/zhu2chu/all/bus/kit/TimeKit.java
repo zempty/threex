@@ -1,5 +1,10 @@
 package com.zhu2chu.all.bus.kit;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 public class TimeKit {
 
     /**
@@ -43,6 +48,36 @@ public class TimeKit {
         msg.append("共" + lt + "毫秒");
 
         return msg.toString();
+    }
+
+    /**
+     * 2017年5月9日 22:51:06
+     * 通过时区获取当前时间
+     * 
+     * @param dateTimeZone
+     * @return
+     */
+    public static DateTime now(String dateTimeZone) {
+        if (dateTimeZone==null || dateTimeZone=="") {
+            dateTimeZone = "Asia/Shanghai";
+        }
+
+        return new DateTime(DateTimeZone.forID(dateTimeZone));
+    }
+
+    /**
+     * 2017年5月9日 23:03:26
+     * 字符串转时间对象
+     * 
+     * @param format
+     * @param time
+     * @return
+     */
+    public static DateTime strToDate(String formatStr, String time) {
+        DateTimeFormatter format = DateTimeFormat.forPattern(formatStr);
+
+        DateTime dateTime = DateTime.parse(time, format);
+        return dateTime;
     }
 
 }

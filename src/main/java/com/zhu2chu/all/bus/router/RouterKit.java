@@ -7,8 +7,7 @@ import com.jfinal.core.Controller;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
-
-import io.jpress.utils.ClassUtils;
+import com.zhu2chu.all.bus.kit.ClassKit;
 
 /**
  * 2017年4月14日 00:47:00
@@ -23,7 +22,7 @@ public class RouterKit {
     /**
      * 写成类变量，这样避免多次扫描
      */
-    private static final List<Class<Controller>> controllerClasses = ClassUtils.scanSubClass(Controller.class, true);
+    private static final List<Class<Controller>> controllerClasses = ClassKit.scanSubClass(Controller.class, true);
 
     /**
      * 自动扫描该路由的Controller并添加到routes里面
