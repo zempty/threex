@@ -23,7 +23,7 @@ public class ClassKit {
 
 	public static <T> List<Class<T>> scanSubClass(Class<T> pclazz, boolean mustbeCanNewInstance) {
 		if (pclazz == null) {
-			log.error("scanClass: parent clazz is null");
+			log.error("scanClass: parent class is null");
 			return null;
 		}
 
