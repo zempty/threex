@@ -1,4 +1,4 @@
-package com.zhu2chu.all.bus.jfplugin.h2;
+package com.zhu2chu.all.bus.h2;
 
 import java.sql.SQLException;
 

@@ -1,4 +1,4 @@
-package com.zhu2chu.all.bus.jfplugin.h2;
+package com.zhu2chu.all.bus.h2;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

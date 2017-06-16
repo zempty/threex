@@ -1,4 +1,4 @@
-package com.zhu2chu.all.bus.dialect;
+package com.zhu2chu.all.bus.h2;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
