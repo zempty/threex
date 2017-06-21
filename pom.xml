@@ -176,6 +176,12 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.2</version>
         </dependency>
+        <!-- 事件驱动插件 -->
+        <dependency>
+		    <groupId>net.dreamlu</groupId>
+		    <artifactId>JFinal-event</artifactId>
+		    <version>1.5.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
