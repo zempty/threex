@@ -1,7 +1,7 @@
 package com.zhu2chu.all.core;
 
 /**
- * ThreeX
+ * 每个项目都有的一个类
  * 
  * @author ThreeX
  *

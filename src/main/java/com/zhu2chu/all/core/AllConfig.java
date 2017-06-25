@@ -31,7 +31,6 @@ import com.mysql.jdbc.Connection;
 import com.zhu2chu.all.bus.h2.H2Dialect;
 import com.zhu2chu.all.bus.h2.H2ServerHandler;
 import com.zhu2chu.all.bus.h2.H2ServerPlugin;
-import com.zhu2chu.all.bus.handler.ConstsHandler;
 import com.zhu2chu.all.bus.handler.DruidStatViewHandler;
 import com.zhu2chu.all.bus.router.RouterKit;
 import com.zhu2chu.all.front.FrontRoutes;
@@ -126,7 +125,6 @@ public class AllConfig extends JFinalConfig {
         h.add(new H2ServerHandler());
 
         h.add(new AllHandler());
-        h.add(new ConstsHandler());
         h.add(new UrlSkipHandler("^/websocket.*", false));
         h.add(new DruidStatViewHandler("/db/druid", new IDruidStatViewAuth() {
             @Override

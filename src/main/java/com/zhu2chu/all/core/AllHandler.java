@@ -10,8 +10,15 @@ public class AllHandler extends Handler {
 
     @Override
     public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {
+        String contextPath = request.getContextPath();
+        // 设置ContextPath到request里面,模板引擎要用
+        request.setAttribute("CP0", contextPath);
 
         String uri = request.getRequestURI();
+
+        if (uri.contains("blogtemplate")) {
+            return;
+        }
         if (uri.endsWith(".html")) {
             HandlerKit.renderError404(request, response, isHandled);
             return;
