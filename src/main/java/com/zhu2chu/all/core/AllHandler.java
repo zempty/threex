@@ -16,7 +16,7 @@ public class AllHandler extends Handler {
 
         String uri = request.getRequestURI();
 
-        if (uri.contains("blogtemplate")) {
+        if (uri.contains("blogtemplate")||uri.contains("layuicms")) {
             return;
         }
         if (uri.endsWith(".html")) {
