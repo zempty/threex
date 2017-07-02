@@ -1,6 +1,8 @@
 package com.zhu2chu.all.test;
 
 import com.jfinal.plugin.activerecord.Record;
+import com.zhu2chu.all.bus.kit.FileKit;
+
 import java.io.IOException;
 
 import org.jsoup.Jsoup;
@@ -24,7 +26,6 @@ public class MainT {
         }
         float a = 20014999;
         System.out.println(a);
-
     }
 
 }

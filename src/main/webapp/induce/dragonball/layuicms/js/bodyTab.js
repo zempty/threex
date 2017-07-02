@@ -42,7 +42,7 @@ layui.define(["element","jquery"],function(exports){
 			}
 		})
 		return layId;
-	}
+	};
 	//通过title判断tab是否存在
 	Tab.prototype.hasTab = function(title){
 		var tabIndex = -1;
@@ -52,7 +52,7 @@ layui.define(["element","jquery"],function(exports){
 			}
 		})
 		return tabIndex;
-	}
+	};
 
 	//右侧内容tab操作
 	var tabIdIndex = 0;
@@ -110,7 +110,7 @@ layui.define(["element","jquery"],function(exports){
 				}
 			}
 		// })
-	}
+	};
 	$("body").on("click",".top_tab li",function(){
 		//切换后获取当前窗口的内容
 		var curmenu = '';
@@ -130,7 +130,7 @@ layui.define(["element","jquery"],function(exports){
 			}
 		}
 		element.tabChange(tabFilter,$(this).attr("lay-id")).init();
-	})
+	});
 
 	//删除tab
 	$("body").on("click",".top_tab li i.layui-tab-close",function(){
@@ -155,7 +155,7 @@ layui.define(["element","jquery"],function(exports){
 		menu.splice((liIndex-1), 1);
 		window.sessionStorage.setItem("menu",JSON.stringify(menu));
 		element.tabDelete("bodyTab",$(this).parent("li").attr("lay-id")).init();
-	})
+	});
 
 	var bodyTab = new Tab();
 	exports("bodyTab",function(option){
