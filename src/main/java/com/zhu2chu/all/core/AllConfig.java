@@ -28,6 +28,7 @@ import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
 import com.mysql.jdbc.Connection;
+import com.zhu2chu.all.admin.bus.AdminRoutes;
 import com.zhu2chu.all.bus.h2.H2Dialect;
 import com.zhu2chu.all.bus.h2.H2ServerHandler;
 import com.zhu2chu.all.bus.h2.H2ServerPlugin;
@@ -65,6 +66,7 @@ public class AllConfig extends JFinalConfig {
         }
 
         r.add(new FrontRoutes());
+        r.add(new AdminRoutes());
     }
 
     @Override

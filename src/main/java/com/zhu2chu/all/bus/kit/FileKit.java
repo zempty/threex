@@ -25,6 +25,13 @@ import org.apache.commons.codec.binary.Base64;
 
 import com.jfinal.log.Log;
 
+/**
+ * 文件操作工具
+ * 
+ * @author ThreeX
+ * @link http://www.zhu2chu.com
+ *
+ */
 public class FileKit {
 
     private static String MESSAGE = "";
@@ -558,18 +565,25 @@ public class FileKit {
      */
     public static void contentToFile(String content, String filePath) {
         FileOutputStream fos = null;
+        File destFile = new File(filePath);
+        if (!destFile.getParentFile().exists()) {//如果目录不存在，则先创建父目录
+            destFile.getParentFile().mkdirs();
+        }
+
         try {
-            fos = new FileOutputStream(new File(filePath));
+            fos = new FileOutputStream(destFile);
             fos.write(content.getBytes());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
