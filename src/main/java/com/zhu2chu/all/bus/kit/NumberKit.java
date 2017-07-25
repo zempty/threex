@@ -1,5 +1,6 @@
 package com.zhu2chu.all.bus.kit;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,6 +48,49 @@ public class NumberKit {
 
     public static boolean isRealNumber(String orginal) {
         return isWholeNumber(orginal) || isDecimal(orginal);
+    }
+
+    /////////////////////////////以下是其它功能
+    /**
+     * 2017年7月25日 15:33:47
+     * 保留指定位数的小数，四舍五入
+     * 
+     * @param number 数字
+     * @param bit 位数
+     * @return
+     */
+    public static double toFixed(double number, int bit) {
+        return toFixed(number, bit, true);
+    }
+
+    /**
+     * 2017年7月25日 15:53:39
+     * 保留指定位数的小数，非四舍五入。
+     * 
+     * @param number
+     * @param bit
+     * @return
+     */
+    public static double toFixedDown(double number, int bit) {
+        return toFixed(number, bit, false);
+    }
+
+    /**
+     * 2017年7月25日 15:54:11
+     * 返回指定位数的小数
+     * 
+     * @param number
+     * @param bit
+     * @param up
+     * @return
+     */
+    public static double toFixed(double number, int bit, boolean up) {
+        BigDecimal bg = new BigDecimal(number);
+        if (up) {
+            return bg.setScale(bit, BigDecimal.ROUND_UP).doubleValue();
+        } else {
+            return bg.setScale(bit, BigDecimal.ROUND_DOWN).doubleValue();
+        }
     }
 
 }
