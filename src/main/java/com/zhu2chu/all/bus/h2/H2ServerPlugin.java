@@ -52,15 +52,13 @@ public class H2ServerPlugin implements IPlugin {
             }
             // 详细的参数见Server.main方法。有空格的项是两个参数来的。如：-baseDir
             // <dir>，要写成："-baseDir","./dbs"
-            String sBaseDir = PropKit.get("h2.baseDir");
-            String baseDir = StrKit.isBlank(sBaseDir) ? "./dbs" : sBaseDir;
+            String baseDir = PropKit.get("h2.baseDir", "./dbs");
 
-            String sTcpPort = PropKit.get("h2.tcpPort");
-            String tcpPort = StrKit.isBlank(sTcpPort) ? "9123" : sTcpPort;
+            String tcpPort = PropKit.get("h2.tcpPort", "9123");
 
             tcpServer = Server.createTcpServer("-tcpPort", tcpPort, "-baseDir", baseDir).start();
             if (log.isInfoEnabled()) {
-                System.out.println(">>>>>>>>>>>>>tcp server模式启动成功。tcpPort:" + tcpPort);
+                System.out.println(">>>>>>>>>>>>>server(tcp)模式启动成功。tcpPort:" + tcpPort);
             }
 
             // 创建web server，便于使用控制台管理h2数据库
@@ -68,8 +66,7 @@ public class H2ServerPlugin implements IPlugin {
                 if (log.isInfoEnabled()) {
                     System.out.println(">>>>>>>>>>>>>启动H2数据库web控制台...");
                 }
-                String sWebPort = PropKit.get("h2.webPort");
-                String webPort = StrKit.isBlank(sWebPort) ? "9122" : sWebPort;
+                String webPort = PropKit.get("h2.webPort", "9122");
                 webServer = Server.createWebServer("-trace", "-webPort", webPort, "-baseDir", baseDir).start();
                 if (log.isInfoEnabled()) {
                     System.out.println(">>>>>>>>>>>>>H2数据库web控制台启动成功。webPort:" + webPort);
