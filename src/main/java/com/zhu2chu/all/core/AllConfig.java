@@ -91,10 +91,22 @@ public class AllConfig extends JFinalConfig {
          * 使用越低的事务隔离级别开启一个事务。说明读的权限越大，也越不靠谱。
          * 但无论何种事务隔离级别，一个事务都无法更新其它事务已经操作(update、delete、insert)但未提交的数据。
          */
-        DruidPlugin dp1 = new DruidPlugin(p.get("h2.jdbcurl").replace("${h2.tcpPort}", p.get("h2.tcpPort")),
-                p.get("h2.username"), p.get("h2.password"));
+        //此处理是为了让配置中配置的数据库类型为带点不带点都可以正确运行。如h2、h2.
+        String dbType = p.get("dbtype", "h2");
+        String dbTypeWithDot = dbType;//带点的数据库类型前缀
+        if (!dbType.contains(".")) {
+            dbTypeWithDot = dbType+".";
+        } else {
+            dbType = dbType.split("\\.")[0];
+        }
+
+        String jdbcUrl = p.get(dbTypeWithDot+"jdbcurl").replace("${"+dbTypeWithDot+"tcpPort}", p.get(dbTypeWithDot+"tcpPort"));
+        String username = p.get(dbTypeWithDot+"username");
+        String password = p.get(dbTypeWithDot+"password");
+
+        DruidPlugin dp1 = new DruidPlugin(jdbcUrl, username, password);
         wallFilter = new WallFilter();
-        wallFilter.setDbType("h2");
+        wallFilter.setDbType(dbType);
 
         wallConfig = new WallConfig();
         // 设置允许多语句执行。如：sql1;sql2;
@@ -162,6 +174,10 @@ public class AllConfig extends JFinalConfig {
     public void afterJFinalStart() {
         super.afterJFinalStart();
 
+        /*
+         * 使用此语句需注意。在controller调用前执行reporter的话，会解析request的输入流
+         * 之后，再在controller就不能解析了，在tomcat中，输入流只能解析一次。
+         */
         ActionReporter.setReportAfterInvocation(false);// 设置为调用Interceptor前打印log
 
     }
