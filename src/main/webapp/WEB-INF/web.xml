@@ -36,7 +36,6 @@
             <param-name>baseDir</param-name>
             <param-value>./dbs</param-value>
         </init-param>
-        
         <load-on-startup>1</load-on-startup>
     </servlet>
 

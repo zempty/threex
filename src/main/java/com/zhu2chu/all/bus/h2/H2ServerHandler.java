@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.jfinal.handler.Handler;
 import com.jfinal.kit.HandlerKit;
+import com.jfinal.kit.PropKit;
 import com.jfinal.log.Log;
 
 /**
@@ -26,12 +27,15 @@ public class H2ServerHandler extends Handler {
 
         // 如果uri以/console开头，统一为进入数据库后台的控制台。
         if (uri.startsWith("/console")) {
-            if (isPermitted) {
-                isHandled[0] = false; // jfinal未处理，留给容器处理。
-                return;
-            } else {
-                HandlerKit.renderError404(request, response, isHandled);
-                return;
+            boolean enableWS = PropKit.getBoolean("enableWebServer", false);
+            if (enableWS) {
+                if (isPermitted) {
+                    isHandled[0] = false; // jfinal未处理，留给容器处理。
+                    return;
+                } else {
+                    HandlerKit.renderError404(request, response, isHandled);
+                    return;
+                }
             }
         }
 
