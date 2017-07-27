@@ -104,6 +104,12 @@ public class AllConfig extends JFinalConfig {
         String username = p.get(dbTypeWithDot+"username");
         String password = p.get(dbTypeWithDot+"password");
 
+        if (log.isDebugEnabled()) {
+            log.debug("使用的JdbcUrl："+jdbcUrl);
+        } else if (log.isInfoEnabled()) {
+            System.out.println("使用的JdbcUrl："+jdbcUrl);
+        }
+
         DruidPlugin dp1 = new DruidPlugin(jdbcUrl, username, password);
         wallFilter = new WallFilter();
         wallFilter.setDbType(dbType);
