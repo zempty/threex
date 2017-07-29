@@ -13,7 +13,7 @@ public class AdminAuthInterceptor implements Interceptor {
 
     @Override
     public void intercept(Invocation inv) {
-
+        inv.invoke();
     }
 
 }

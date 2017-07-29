@@ -1,7 +1,6 @@
 package com.zhu2chu.all.admin.bus;
 
 import com.jfinal.config.Routes;
-import com.zhu2chu.all.admin.index.IndexController;
 import com.zhu2chu.all.admin.interceptor.AdminAuthInterceptor;
 import com.zhu2chu.all.bus.router.RouterKit;
 

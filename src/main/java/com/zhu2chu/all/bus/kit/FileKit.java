@@ -7,11 +7,13 @@ package com.zhu2chu.all.bus.kit;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -557,8 +559,7 @@ public class FileKit {
     }
 
     /**
-     * 2017年5月7日 14:50:04
-     * 将内容输出到指定路径的文件
+     * 2017年5月7日 14:50:04 将内容输出到指定路径的文件
      * 
      * @param content
      * @param filePath
@@ -566,7 +567,7 @@ public class FileKit {
     public static void contentToFile(String content, String filePath) {
         FileOutputStream fos = null;
         File destFile = new File(filePath);
-        if (!destFile.getParentFile().exists()) {//如果目录不存在，则先创建父目录
+        if (!destFile.getParentFile().exists()) {// 如果目录不存在，则先创建父目录
             destFile.getParentFile().mkdirs();
         }
 
@@ -588,4 +589,49 @@ public class FileKit {
         }
     }
 
+    /****************************
+     * 以下方法来自：
+     ****************************/
+
+    /**
+     * 以行为单位读取文件，常用于读面向行的格式化文件
+     */
+    public static StringBuilder readFileByLines(File file) {
+        BufferedReader reader = null;
+        try {
+            StringBuilder content = new StringBuilder();
+
+            //System.out.println("以行为单位读取文件内容，一次读一整行：");
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            //int line = 1;
+            // 一次读入一行，直到读入null为文件结束
+            while ((tempString = reader.readLine()) != null) {
+                // 显示行号
+                //System.out.println("line " + line + ": " + tempString);
+                content.append(tempString);
+                //line++;
+            }
+            reader.close();
+            return content;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 以行为单位读取文件，常用于读面向行的格式化文件
+     * @param filename 文件名
+     */
+    public static StringBuilder readFileByLines(String filename) {
+        return readFileByLines(new File(filename));
+    }
 }

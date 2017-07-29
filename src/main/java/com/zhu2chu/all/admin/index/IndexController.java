@@ -1,7 +1,8 @@
 package com.zhu2chu.all.admin.index;
 
-import com.jfinal.core.Controller;
 import com.zhu2chu.all.admin.bus.AdminRoutes;
+import com.zhu2chu.all.bus.controller.BusController;
+import com.zhu2chu.all.bus.kit.FileKit;
 import com.zhu2chu.all.bus.router.UrlMapping;
 
 /**
@@ -13,10 +14,12 @@ import com.zhu2chu.all.bus.router.UrlMapping;
  *
  */
 @UrlMapping(url="/admin/index", routeClass=AdminRoutes.class, viewPath="/layuicms")
-public class IndexController extends Controller {
+public class IndexController extends BusController {
 
     public void index() {
-        render("index");
+        StringBuilder html = FileKit.readFileByLines("D:\\soft\\danji\\page.html");
+
+        renderHtmlWithTemplate(html.toString());
     }
 
 }
