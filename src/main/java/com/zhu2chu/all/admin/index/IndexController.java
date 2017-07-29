@@ -1,5 +1,8 @@
 package com.zhu2chu.all.admin.index;
 
+import java.io.File;
+
+import com.jfinal.kit.Kv;
 import com.zhu2chu.all.admin.bus.AdminRoutes;
 import com.zhu2chu.all.bus.controller.BusController;
 import com.zhu2chu.all.bus.kit.FileKit;
@@ -13,13 +16,19 @@ import com.zhu2chu.all.bus.router.UrlMapping;
  * @link http://www.zhu2chu.com
  *
  */
-@UrlMapping(url="/admin/index", routeClass=AdminRoutes.class, viewPath="/layuicms")
+@UrlMapping(url="/admin/index", routeClass=AdminRoutes.class, viewPath="/invalid")
 public class IndexController extends BusController {
 
     public void index() {
-        StringBuilder html = FileKit.readFileByLines("D:\\soft\\danji\\page.html");
+        File file = new File("D:\\360Chrome\\page.html");
+        String html = FileKit.onceReadToString(file);
 
-        renderHtmlWithTemplate(html.toString());
+        Kv kv = new Kv();
+        kv.set("chu", "王");
+        kv.set("love", "五");
+        setAttr("wo", kv);
+
+        renderHtmlWithTemplate(html);
     }
 
 }

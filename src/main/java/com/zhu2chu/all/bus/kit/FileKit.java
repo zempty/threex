@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import javax.swing.JOptionPane;
 
 import org.apache.commons.codec.binary.Base64;
 
+import com.jfinal.core.Const;
 import com.jfinal.log.Log;
 
 /**
@@ -596,7 +598,7 @@ public class FileKit {
     /**
      * 以行为单位读取文件，常用于读面向行的格式化文件
      */
-    public static StringBuilder readFileByLines(File file) {
+    public static String readFileByLines(File file) {
         BufferedReader reader = null;
         try {
             StringBuilder content = new StringBuilder();
@@ -613,7 +615,7 @@ public class FileKit {
                 //line++;
             }
             reader.close();
-            return content;
+            return content.toString();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -631,7 +633,48 @@ public class FileKit {
      * 以行为单位读取文件，常用于读面向行的格式化文件
      * @param filename 文件名
      */
-    public static StringBuilder readFileByLines(String filename) {
+    public static String readFileByLines(String filename) {
         return readFileByLines(new File(filename));
+    }
+
+    /**
+     * 2017年7月29日 13:58:26
+     * 一次性读文件文本内容，<code>仅适用于小文件</code>。大文件要分次读取，否则会有内存溢出的风险
+     * 这里的文件编码使用jfinal默认的文件编码，如果要用于其它非jfinal的地方，这得修改
+     * 
+     * @param filename
+     * @return
+     */
+    public static String onceReadToString(File file) {
+        String encoding = Const.DEFAULT_ENCODING;
+        Long filelength = file.length();
+        byte[] filecontent = new byte[filelength.intValue()];
+        try {
+            FileInputStream in = new FileInputStream(file);
+            in.read(filecontent);
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            return new String(filecontent, encoding);
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("The OS does not support " + encoding);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 一次性读文件文本内容，<code>仅适用于小文件</code>。大文件要分次读取，否则会有内存溢出的风险
+     * 这里的文件编码使用jfinal默认的文件编码，如果要用于其它非jfinal的地方，这得修改
+     * 
+     * @param file
+     * @return
+     */
+    public static String onceReadToString(String filename) {
+        return onceReadToString(new File(filename));
     }
 }
