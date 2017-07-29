@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import com.jfinal.core.Controller;
-import com.jfinal.render.RenderManager;
+import com.jfinal.template.Engine;
 
 /**
  * 2017年7月29日 09:32:46
@@ -19,8 +19,6 @@ import com.jfinal.render.RenderManager;
  */
 public abstract class BusController extends Controller {
 
-    private static final RenderManager renderManager = RenderManager.me();
-
     /**
      * 2017年7月29日 10:26:07
      * 从字符串形式的html中渲染模板
@@ -29,7 +27,7 @@ public abstract class BusController extends Controller {
      * @return 返回渲染后的内容
      */
     public String renderToString(String content) {
-        return renderManager.getEngine().getTemplateByString(content).renderToString(putRequestAttrsInMap(getRequest()));
+        return Engine.use().getTemplateByString(content).renderToString(putRequestAttrsInMap(getRequest()));
     }
 
     /**
