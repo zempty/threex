@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.jar.JarFile;
 
 import com.jfinal.kit.PathKit;
 import com.jfinal.log.Log;
+import com.xiaoleilu.hutool.util.ClassUtil;
 
 public class ClassKit {
 
@@ -142,5 +145,60 @@ public class ClassKit {
 			}
 		}
 	}
+
+	/**
+	 * 取得ClassLoader，依次获取
+	 * @return
+	 */
+	public static ClassLoader getClassLoader() {
+        ClassLoader classLoader = getContextClassLoader();
+        if (classLoader == null) {
+            classLoader = ClassUtil.class.getClassLoader();
+            if(null == classLoader){
+                classLoader = ClassLoader.getSystemClassLoader();
+            }
+        }
+        return classLoader;
+    }
+
+	/**
+     * @return 当前线程的class loader
+     */
+    public static ClassLoader getContextClassLoader() {
+        return Thread.currentThread().getContextClassLoader();
+    }
+
+    /**
+     * 获得资源的URL
+     * 
+     * @param resource 资源（相对Classpath的路径）
+     * @return 资源URL
+     */
+    public static URL getURL(String resource) {
+        return ClassUtil.getClassLoader().getResource(resource);
+    }
+
+    /**
+     * 获取ClassPathURL
+     * @return
+     */
+    public static URL getClassPathURL() {
+        return getURL("");
+    }
+
+    /**
+     * 获得ClassPath
+     * 
+     * @return ClassPath
+     */
+    public static String getClassPath() {
+        try {
+            String path = getClassPathURL().toURI().getPath();
+            return new File(path).getAbsolutePath();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
