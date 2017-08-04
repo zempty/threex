@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.jfinal.kit.Kv;
 import com.zhu2chu.all.admin.bus.AdminRoutes;
-import com.zhu2chu.all.bus.controller.BusController;
+import com.zhu2chu.all.bus.controller.SuperController;
 import com.zhu2chu.all.bus.kit.FileKit;
 import com.zhu2chu.all.bus.router.UrlMapping;
 
@@ -17,7 +17,7 @@ import com.zhu2chu.all.bus.router.UrlMapping;
  *
  */
 @UrlMapping(url="/admin/index", routeClass=AdminRoutes.class, viewPath="/invalid")
-public class IndexController extends BusController {
+public class IndexController extends SuperController {
 
     public void index() {
         File file = new File("D:\\360Chrome\\page.html");

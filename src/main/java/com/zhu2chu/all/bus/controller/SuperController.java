@@ -17,7 +17,7 @@ import com.jfinal.template.Engine;
  * @author ThreeX
  *
  */
-public abstract class BusController extends Controller {
+public abstract class SuperController extends Controller {
 
     /**
      * 2017年7月29日 10:26:07

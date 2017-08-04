@@ -25,6 +25,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.IDruidStatViewAuth;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
+import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
 import com.jfplugin.mail.MailPlugin;
 import com.mysql.jdbc.Connection;
@@ -48,6 +49,7 @@ public class AllConfig extends JFinalConfig {
     @Override
     public void configConstant(Constants c) {
         c.setDevMode(p.getBoolean("devMode", false));
+        c.setViewType(ViewType.FREE_MARKER);
     }
 
     @Override
