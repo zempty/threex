@@ -33,7 +33,7 @@ import com.zhu2chu.all.bus.h2.H2Dialect;
 import com.zhu2chu.all.bus.h2.H2ServerHandler;
 import com.zhu2chu.all.bus.h2.H2ServerPlugin;
 import com.zhu2chu.all.bus.handler.DruidStatViewHandler;
-import com.zhu2chu.all.bus.router.RouterKit;
+import com.zhu2chu.all.bus.log.Log4j2LogFactory;
 import com.zhu2chu.all.front.FrontRoutes;
 import com.zhu2chu.all.test.websocket.WebSocketController;
 
@@ -48,6 +48,7 @@ public class AllConfig extends JFinalConfig {
     @Override
     public void configConstant(Constants c) {
         c.setDevMode(p.getBoolean("devMode", false));
+        c.setLogFactory(new Log4j2LogFactory());
         //c.setViewType(ViewType.FREE_MARKER);
     }
 
