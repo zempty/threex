@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>websocket客户端</title>
+#@zuiCSS()
+</head>
+<body>
+Welcome <br/>
+<input id="text" type="text" />
+<button onclick="send()">Send</button>
+<button onclick="closeWebSocket()">Close</button>
+<div id="message">#\</div>
+</body>
+#@busJS()#@zuiJS()
+<script>
+    var ws = null;
+    var lockReconnect = false;//避免重复连接
+    var wsUrl = '#(websocketPath)#(CP0)'+"/websocket/server";
+
+    //创建websocket连接
+    function createWebSocket(url) {
+        try {
+            ws = new WebSocket(url);
+            initEventHandle();
+        } catch (e) {
+            reconnect(url);
+        }
+    }
+
+    function initEventHandle() {
+        ws.onclose = function () {
+            reconnect(wsUrl);
+        };
+        ws.onerror = function () {
+            reconnect(wsUrl);
+        };
+        ws.onopen = function (event) {
+            //心跳检测重置
+            heartCheck.reset().start();
+        };
+        ws.onmessage = function (event) {
+            //如果获取到消息，心跳检测重置
+            //拿到任何消息都说明当前连接是正常的
+            all.showSuccess(event.data);
+            heartCheck.reset().start();
+        }
+    }
+
+    //心跳检测
+    var heartCheck = {
+        timeout: 60000,//60秒
+        timeoutObj: null,
+        serverTimeoutObj: null,
+        reset: function(){
+            clearTimeout(this.timeoutObj);
+            clearTimeout(this.serverTimeoutObj);
+            return this;
+        },
+        start: function(){
+            var self = this;
+            this.timeoutObj = setTimeout(function(){
+                //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                //onmessage拿到返回的心跳就说明连接正常
+                ws.send("HeartBeat");
+                self.serverTimeoutObj = setTimeout(function(){//如果超过一定时间还没重置，说明后端主动断开了
+                    ws.close();//如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+                }, self.timeout)
+            }, this.timeout)
+        }
+    };
+
+    function setMessageInnerHTML(innerHTML) {
+        //document.getElementById("message").innerHTML += innerHTML + "<br/>";
+    }
+    function closeWebSocket() {
+        ws.close();
+    }
+    function send() {
+        var message = document.getElementById("text").value;
+        ws.send(message);
+    }
+
+    function reconnect(url) {
+        if(lockReconnect) return;
+        lockReconnect = true;
+        //没连接上会一直重连，设置延迟避免请求过多
+        setTimeout(function () {
+            createWebSocket(url);
+            lockReconnect = false;
+        }, 2000);
+    }
+
+    if ('WebSocket' in window) {
+        createWebSocket(wsUrl);
+    } else {
+        all.showMsg("Your Browser is not support WebSocket.",{time:0});
+    }
+
+    //关闭 websocket 连接前的操作
+    ws.onbeforeunload = function () {
+        websocket.close();
+    }
+</script>
+</html>

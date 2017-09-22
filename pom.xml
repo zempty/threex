@@ -2,18 +2,26 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>wang.threex</groupId>
-	<artifactId>threex</artifactId>
+	<groupId>com.zhu2chu</groupId>
+	<artifactId>all</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
-		<jfinal.version>2.2</jfinal.version>
-		<druid.version>1.0.26</druid.version>
-		<freemarker.version>2.3.23</freemarker.version>
+		<jfinal.version>3.2</jfinal.version>
+		<mysql.version>5.1.40</mysql.version>
+		<druid.version>1.0.29</druid.version>
+		<fastjson.version>1.2.31</fastjson.version>
+		<profiles.active>development</profiles.active>
 		<servlet.api.version>3.1.0</servlet.api.version>
 		<jfinal-mail-plugin.version>2.2</jfinal-mail-plugin.version>
+		<cron4j.version>2.2.5</cron4j.version>
+		<dom4j.version>1.6.1</dom4j.version>
+		<joda.version>2.9.7</joda.version>
+		<netty.version>4.1.10.Final</netty.version>
+		<tomcat.embed.version>8.0.45</tomcat.embed.version>
+		<tomcat.embed.scope>compile</tomcat.embed.scope>
 	</properties>
 
 	<dependencies>
@@ -23,33 +31,221 @@
 			<version>${jfinal.version}</version>
 		</dependency>
 		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>${mysql.version}</version>
+		</dependency>
+
+		<!-- 阿里巴巴 -->
+		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>${freemarker.version}</version>
-		</dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet.api.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- jfinal plugin -->
 		<dependency>
 			<groupId>cn.fsdev</groupId>
 			<artifactId>jfinal-mail-plugin</artifactId>
 			<version>${jfinal-mail-plugin.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>io.jpress</groupId>
-			<artifactId>jpress-message</artifactId>
-			<version>1.0</version>
-			<type>jar</type>
-			<scope>compile</scope>
+		    <groupId>com.github.jieblog</groupId>
+		    <artifactId>jfinal-shiro</artifactId>
+		    <version>1.0</version>
 		</dependency>
+
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		    <version>1.1</version>
+		</dependency>
+		<dependency>
+            <groupId>it.sauronsoftware.cron4j</groupId>
+            <artifactId>cron4j</artifactId>
+            <version>${cron4j.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>dom4j</groupId>
+		    <artifactId>dom4j</artifactId>
+		    <version>${dom4j.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>${joda.version}</version>
+		</dependency>
+		<!-- apache commons -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-math3</artifactId>
+		    <version>3.6.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
+		</dependency>
+		<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.14</version>
+        </dependency>
+        <dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.5</version>
+		</dependency>
+        <!-- 用以支持apache commons compress -->
+        <dependency>
+		    <groupId>org.tukaani</groupId>
+		    <artifactId>xz</artifactId>
+		    <version>1.6</version>
+		</dependency>
+		<!-- log4j -->
+		<dependency>
+		    <groupId>log4j</groupId>
+		    <artifactId>log4j</artifactId>
+		    <version>1.2.17</version>
+		</dependency>
+		<dependency>
+            <groupId>com.jfinal</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>8.1.8</version>
+            <!-- 此处的 scope 值为 compile 仅为支持 IDEA 下启动项目
+               - 打 war 包时需要改成 provided，以免将一些无用的 jar 打进去 -->
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+		    <groupId>com.belerweb</groupId>
+		    <artifactId>pinyin4j</artifactId>
+		    <version>2.5.1</version>
+		</dependency>
+		<!-- Required in all environments. Slf4j's slf4j-api jar and one of its
+		     binding jars is required. commons-beanutils is required only if using
+		     INI config. -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-core</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
+		<!-- Enables support for web-based applications. -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-web</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
+		<!-- Enables Ehcache-based famework caching. -->
+		<!-- <dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-ehcache</artifactId>
+		    <version>1.3.2</version>
+		</dependency> -->
+		<dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.6.11</version>
+        </dependency>
+        <!-- java字节码操作 -->
+        <dependency>
+		    <groupId>org.javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>3.21.0-GA</version>
+		</dependency>
+		<!-- 一个网友总结的工具包 -->
+		<dependency>
+		    <groupId>com.xiaoleilu</groupId>
+		    <artifactId>hutool-all</artifactId>
+		    <version>3.0.1</version>
+        </dependency>
+        <dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>1.4.196</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.jfinal</groupId>
+		    <artifactId>cos</artifactId>
+		    <version>2017.5</version>
+		</dependency>
+		<!-- 用于构建网络应用的炸包 -->
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		    <version>${netty.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+        <!-- 事件驱动插件 -->
+        <dependency>
+		    <groupId>net.dreamlu</groupId>
+		    <artifactId>JFinal-event</artifactId>
+		    <version>1.5.1</version>
+		</dependency>
+		<!-- 线上压缩 -->
+		<!-- <dependency>
+		    <groupId>net.dreamlu</groupId>
+		    <artifactId>JFinal-assets</artifactId>
+		    <version>1.2.0</version>
+		</dependency> -->
+		<dependency>
+		    <groupId>com.yahoo.platform.yui</groupId>
+		    <artifactId>yuicompressor</artifactId>
+		    <version>2.4.8</version>
+		</dependency>
+		<dependency>
+            <groupId>it.sauronsoftware</groupId>
+            <artifactId>jave</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <!-- 内嵌tomcat -->
+        <!-- <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.embed.version}</version>
+            <scope>${tomcat.embed.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-logging-juli</artifactId>
+            <version>${tomcat.embed.version}</version>
+            <scope>${tomcat.embed.scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+            <version>${tomcat.embed.version}</version>
+            <scope>${tomcat.embed.scope}</scope>
+        </dependency> -->
+        <!--
+        0虽然我们不用jsp，但这玩意儿也要加上，不然报错。此依赖会同时载入ecj,embed-el包
+        1这玩意儿会导致jetty9插件启动失败，必须去embed tomcat相关的jar才行
+        -->
+        <!-- <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>${tomcat.embed.version}</version>
+            <scope>${tomcat.embed.scope}</scope>
+        </dependency> -->
 	</dependencies>
 
 	<build>
@@ -60,8 +256,9 @@
 				<directory>src/main/config</directory>
 				<!-- 此处只需把config下的文件作为资源文件，不包括它的子文件夹。因为这些子文件夹的资源文件是根据环境选择其中一套 -->
 				<excludes>
-				    <exclude>production/*</exclude>
-				    <exclude>development/*</exclude>
+				    <exclude>app/**</exclude>
+				    <exclude>development/**</exclude>
+				    <exclude>production/**</exclude>
 				</excludes>
 			</resource>
 			<resource>
@@ -73,9 +270,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
+				<version>3.1.0</version>
 				<configuration>
 					<attachClasses>true</attachClasses>
+					<webappDirectory>src/main/config/app</webappDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -88,18 +286,76 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<!-- 读取properties文件的插件 -->
 			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>properties-maven-plugin</artifactId>
+		        <version>1.0.0</version>
+		        <executions>
+		            <execution>
+		                <phase>initialize</phase><!-- 要绑定到的生命周期的阶段 -->
+		                <goals>
+		                    <goal>read-project-properties</goal><!-- 要绑定的插件的目标 -->
+		                </goals>
+		                <configuration>
+		                    <files>
+		                        <file>${basedir}/src/main/config/global.properties</file>
+		                    </files>
+		                </configuration>
+		            </execution>
+		        </executions>
+		    </plugin>
+			<!-- <plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
 					<port>9090</port>
-					<!-- <path>/</path> -->
-					<!-- <url>http://localhost:9090/manager/text</url> -->
-					<!-- <server>tomcat8</server> -->
-					<!-- <contextReloadable>false</contextReloadable> -->
+					<path>/</path>
+					<url>http://localhost:9090/manager/text</url>
+					<server>tomcat8</server>
+					<contextReloadable>false</contextReloadable>
 				</configuration>
-			</plugin>
+			</plugin> -->
+			<!-- jetty use to main to run directly -->
+			<!-- <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.8.v20121106</version>
+                <configuration>
+                    <stopKey>stop</stopKey>
+                    <stopPort>5599</stopPort>
+                    <webAppConfig>
+                        <contextPath>/</contextPath>
+                    </webAppConfig>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <connectors>
+                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                            <port>80</port>
+                            <maxIdleTime>60000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                </configuration>
+            </plugin> -->
+            <!-- <plugin>
+                mvn jetty:run 运行此插件,jetty为插件短前缀，run为goal
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.6.v20170531</version>
+                官网配置项：http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html
+                <configuration>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>每隔几秒扫描一下文件有没变化以便热加载
+                    <httpConnector>
+                        <port>8022</port>
+                    </httpConnector>
+                    配置项在：Configuring Your WebApp章节
+                    <webApp>
+                        <contextPath>/all</contextPath>
+                        <baseResource>src/main/config/app</baseResource>指定静态资源路径，默认是src/main/webapp。这是官网的说法，可以我设置这个木有用，设置下面的才有用:s1
+                        <resourceBases>src/main/config/app</resourceBases>:s1 设置这个才有用
+                    </webApp>
+                </configuration>
+            </plugin> -->
 		</plugins>
 	</build>
 	<!-- 配置文件，可根据环境选择 -->

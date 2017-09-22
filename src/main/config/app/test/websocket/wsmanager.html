@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>websocket管理员页面</title>
+#@zuiCSS()
+</head>
+<body>
+欢迎你来到websocket管理员页面，此页可以向用户推送消息 <br/>
+<input id="text" type="text" />
+<button onclick="send()">Send</button>
+<button onclick="closeWebSocket()">Close</button>
+<div id="message"></div>
+</body>
+#@busJS()#@zuiJS()
+<script>
+    var websocket = null;
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("#(websocketPath)#(CP0)/websocket/server");
+    } else {
+        alert("Your Browser is not support WebSocket.");
+    }
+
+    websocket.onerror = function () {
+        setMessageInnerHTML("error");
+    }
+    websocket.onopen = function (event) {
+        setMessageInnerHTML("open");
+    }
+    websocket.onmessage = function (event) {
+        //setMessageInnerHTML(event.data);
+        all.showDanger(event.data);
+    }
+    websocket.onclose = function () {
+        setMessageInnerHTML("close");
+    }
+
+    //关闭 websocket 连接前的操作
+    websocket.onbeforeunload = function () {
+        websocket.close();
+    }
+    function setMessageInnerHTML(innerHTML) {
+        //document.getElementById("message").innerHTML += innerHTML + "<br/>";
+    }
+    function closeWebSocket() {
+        websocket.close();
+    }
+    function send() {
+        var message = document.getElementById("text").value;
+        websocket.send(message);
+    }
+</script>
+</html>

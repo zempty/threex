@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- plupload本来是支持ie8使用flash上传的，不知怎滴，zui基于开发后，只能支持ie10及以上了 -->
+<html>
+<head>
+<title>zui扩展的plupload演示</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="/assets/modules/zui/css/zui.min.css" />
+<link rel="stylesheet" href="/assets/font/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/assets/modules/zui/lib/uploader/zui.uploader.css" />
+</head>
+<body>
+    <h1>这人有病吧？</h1>
+	<div id='uploaderExample' class="uploader" data-ride="uploader" data-url="your/file/upload/url">
+	  <div class="uploader-message text-center">
+	    <div class="content"></div>
+	    <button type="button" class="close">×</button>
+	  </div>
+	  <div class="uploader-files file-list"></div>
+	  <div>
+	    <hr class="divider">
+	    <div class="uploader-status pull-right text-muted"></div>
+	    <button type="button" class="btn btn-link uploader-btn-browse"><i class="icon icon-plus"></i> 选择文件</button>
+	    <button type="button" class="btn btn-link uploader-btn-start"><i class="icon icon-cloud-upload"></i> 开始上传</button>
+	    <button type="button" class="btn btn-link uploader-btn-stop"><i class="icon icon-ban-circle"></i> 暂停上传</button>
+	  </div>
+	</div>
+	<script src="/assets/js/jquery.1.12.4.js"></script>
+	<script src="/assets/modules/zui/js/zui.min.js"></script>
+	<script src="/assets/modules/zui/lib/uploader/zui.uploader.js"></script>
+	<script>
+	    //返回的是$.each()返回的对象：jQuery.fn.init(1)
+		var uploader0 = $('#uploaderExample').uploader({
+		    autoUpload:false,            // 当选择文件后立即自动进行上传操作
+		    url:'/zuiuploader/uploadChunk',  // 文件上传提交地址
+		    deleteActionOnDone:function(file, doRemoveFile){
+		        //doRemoveFile();
+		        return true;
+		    },
+		    chunk_size:'5mb',
+		    fileList:'grid',
+		    staticFiles:[{
+		        id:'jain',              // 文件id
+		        name:'laopo',            // 文件名，例如"myfile.gif"
+		        type:'image/jpeg',            // 文件类型，例如"image/jpeg"
+		        size:'10243',            // 文件大小，单位为字节，当启用了客户端压缩功能后，该值可能会改变
+		        origSize:'1024',        // 文件的原始大小，单位为字节
+		        lastModifiedDate:'2017-09-02 12:12:12' // 文件的最后修改时间
+		    }],
+		    unique_names:true,
+		    onFileUploaded:function(file, responseObject){
+	            
+	        }
+		});
+	    uploader0.on('onUploadFile', function(upad, file){
+	    	console.log(upad);
+	    	console.log(file);
+	    });
+		var uploader1 = $('#uploaderExample').data("zui.uploader");
+    </script>
+</body>
+</html>

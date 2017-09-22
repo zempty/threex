@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>plupload演示</title>
+<base href="#(CP0)" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="/assets/font/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/assets/modules/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
+</head>
+<body>
+	<div id="uploader">
+	    <p>你的浏览器不支持flash、Sliverlight或者html5，赶紧换一个都什么时代了还在留恋老古董</p>
+	</div>
+	<button id="toStop">暂停一下</button>
+	<button id="toStart">再次开始</button>
+	<script src="/assets/js/jquery.1.12.4.js"></script>
+	<script src="/assets/modules/plupload/js/plupload.full.min.js"></script>
+	<script src="/assets/modules/plupload/js/i18n/zh_CN.js"></script>
+	<script src="/assets/modules/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+	<script>
+		var uploader = $("#uploader").pluploadQueue({
+		    runtimes:'html5,flash,silverlight,html4',
+		    url:'/plupload/uploadChunk',
+		    max_file_size: '10000mb',//最大文件大小
+		    chunk_size:'5mb',//分块的大小
+		    resize:{//如果可以，在客户端压缩图片的大小
+		        width:200,
+		        height:200,
+		        quality:90,
+		        crop:true
+		    },
+		    filters:[
+		        {title:'图片类型',extensions:'jpg,gif,png'},
+		        {title:'视频类型',extensions:'mp4,mkv,avi'},
+		        {title:'压缩类型',extensions:'zip,7z,rar'},
+		        {title:'可执行',extensions:'exe'}
+		    ],
+		    //点击标题重命名文件
+		    rename:true,
+		    sortable:true,//排序文件
+		    dragdrop:true,//允许拖拽文件
+		    unique_names:false,//为true时会生成一个随机字符串替换文件名
+		    //激活的视图
+		    views:{
+		        list:true,
+		        thumbs:true,//缩略图
+		        active:'thumbs'
+		    },
+		    flash_swf_url:'/assets/modules/plupload/js/Moxie.swf'
+		});
+		uploader.bind("UploadFile",function(upad, file){
+            console.log(upad);
+            console.log(file);
+        });
+
+		//事件监听
+		$("#toStop").on('click', function () {
+		    uploader.stop();
+		});
+		$("#toStart").on('click', function () {
+		    uploader.start();
+		}); 
+    </script>
+</body>
+</html>

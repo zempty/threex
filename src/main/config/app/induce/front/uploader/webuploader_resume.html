@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>webuploader-分片上传-断点续传</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="#(CP0)/assets/modules/zui/css/zui.min.css">
+<link rel="stylesheet" href="#(CP0)/assets/font/css/font-awesome.min.css">
+<link rel="stylesheet" href="#(CP0)/assets/modules/webuploader/webuploader.css">
+<link rel="stylesheet" href="#(CP0)/assets/css/style.css">
+<style type="text/css">
+    #dndArea {
+        width: 200px;
+        height: 100px;
+        border-color: red;
+        border-style: dashed;
+    }
+</style> 
+</head>
+<body>
+	<div id="uploader" class="wu-example">
+	    <!-- 创建用于拖拽的区域 -->
+        <div id="dndArea"></div>
+		<!--用来存放文件信息-->
+		<div id="fileList"></div>
+		<div id="picker">文件上传</div>
+	</div>
+	<script src="#(CP0)/assets/js/jquery.1.12.4.js"></script>
+	<script src="#(CP0)/assets/modules/zui/js/zui.min.js"></script>
+	<script src="#(CP0)/assets/modules/webuploader/webuploader.js"></script>
+	<script>
+        // 文件上传
+        jQuery(function() {
+            var $ = jQuery,
+                $btn = $('#ctlBtn'), state = 'pending',
+                uploader;
+            uploader = WebUploader.create({
+                // 不压缩image
+                resize:false,
+                // swf文件路径
+                swf:'#(CP0)/assets/modules/webuploader/Uploader.swf',
+                // 文件接收服务端。
+                server:'#(CP0)/uploader/importData',
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick:'#picker',
+                // 开启拖拽
+                dnd:"#dndArea",
+                // 屏蔽拖拽区域外的响应
+                disableGlobalDnd:true,
+                paste:"#uploader",
+                chunked:true,//开启分块上传
+                chunkSize:5*1024*1024,//每个分块大小
+                threads:3,//处理上传的线程数,默认3个
+                prepareNextFile:true,// 在上传当前文件时，准备好下一个文件
+                auto:true,
+                //允许重复上传同一个文件
+                duplicate :true
+            });
+
+            uploader.on('uploadAccept', function(object, ret) {
+                if (ret.state == 'ok') {
+                    //
+                }
+            });
+
+            // 当有文件添加进来的时候
+            uploader.on('fileQueued', function(file) {
+            	// 把文件信息追加到fileList的div中
+                $("#fileList").append("<div id='" + file.id + "'><img/><span>" + file.name + "</span><div><span class='percentage'><span></div></div>")
+
+                // 制作缩略图
+                // error：不是图片，则有error
+                // src:代表生成缩略图的地址
+                uploader.makeThumb(file, function(error, src) {
+                    if (error) {
+                        $("#" + file.id).find("img").replaceWith("<span>无法预览&nbsp;</span>");
+                    } else {
+                        $("#" + file.id).find("img").attr("src", src);
+                    }
+                });
+            });
+
+            // 文件上传过程中创建进度条实时显示。
+            uploader.on('uploadProgress', function(file, percentage) {
+            	$("#" + file.id).find("span.percentage").text(Math.round(percentage * 100) + "%");
+            	$("#fileList").append("<div id='" + file.id + "'><img/><span>" + file.name + "</span><div><span class='state'></span></div><div><span class='percentage'></span></div></div>");
+            });
+
+            uploader.on('uploadSuccess', function(file) {
+                $('#' + file.id).find('p.state').text('已上传');
+                $("div[id^='WU_FILE_']").remove();
+            });
+
+            uploader.on('uploadError', function(file) {
+                $('#' + file.id).find('p.state').text('上传出错');
+            });
+
+            uploader.on('uploadComplete', function(file) {
+                $('#' + file.id).find('.progress').fadeOut();
+                var stats = uploader.getStats();
+                $("div[id^='WU_FILE_']").remove();
+            });
+
+            uploader.on('all', function(type) {
+                if (type === 'startUpload') {
+                    state = 'uploading';
+                } else if (type === 'stopUpload') {
+                    state = 'paused';
+                } else if (type === 'uploadFinished') {
+                    state = 'done';
+                }
+
+                if (state === 'uploading') {
+                    $btn.text('暂停上传');
+                } else {
+                    $btn.text('开始上传');
+                }
+            });
+
+            $btn.on('click', function() {
+                if (state === 'uploading') {
+                    uploader.stop();
+                } else {
+                    uploader.upload();
+                }
+            });
+        });
+
+        /*前端监听分块
+        可以分为三个时间点：
+        before-send-file: 该方法在文件上传前调用（只会在一个文件上传前调用）。
+        可以在该方法中获取文件的md5字符串作为后台保存分块文件的目录名
+        before-send: 该方法在每个分块文件上传前调用（每个分块上传前都会调用）。
+        可以在该方法中发送md5字符串到后台，后台判断是否已经存在分块决定是否发送以达到断点续传的功能
+        after-send-file: 该方法在所有文件上传完成没有错误之后调用（所有分块上传完成后调用）。
+        可以在该方法中通知后台合并所有分块*/
+        // 监听分块上传的时间点，断点续传
+        var GUID = WebUploader.Base.guid();
+        var fileMd5;
+        WebUploader.Uploader.register({
+            "before-send-file":"beforeSendFile",
+            "before-send":"beforeSend",
+            "after-send-file":"afterSendFile"
+            },{
+                beforeSendFile:function(file) {
+                    // 创建一个deffered,用于通知是否完成操作
+                    var deferred = WebUploader.Deferred();
+
+                    // 计算文件的唯一标识，用于断点续传和妙传
+                    (new WebUploader.Uploader()).md5File(file, 0, 5*1024*1024)
+                        .progress(function(percentage){
+                            $("#"+file.id).find("span.state").text("正在获取文件信息...");
+                        })
+                        .then(function(val) {
+                            fileMd5 = val;
+                            $("#" + file.id).find("span.state").text("成功获取文件信息");
+                            // 放行
+                            deferred.resolve();
+                        });
+                    // 通知完成操作
+                    return deferred.promise();
+                },
+                beforeSend:function(block) {
+                    var deferred = WebUploader.Deferred();
+                    // 支持断点续传，发送到后台判断是否已经上传过
+                    $.ajax({
+                        type:"POST",
+                        url:"#(CP0)/uploader/checkChunk",
+                        data:{
+                            // 文件唯一表示                               
+                            fileMd5:fileMd5,
+                            // 当前分块下标
+                            chunk:block.chunk,
+                            // 当前分块大小
+                            chunkSize:block.end-block.start
+                        },
+                        dataType:"json",
+                        success:function(response) {
+                            if(response.ifExist) {
+                                // 分块存在，跳过该分块
+                                deferred.reject();
+                            } else {
+                                // 分块不存在或不完整，重新发送
+                                deferred.resolve();
+                            }
+                        }
+                    });
+
+                    // 发送文件md5字符串到后台
+                    this.owner.options.formData.fileMd5 = fileMd5;
+                    return deferred.promise();
+                },/* function() {
+                    var deferred = WebUploader.Deferred();
+                    // 发送文件md5字符串到后台
+                    this.owner.options.formData.fileMd5 = fileMd5;
+                    deferred.resolve();
+                    return deferred.promise();
+                } */
+                afterSendFile:function(file) {
+                	//var pos = "." + file.name.replace(/.+\./, "");
+                	// 通知合并分块
+                	$.ajax({
+               	        type:"POST",
+               	        url:"#(CP0)/uploader/mergeChunks",
+               	        data:{
+               	            fileMd5:fileMd5,
+               	            filename:file.name
+               	        },
+               	        success:function(ret){
+               	            
+               	        }
+               	    });
+                }
+            }
+        );
+    </script>
+</body>
+</html>
