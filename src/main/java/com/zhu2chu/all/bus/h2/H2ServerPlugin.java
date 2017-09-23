@@ -94,8 +94,17 @@ public class H2ServerPlugin implements IPlugin {
         if (log.isInfoEnabled()) {
             System.out.println("正在停止H2数据库...");
         }
+        if (webServer != null) {
+            webServer.stop();
+            if (log.isInfoEnabled()) {
+                System.out.println("关闭WEB...");
+            }
+        }
         if (tcpServer != null) {
             tcpServer.stop();
+            if (log.isInfoEnabled()) {
+                System.out.println("关闭TCP...");
+            }
         }
         if (log.isInfoEnabled()) {
             System.out.println("H2数据库停止完毕！");
