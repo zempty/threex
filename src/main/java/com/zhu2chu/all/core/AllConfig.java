@@ -1,5 +1,9 @@
 package com.zhu2chu.all.core;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -190,6 +194,19 @@ public class AllConfig extends JFinalConfig {
          */
         ActionReporter.setReportAfterInvocation(false);// 设置为调用Interceptor前打印log
 
+        try {
+            if (PropKit.getBoolean("openBrowse", false)) {
+                if (log.isDebugEnabled()) {
+                    log.debug("正在启动浏览器...");
+                }
+                Desktop.getDesktop().browse(new URI(PropKit.get("siteUrl")));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } finally {
+        }
     }
 
 }
