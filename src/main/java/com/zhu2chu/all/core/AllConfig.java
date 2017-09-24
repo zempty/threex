@@ -161,7 +161,7 @@ public class AllConfig extends JFinalConfig {
         // 模板引擎开发模式。当在生产环境的时候，设置模板引擎为开发模式，可以在不重启应用的情况下刷新页面。
         me.setDevMode(p.getBoolean("engDevMode", true));
         //me.addDirective("assets", new Assets());
-        me.addSharedFunction("/induce/bus/__layout.html");
+        me.addSharedFunction("/induce/shared/functions.html");
     }
 
     public static void main(String[] args) {
