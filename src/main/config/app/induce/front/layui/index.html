@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>开始使用Layui</title>
+  #@layuiCSS()
+</head>
+<body>
+ 
+<!-- 你的HTML代码 -->
+ 
+#@layuiJS()
+<script>
+//一般直接写在一个js文件中
+layui.use(['layer', 'form'], function(){
+  var layer = layui.layer
+  ,form = layui.form;
+  
+
+  var index = layer.msg("请稍等...", {
+      icon:16,
+      shade: [0.5,'#000'],
+      time:1000
+  }); 
+});
+</script> 
+</body>
+</html>
