@@ -656,4 +656,4 @@
     misc.datee = dateExt;
     // 绑定misc到window对象里，才能在外面使用
     rt.misc = misc;
-})(window || this);// window对象存在就用window对象，不存在说明不是浏览器环境，就用调用它的那个对象
+})(window || this);// window对象存在就用window对象，不存在说明不是浏览器环境，就用调用它的那个对象，其实直接写this都没太大问题
