@@ -18,19 +18,18 @@
 	    <span class="label label-badge label-info">99+</span>
 	</button>
 	<div class="btn-group">
-	    <button class="btn btn-danger">超级按钮组</button>
-	    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+	    <button class="btn btn-danger" data-toggle="dropdown">超级按钮组</button>
+	    <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
 	        <span class="caret"></span>
 	    </button>
 	    <ul class="dropdown-menu" role="menu">
-		    <li><a href="##">操作</a></li>
+		    <li><a href="javascript:;" onclick="">操作</a></li>
 		    <li><a href="##">删除</a></li>
 		    <li class="divider"></li>
 		    <li><a href="##">撤销</a></li>
 		</ul>
 	</div>
-	#@jqueryJS()
-	#@zuiJS()
+	#@jqueryJS()#@zuiJS()
 	<script>
 	    $(".progress").on("mouseover",function(){
 	        var num = Math.round(Math.random()*100)+"%";
@@ -42,6 +41,10 @@
 	        var ariavaluenow = $(".progress-bar").attr("aria-valuenow")+"%";
 	        $(".progress-bar").text(ariavaluenow);
 	    });
+
+	    /* $(".btn-group>.btn:not(.btn-group>.btn[data-toggle='dropdown']):first").on("click", function() {
+	        $(".btn-group>.btn[data-toggle='dropdown']:first").trigger('click.zui.dropdown');
+	    }); */
     </script>
 </body>
 </html>
