@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>videojs学习</title>
+#@videoJS()
+</head>
+<body>
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" style="width:600px;height:256px;" poster="http://vjs.zencdn.net/v/oceans.png">
+        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+    </video>
+	<!-- 你的HTML代码 -->
+
+	<script>
+		/////一般直接写在一个js文件中
+		//获取播放器对象并用内置的样式对video元素做一些改变，可以对此进行一些设置
+		/*
+		 *videojs是全局函数，它可以接收三个参数（id,options,onready）: 第一个参数是video标签的id，兼容以前的方式，如果用 '#'+id 也是可以的，
+		 *比如videojs('#example_video_1'); 第二参数是配置选项，除了在这里给出之外，还可以通过在video标签中，通过data-setup='{}'属性的形式给出。
+		 *如果不知道要传什么内容，那么这个options可以直接省略，但是如果你要用到第三参数onready的话，这个options不能直接省略，必须要用{}进行占位。
+		 *第三个参数实际上是videojs初始化完成之后的回调函数，在这个里函数里边，可以使用this引用videojs的实例对象。进行this.play(),this.pause()，this.on('ended')等操作：
+		 */
+		var player = videojs('example_video_1',{
+			
+		},function onPlayerReady(){
+			videojs.log('播放器已经准备好了!');
+			this.play();
+			this.on('ended', function() {
+			    videojs.log('播放结束了!');
+			});
+
+			/*
+			 *options配置大全：http://docs.videojs.com/tutorial-options.html
+			 *对于视频播放来说，常用的功能有：
+			 1. 播放   this.play()
+			 2. 停止   -- video没有stop方法，可以用pause 暂停获得同样的效果
+			 3. 暂停   this.pause()
+			 4. 销毁  this.dispose()
+			 5. 监听  this.on('click',fn)
+			 6. 触发事件this.trigger('dispose')
+			 ....
+			 以上的this是指在onPlayerReady函数中执行。
+			 */
+		});
+		player.addChild('TitleBar', {text: '国庆节快乐的日子'});
+	</script>
+</body>
+</html>
