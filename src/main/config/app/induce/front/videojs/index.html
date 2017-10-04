@@ -7,7 +7,8 @@
 #@videoJS()
 </head>
 <body>
-    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" style="width:600px;height:256px;" poster="http://vjs.zencdn.net/v/oceans.png">
+    <!-- 指定元素的高时不能用style指定，要用属性的方式。不然全屏没有效果 -->
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" height="400" poster="http://vjs.zencdn.net/v/oceans.png">
         <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
     </video>
 	<!-- 你的HTML代码 -->
@@ -22,7 +23,7 @@
 		 *第三个参数实际上是videojs初始化完成之后的回调函数，在这个里函数里边，可以使用this引用videojs的实例对象。进行this.play(),this.pause()，this.on('ended')等操作：
 		 */
 		var player = videojs('example_video_1',{
-			
+			techOrder: ['flash', 'html5']
 		},function onPlayerReady(){
 			videojs.log('播放器已经准备好了!');
 			this.play();

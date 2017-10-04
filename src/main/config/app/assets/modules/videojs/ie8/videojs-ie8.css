@@ -1,0 +1,11 @@
+/**
+ * ie8兼容字体文件
+ */
+@font-face {
+  font-family: VideoJS;
+  /*非常重要!!!后面不能跟 format("eot")，否则没有效果
+   *并且要以../开头，原因不明
+   */
+  src: url("../font/VideoJS.eot");
+
+}

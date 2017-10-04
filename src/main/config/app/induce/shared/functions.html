@@ -24,10 +24,20 @@
 <script src="#(CP0)/assets/modules/beejs/bee.min.js"></script>
 #end
 #define videoJS()
-<link href="#(CP0)/assets/modules/videojs/video-js.min.css" rel="stylesheet" type="text/css" />
+<link href="#(CP0)/assets/modules/videojs/video-js.css" rel="stylesheet" type="text/css" />
+<!-- ie8及以下才引入这个文件，不然会导致ie9不行了 -->
+<!--[if lt IE 9]>
+<link href="#(CP0)/assets/modules/videojs/ie8/videojs-ie8.css" rel="stylesheet" type="text/css" />
+<![endif]-->
 <link href="#(CP0)/assets/modules/videojs/ext/titlebar/titlebar.css" rel="stylesheet" type="text/css" />
-<script src="#(CP0)/assets/modules/videojs/video.min.js"></script>
+<!-- ie8文件要放在video.js的前面，且不能使用video.min.js，压缩版有问题 -->
 <script src="#(CP0)/assets/modules/videojs/ie8/videojs-ie8.min.js"></script>
+<script src="#(CP0)/assets/modules/videojs/video.js"></script>
+<!-- video.js 6.0.0版本后要加上videojs-flash.js才会支持ie8播放，不过有些样式看不到了(音量,全屏等按钮看不见但点击有效果) -->
+<script src="#(CP0)/assets/modules/videojs/videojs-flash.js"></script>
+<script>
+  videojs.options.flash.swf = "#(CP0)/assets/modules/videojs/video-js.swf";
+</script>
 <script src="#(CP0)/assets/modules/videojs/ext/titlebar/titlebar.js"></script>
 #end
 
@@ -43,9 +53,9 @@
 
 #define ltIE9()
 <!--[if lt IE 9]>
-    <script src="#(CP0)/assets/modules/zui/lib/ieonly/html5shiv.js"></script>
-    <script src="#(CP0)/assets/modules/zui/lib/ieonly/respond.js"></script>
-    <script src="#(CP0)/assets/modules/zui/lib/ieonly/excanvas.js"></script>
+  <script src="#(CP0)/assets/modules/zui/lib/ieonly/html5shiv.js"></script>
+  <script src="#(CP0)/assets/modules/zui/lib/ieonly/respond.js"></script>
+  <script src="#(CP0)/assets/modules/zui/lib/ieonly/excanvas.js"></script>
 <![endif]-->
 #end
 
