@@ -46,8 +46,6 @@ import com.jfinal.log.Log;
  */
 public class FileKit {
 
-    private static String MESSAGE = "";
-
     private static final Log log = Log.getLog(FileKit.class);
 
     /**
@@ -64,13 +62,11 @@ public class FileKit {
     public static boolean copyFile(File srcFile, File destFile, boolean overlay) {
         String srcFilename = srcFile.getAbsolutePath();
         if (!srcFile.exists()) {
-            MESSAGE = "源文件" + srcFilename + "不存在！";
-            JOptionPane.showMessageDialog(null, MESSAGE);
+            JOptionPane.showMessageDialog(null, "源文件" + srcFilename + "不存在！");
 
             return false;
         } else if (!srcFile.isFile()) {
-            MESSAGE = "复制文件失败，源文件：" + srcFilename + "不是一个文件！";
-            JOptionPane.showMessageDialog(null, MESSAGE);
+            JOptionPane.showMessageDialog(null, "复制文件失败，源文件：" + srcFilename + "不是一个文件！");
 
             return false;
         }
@@ -85,8 +81,7 @@ public class FileKit {
             File parentFile = destFile.getParentFile();
             if (!parentFile.exists()) {
                 if (!parentFile.mkdirs()) {
-                    MESSAGE = "目标文件或目录不存在，尝试创建并失败。请检测是否对" + destFilename + "有读写的权限？";
-                    JOptionPane.showMessageDialog(null, MESSAGE);
+                    JOptionPane.showMessageDialog(null, "目标文件或目录不存在，尝试创建并失败。请检测是否对" + destFilename + "有读写的权限？");
 
                     return false;
                 }
@@ -179,12 +174,10 @@ public class FileKit {
      */
     public static boolean copyDirectory(File srcDir, File destDir, boolean overlay) {
         if (!srcDir.exists()) {
-            MESSAGE = "复制目录失败：源目录" + srcDir.getAbsolutePath() + "不存在！";
-            JOptionPane.showMessageDialog(null, MESSAGE);
+            JOptionPane.showMessageDialog(null, "复制目录失败：源目录" + srcDir.getAbsolutePath() + "不存在！");
             return false;
         } else if (!srcDir.isDirectory()) {
-            MESSAGE = "复制目录失败：" + srcDir.getAbsolutePath() + "不是目录！";
-            JOptionPane.showMessageDialog(null, MESSAGE);
+            JOptionPane.showMessageDialog(null, "复制目录失败：" + srcDir.getAbsolutePath() + "不是目录！");
             return false;
         }
 
@@ -200,8 +193,7 @@ public class FileKit {
             if (overlay) {
                 destDir.delete();
             } else {
-                MESSAGE = "复制目录失败：目的目录" + destDir.getAbsolutePath() + "已存在！";
-                JOptionPane.showMessageDialog(null, MESSAGE);
+                JOptionPane.showMessageDialog(null, "复制目录失败：目的目录" + destDir.getAbsolutePath() + "已存在！");
                 return false;
             }
         } else {
@@ -229,8 +221,7 @@ public class FileKit {
         }
 
         if (!flag) {
-            MESSAGE = "复制目录" + srcDir.getAbsolutePath() + "至" + destDirName + "失败！";
-            JOptionPane.showMessageDialog(null, MESSAGE);
+            JOptionPane.showMessageDialog(null, "复制目录" + srcDir.getAbsolutePath() + "至" + destDirName + "失败！");
             return false;
         } else {
             return true;

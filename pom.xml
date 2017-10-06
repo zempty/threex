@@ -212,11 +212,11 @@
 		    <artifactId>yuicompressor</artifactId>
 		    <version>2.4.8</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
             <groupId>it.sauronsoftware</groupId>
             <artifactId>jave</artifactId>
             <version>1.0.2</version>
-        </dependency>
+        </dependency> -->
         <!-- 内嵌tomcat -->
         <!-- <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -266,6 +266,9 @@
             <groupId>com.zhu2chu</groupId>
             <artifactId>elfinder2</artifactId>
             <version>1.0.1</version>
+            <!-- artifactId-version-classifier.jar
+            _查找elfinder2-1.0.1-classes.jar -->
+            <classifier>classes</classifier>
         </dependency>
 	</dependencies>
 
