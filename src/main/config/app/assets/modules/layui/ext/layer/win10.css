@@ -1,0 +1,88 @@
+/*win10风格提示框皮肤*/
+
+body .layer-ext-winconfirm {
+    min-width: 360px;
+    border-radius: 0;
+}
+
+body .layer-ext-winconfirm .layui-layer-title {
+    background-color: #135995;
+    border-radius: 0;
+    height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+    color: #fff;
+    cursor: default !important;
+    border-bottom: none;
+    padding-left: 10px;
+}
+
+body .layer-ext-winconfirm .layui-layer-setwin {
+    line-height: 28px;
+    top: 0;
+    right: 0;
+}
+
+body .layer-ext-winconfirm .layui-layer-setwin .layui-layer-ico {
+    background: none;
+    position: relative;
+}
+
+body .layer-ext-winconfirm .layui-layer-setwin .layui-layer-ico i {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 1px;
+    left: 8px;
+    color: #fff;
+}
+
+body .layer-ext-winconfirm .layui-layer-setwin .layui-layer-close:hover {
+    background-color: #E81123;
+    opacity: 1;
+}
+
+body .layer-ext-winconfirm .layui-layer-setwin a {
+    height: 28px;
+    width: 32px;
+    margin: 0;
+    cursor: default;
+}
+
+body .layer-ext-winconfirm .layui-layer-btn {
+    padding-right: 8px;
+    padding-bottom: 10px;
+}
+
+body .layer-ext-winconfirm .layui-layer-btn>a {
+    font-size: 12px;
+    border-radius: 0;
+    border: 1px solid #ADADAD;
+    background-color: #E1E1E1;
+    color: #000;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 30px;
+    cursor: default;
+    white-space: nowrap;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    outline: none;
+    transition: border-color .2s cubic-bezier(.65, .05, .35, .5);
+    box-sizing: border-box;
+}
+
+body .layer-ext-winconfirm .layui-layer-btn>a:first-child {
+    border: 1px solid #0078D7;
+}
+
+body .layer-ext-winconfirm .layui-layer-btn>a:hover {
+    background-color: #E5F1FB;
+    border: 1px solid #0078D7;
+    color: #000;
+}
+
+body .layer-ext-winconfirm .layui-layer-content {
+    min-height: 50px;
+}

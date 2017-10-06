@@ -58,7 +58,18 @@
 	    </tr>
 	  </tfoot>
 	</table>
-	#@jqueryJS()#@zuiJS()
+	<h1>Base64.js</h1>
+	<textarea id="input" cols="80" rows="10"></textarea>
+	<br>
+	<button onclick="normal_encode()">普通Base64编码</button>
+	<button onclick="normal_decode()">普通Base64解码</button>
+	<button onclick="url_safe_encode()">URL_safe Base64编码</button>
+	<button onclick="url_safe_decode()">URL_safe Base64解码</button>
+	<button onclick="trickEncode()">trick Base64编码</button>
+    <button onclick="trickDecode()">trick Base64解码</button>
+	<br>
+	<textarea id="output" cols="80" rows="10" readonly></textarea>
+	#@jqueryJS()#@zuiJS()#@base64JS()#@cryptoJS()
 	<script>
 	    $(".progress").on("mouseover",function(){
 	        var num = Math.round(Math.random()*100)+"%";
@@ -91,6 +102,39 @@
 	    /* $(".btn-group>.btn:not(.btn-group>.btn[data-toggle='dropdown']):first").on("click", function() {
 	        $(".btn-group>.btn[data-toggle='dropdown']:first").trigger('click.zui.dropdown');
 	    }); */
+	    function normal_encode() {
+	        var raw = document.getElementById("input").value;
+	        var encoded = BASE64.encode(raw);
+	        document.getElementById("output").value = encoded;
+	    }
+
+	    function normal_decode() {
+	        var raw = document.getElementById("input").value;
+	        var decoded = BASE64.decode(raw);
+	        document.getElementById("output").value = decoded;
+	    }
+
+	    function url_safe_encode() {
+	        var raw = document.getElementById("input").value;
+	        var encoded = BASE64.urlsafe_encode(raw);
+	        document.getElementById("output").value = encoded;
+	    }
+
+	    function url_safe_decode() {
+	        var raw = document.getElementById("input").value;
+	        var decoded = BASE64.urlsafe_decode(raw);
+	        document.getElementById("output").value = decoded;
+	    }
+	    function trickEncode() {
+	    	var raw = document.getElementById("input").value;
+            var encoded = BASE64.trick(raw);
+            document.getElementById("output").value = encoded;
+	    }
+	    function trickDecode() {
+            var raw = document.getElementById("input").value;
+            var decoded = BASE64.trickDecode(raw);
+            document.getElementById("output").value = decoded;
+        }
     </script>
 </body>
 </html>
