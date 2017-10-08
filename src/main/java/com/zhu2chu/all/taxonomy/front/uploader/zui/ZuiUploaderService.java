@@ -35,7 +35,8 @@ public class ZuiUploaderService {
             fileDir.mkdirs();
         }
 
-        FileKit.copyFile(file, new File(fileDir, String.valueOf(chunk)), true);
+        File tmp0 = new File(fileDir, String.valueOf(chunk));
+        FileKit.copyFile(file, tmp0, true);
 
         File finalFile = new File(uploadPath, name);
         if (chunk==0 && finalFile.exists()) {//如果是第一个分片上来时删除原有的文件
@@ -43,6 +44,7 @@ public class ZuiUploaderService {
         }
 
         FileKit.appendFile(file, finalFile);
+        tmp0.delete();
 
         return Ret.ok();
     }

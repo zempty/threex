@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SparkMD5 file reader test</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+#@zuiCSS()#@fontCSS() #@sparkmd5JS()
+<style type="text/css" media="screen">
+.alert-message {
+	margin-bottom: 5px;
+}
+
+.actions {
+	background: #f5f5f5;
+	margin-top: 18px;
+	margin-bottom: 18px;
+	padding: 17px 20px 18px 150px;
+	border-top: 1px solid #ddd;
+	-webkit-border-radius: 0 0 3px 3px;
+	-moz-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+}
+
+.actions .secondary-action {
+	float: right;
+}
+
+.actions .secondary-action a {
+	line-height: 30px;
+}
+
+.actions .secondary-action a:hover {
+	text-decoration: underline;
+}
+
+input.input-file {
+	padding: 5px;
+	margin-right: 25px;
+	background-color: transparent;
+	line-height: 1;
+	vertical-align: middle;
+	float:left;
+}
+</style>
+</head>
+<body class="container">
+	<h1>SparkMD5 file reader 测试, 增量或全量</h1>
+
+	<h4>增量的优势是保持较少的内存使用且更稳定。</h4>
+	<p>留意你的浏览器的内存使用情况。如果你获得了Chrome，打开内存：查看所有浏览器的内存使用情况（你必须不断刷新）。
+		用正常的MD5，你应该观察稍微快一点的时间，但是内存占用率很高（因为整个文件需要读入一个数组）。
+		使用增量MD5，您应该观察稳定的内存使用情况，但要稍高一点。 请注意，当使用正常的MD5时，由于高内存占用，浏览器可能崩溃。</p>
+
+	<div class="actions">
+		<input type="file" id="file" class="input-file span5" />
+		<input type="button" id="normal" value="Normal" class="btn btn-primary" />
+		<input type="button" id="incremental" value="Incremental" class="btn btn-primary" />
+		<input type="button" id="clear" value="Clear" class="btn" />
+	</div>
+	<div id="log"></div>
+
+	<script type="text/javascript">
+		var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+			log = document.getElementById('log'),
+			input = document.getElementById('file'),
+			running = false,
+			ua = navigator.userAgent.toLowerCase();
+
+		function registerLog(str, className) {
+			var elem = document.createElement('div');
+
+			elem.innerHTML = str;
+			elem.className = 'alert alert-danger-inverse' + (className ? ' ' + className : '');
+			log.appendChild(elem);
+		}
+
+		function doIncrementalTest() {
+			if (running) {
+				return;
+			}
+
+			if (!input.files.length) {
+				registerLog('<strong>请选择一个文件</strong><br/>');
+				return;
+			}
+
+			var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice,
+			    file = input.files[0],
+			    chunkSize = 2097152, // read in chunks of 2MB
+			    chunks = Math.ceil(file.size / chunkSize),
+			    currentChunk = 0,
+			    spark = new SparkMD5.ArrayBuffer(),
+			    time,
+			    uniqueId = 'chunk_' + (new Date().getTime()),
+			    chunkId = null,
+			    fileReader = new FileReader();
+
+			fileReader.onload = function(e) {
+				if (currentChunk === 0) {
+					registerLog(
+							'读取分块<strong id="' + uniqueId + '">'
+									+ (currentChunk + 1)
+									+ '</strong> of <strong>' + chunks
+									+ '</strong><br/>', 'info');
+				} else {
+					if (chunkId === null) {
+						chunkId = document.getElementById(uniqueId);
+					}
+
+					chunkId.innerHTML = currentChunk + 1;
+				}
+
+				spark.append(e.target.result); // append array buffer
+				currentChunk += 1;
+
+				if (currentChunk < chunks) {
+					loadNext();
+				} else {
+					running = false;
+					registerLog('<strong>载入完成！</strong><br/>', 'success');
+					registerLog('<strong>计算出的哈希：</strong> ' + spark.end() + '<br/>', 'success'); // compute hash
+					registerLog('<strong>耗时：</strong> ' + (new Date().getTime() - time) + 'ms<br/>', 'success');
+				}
+			};
+
+			fileReader.onerror = function() {
+				running = false;
+				registerLog('<strong>Oops, something went wrong.</strong>', 'error');
+			};
+
+			function loadNext() {
+				var start = currentChunk * chunkSize, end = start + chunkSize >= file.size ? file.size : start + chunkSize;
+
+				fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
+			}
+
+			running = true;
+			registerLog('<p></p><strong>开始增量测试：(' + file.name
+					+ ')</strong><br/>', 'info');
+			time = new Date().getTime();
+			loadNext();
+		}
+
+		function doNormalTest() {
+			if (running) {
+				return;
+			}
+
+			if (!input.files.length) {
+				registerLog('<strong>请选择一个文件</strong><br/>');
+				return;
+			}
+
+			var fileReader = new FileReader(), file = input.files[0], time;
+
+			fileReader.onload = function(e) {
+				running = false;
+
+				if (file.size != e.target.result.byteLength) {
+					registerLog(
+							'<strong>ERROR:</strong> Browser reported success but could not read the file until the end.<br/>',
+							'error');
+				} else {
+					registerLog('<strong>载入完成！</strong><br/>',
+							'success');
+					registerLog('<strong>计算出的哈希：</strong> '
+							+ SparkMD5.ArrayBuffer.hash(e.target.result)
+							+ '<br/>', 'success'); // compute hash
+					registerLog('<strong>耗时：</strong> '
+							+ (new Date().getTime() - time) + 'ms<br/>',
+							'success');
+				}
+			};
+
+			fileReader.onerror = function() {
+				running = false;
+				registerLog(
+						'<strong>ERROR:</strong> FileReader onerror was triggered, maybe the browser aborted due to high memory usage.<br/>',
+						'error');
+			};
+
+			running = true;
+			registerLog('<strong>开始全量测试：(' + file.name + ')</strong><br/>',
+					'info');
+			time = new Date().getTime();
+			fileReader.readAsArrayBuffer(file);
+		}
+
+		function clearLog() {
+			if (!running) {
+				log.innerHTML = '';
+			}
+		}
+
+		if (!('FileReader' in window) || !('File' in window) || !blobSlice) {
+			registerLog('<p><strong>你的浏览器不支持FileAPI或文件切割</strong></p>', 'error');
+		} else {
+			registerLog('保持关闭你的开发工具(f12)，否则这个例子会慢很多', 'info');
+
+			if (/chrome/.test(ua)) {
+				if (location.protocol === 'file:') {
+					registerLog('<p><strong>This example might not work in chrome because you are using the file:// protocol.</strong><br/>You can try to start chrome with -allow-file-access-from-files argument or spawn a local server instead. This is a security measure introduced in chrome, please <a target=\'_blank\' href=\'http://code.google.com/p/chromium/issues/detail?id=60889\'>see</a>.</p>');
+				}
+			}
+
+			document.getElementById('normal').addEventListener('click', doNormalTest);
+			document.getElementById('incremental').addEventListener('click', doIncrementalTest);
+			document.getElementById('clear').addEventListener('click', clearLog);
+		}
+	</script>
+</body>
+</html>

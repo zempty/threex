@@ -5,9 +5,8 @@
 <title>zui扩展的plupload演示</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="/assets/modules/zui/css/zui.min.css" />
-<link rel="stylesheet" href="/assets/font/css/font-awesome.min.css" />
-<link rel="stylesheet" href="/assets/modules/zui/lib/uploader/zui.uploader.css" />
+#@zuiCSS()#@fontCSS()
+<link rel="stylesheet" href="/assets/modules/ui/zui/lib/uploader/zui.uploader.css" />
 </head>
 <body>
     <h1>这人有病吧？</h1>
@@ -25,9 +24,8 @@
 	    <button type="button" class="btn btn-link uploader-btn-stop"><i class="icon icon-ban-circle"></i> 暂停上传</button>
 	  </div>
 	</div>
-	<script src="/assets/modules/shared/jquery.1.12.4.js"></script>
-	<script src="/assets/modules/zui/js/zui.min.js"></script>
-	<script src="/assets/modules/zui/lib/uploader/zui.uploader.js"></script>
+	#@jqueryJS()#@zuiJS()#@sparkmd5JS()
+	<script src="/assets/modules/ui/zui/lib/uploader/zui.uploader.js"></script>
 	<script>
 	    //返回的是$.each()返回的对象：jQuery.fn.init(1)
 		var uploader0 = $('#uploaderExample').uploader({
@@ -37,6 +35,7 @@
 		        //doRemoveFile();
 		        return true;
 		    },
+		    flash_swf_url:'#(CP0)/assets/modules/ui/zui/lib/uploader/Moxie.swf',
 		    chunk_size:'5mb',
 		    fileList:'grid',
 		    staticFiles:[{
@@ -50,11 +49,21 @@
 		    unique_names:true,
 		    onFileUploaded:function(file, responseObject){
 	            
+	        },
+	        onBeforeUpload:function(file){
+	            //var source = file.getSource();
+	            var nativeFile = file.getNative();
+	            var fileHash = null;
+	            //里面的事件是异常函数咋整
+	            var $dfd = doIncremental(false, nativeFile, fileHash);
+	            //while ($dfd.state()=='pending') {
+	            	
+	            //}
 	        }
 		});
 	    uploader0.on('onUploadFile', function(upad, file){
-	    	console.log(upad);
-	    	console.log(file);
+	    	//console.log(upad);
+	    	//console.log(file);
 	    });
 		var uploader1 = $('#uploaderExample').data("zui.uploader");
     </script>
