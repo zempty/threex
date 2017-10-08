@@ -52,9 +52,13 @@
 #end
 #define layuiCSS()
 <link href="#(CP0)/assets/modules/layui/css/layui.css" rel="stylesheet" type="text/css" />
+<link href="#(CP0)/assets/modules/layui/ext/layer/win10.css" rel="stylesheet" type="text/css" />
 #end
 #define fontCSS()
 <link rel="stylesheet" href="#(CP0)/assets/central/font/css/font-awesome.min.css" />
+#end
+#define busCSS()
+<link rel="stylesheet" href="#(CP0)/assets/central/css/all.css" />
 #end
 
 #define ltIE9()
@@ -65,5 +69,16 @@
 <![endif]-->
 #end
 
+
+#define layerWin10()
+//替换窗体的关闭图标
+layui.$('.layer-ext-winconfirm').find('.layui-layer-close').html('<i class="layui-icon">&#x1006;<i>');
+//增加最大化图标
+layui.$('.layer-ext-winconfirm').find('.layui-layer-max').html('<i class="layui-icon">&#xe606;<i>');
+//移除移动窗体的div
+layui.$('.layui-layer-move').remove();
+//移除最小化最大化关闭按钮a标签的href属性
+layui.$('.layer-ext-winconfirm').find('.layui-layer-setwin').children('a').removeAttr('href');
+#end
 
 

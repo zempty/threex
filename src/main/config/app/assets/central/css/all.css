@@ -1,0 +1,19 @@
+/*透明圆角背景start给元素加上这3个样式就完事了*/
+body .content-box {
+	/*position: relative;*/
+	overflow: hidden;
+	border: 0px solid white;
+	/*min-height: 200px;*/
+	line-height: 25px;
+	background: transparent url(../img/contact-bg.png) repeat-x 0 0;
+}
+body .round {
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-khtml-border-radius: 0px;
+	border-radius: 0px;
+}
+body .clearfix {
+	display: block;
+}
+/*透明圆角背景end*/

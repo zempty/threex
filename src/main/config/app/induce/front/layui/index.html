@@ -4,10 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>开始使用Layui</title>
-  #@layuiCSS()
+  #@layuiCSS()#@busCSS()
+<style>
+html,body {
+    height:100%;
+    color: #2f332a;font: 15px/21px Arial, Helvetica, simsun, sans-serif;background: #528036 url(http://www.treejs.cn/v3/img/background.jpg) no-repeat fixed 0 0;
+}
+#bg {
+    width:600px;
+    height:200px;
+    margin:0 auto;
+}
+</style>
 </head>
 <body>
- 
+ <div id="demo">可以了吗</div>
+ <div id="bg" class="content-box round clearfix">这是背景颜色</div>
 <!-- 你的HTML代码 -->
  
 #@layuiJS()
@@ -21,8 +33,45 @@ layui.use(['layer', 'form'], function(){
   var index = layer.msg("请稍等...", {
       icon:16,
       shade: [0.5,'#000'],
-      time:1000
-  }); 
+      time:500
+  });
+  /* setTimeout(
+      'layui.$(".layui-layer-content.layui-layer-padding").text("改变了小字咋样");',1000
+  ); */
+
+  layui.$('#demo').click(function() {
+      layer.confirm('你确定要删除XXXX吗?', {
+          icon: 3,
+          title: 'win10风格提示框'
+          ,skin: 'layer-ext-winconfirm content-box round clearfix'
+      }, function(index) {
+          layer.msg('点击了确定');
+          layer.close(index);
+      });
+      /* layer.msg('玩命提示中'); */
+      /* layer.open({
+          type: 2,
+          title: '很多时候，我们想最大化看，比如像这个页面。',
+          shadeClose: true,
+          shade: false,
+          maxmin: true, //开启最大化最小化按钮
+          area: ['893px', '600px'],
+          content: 'https://www.baidu.com/'
+          ,skin: 'layer-ext-winconfirm content-box round clearfix'
+      }); */
+      /* layer.alert('墨绿风格，点击确认看深蓝', {
+    	  skin: 'layer-ext-winconfirm content-box round clearfix' //样式类名
+    	  ,closeBtn: 0
+    	}, function(){
+    	  layer.alert('偶吧深蓝style', {
+    	    skin: 'layer-ext-winconfirm content-box round clearfix'
+    	    ,closeBtn: 0
+    	    ,anim: 4 //动画类型
+    	  });
+    	}); */
+      #@layerWin10()
+  });
+
 });
 </script> 
 </body>

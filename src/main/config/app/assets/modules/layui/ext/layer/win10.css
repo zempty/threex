@@ -1,7 +1,7 @@
 /*win10风格提示框皮肤*/
 
 body .layer-ext-winconfirm {
-    min-width: 360px;
+    min-width: 320px;
     border-radius: 0;
 }
 
@@ -46,7 +46,10 @@ body .layer-ext-winconfirm .layui-layer-setwin a {
     height: 28px;
     width: 32px;
     margin: 0;
-    cursor: default;
+    cursor: pointer;
+}
+body .layer-ext-winconfirm .layui-layer-setwin a.layui-layer-max:hover .layui-icon {
+    color: #7CFC00;
 }
 
 body .layer-ext-winconfirm .layui-layer-btn {
@@ -63,7 +66,8 @@ body .layer-ext-winconfirm .layui-layer-btn>a {
     height: 28px;
     line-height: 28px;
     padding: 0 30px;
-    cursor: default;
+    /*cursor: default;2017年10月7日 13:12:52修改为下面*/
+    cursor: pointer;
     white-space: nowrap;
     text-align: center;
     display: inline-block;
@@ -86,3 +90,4 @@ body .layer-ext-winconfirm .layui-layer-btn>a:hover {
 body .layer-ext-winconfirm .layui-layer-content {
     min-height: 50px;
 }
+
