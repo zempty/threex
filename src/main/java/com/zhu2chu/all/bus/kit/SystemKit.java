@@ -1,14 +1,8 @@
 package com.zhu2chu.all.bus.kit;
 
-import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Enumeration;
-import java.util.Map;
 import java.util.Properties;
-
-import com.jfinal.kit.PropKit;
 
 /**
  * 2017年5月6日 10:50:54
@@ -18,6 +12,76 @@ import com.jfinal.kit.PropKit;
  *
  */
 public class SystemKit {
+
+    public enum OSType {
+        OS_TYPE_LINUX, OS_TYPE_WIN, OS_TYPE_SOLARIS, OS_TYPE_MAC, OS_TYPE_FREEBSD, OS_TYPE_OTHER
+    }
+
+    private static OSType getOSType() {
+        String osName = System.getProperty("os.name");
+        if (osName.startsWith("Windows")) {
+            return OSType.OS_TYPE_WIN;
+        } else if (osName.contains("SunOS") || osName.contains("Solaris")) {
+            return OSType.OS_TYPE_SOLARIS;
+        } else if (osName.contains("Mac")) {
+            return OSType.OS_TYPE_MAC;
+        } else if (osName.contains("FreeBSD")) {
+            return OSType.OS_TYPE_FREEBSD;
+        } else if (osName.startsWith("Linux")) {
+            return OSType.OS_TYPE_LINUX;
+        } else {
+            // Some other form of Unix
+            return OSType.OS_TYPE_OTHER;
+        }
+    }
+
+    private static final OSType osType = getOSType();
+    // Helper static vars for each platform
+    private static final boolean WINDOWS = (osType == OSType.OS_TYPE_WIN);
+    private static final boolean SOLARIS = (osType == OSType.OS_TYPE_SOLARIS);
+    private static final boolean MAC = (osType == OSType.OS_TYPE_MAC);
+    private static final boolean FREEBSD = (osType == OSType.OS_TYPE_FREEBSD);
+    private static final boolean LINUX = (osType == OSType.OS_TYPE_LINUX);
+    private static final boolean OTHER = (osType == OSType.OS_TYPE_OTHER);
+
+    /**
+     * 返回操作系统类型
+     * @return
+     */
+    public static String osType() {
+        return osType.toString();
+    }
+
+    public static boolean isSolaris() {
+        return SOLARIS;
+    }
+    public static boolean notSolaris() {
+        return !SOLARIS;
+    }
+    public static boolean isMacOS() {
+        return MAC;
+    }
+    public static boolean notMacOS() {
+        return !MAC;
+    }
+    public static boolean isFreeBSD() {
+        return FREEBSD;
+    }
+    public static boolean notFreeBSD() {
+        return !FREEBSD;
+    }
+    public static boolean isLinux() {
+        return LINUX;
+    }
+    public static boolean notLinux() {
+        return !LINUX;
+    }
+    public static boolean isWindows() {
+        return WINDOWS;
+    }
+    public static boolean notWindows() {
+        return !WINDOWS;
+    }
 
     /**
      * 输出System中的所有键值对
