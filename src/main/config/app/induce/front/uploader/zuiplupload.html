@@ -50,15 +50,22 @@
 		    onFileUploaded:function(file, responseObject){
 	            
 	        },
-	        onBeforeUpload:function(file){
+	        onFilesAdded:function(files){
+	        	var $this = this;
 	            //var source = file.getSource();
-	            var nativeFile = file.getNative();
-	            var fileHash = null;
+	            var nativeFile = files[0].getNative();
 	            //里面的事件是异常函数咋整
-	            var $dfd = doIncremental(false, nativeFile, fileHash);
+	            var $dfd = doIncremental(false, nativeFile, files[0]);
 	            //while ($dfd.state()=='pending') {
-	            	
+	            	$dfd.done(function(){
+	            	    $this.options.multipart_params={uuid:files[0].fileHash}
+	            	});
 	            //}
+	        },
+	        onBeforeUpload:function(file){
+	        	if (!file.fileHash) {
+	        		return;
+	        	}
 	        }
 		});
 	    uploader0.on('onUploadFile', function(upad, file){

@@ -2,7 +2,7 @@
 /**
  * 分块计算文件的md5
  */
-function doIncremental(running, file, fileHash) {
+function doIncremental(running, file, fileObj) {
     //jquery延时函数
     var dfd = $.Deferred();
 
@@ -52,7 +52,7 @@ function doIncremental(running, file, fileHash) {
             registerLog('<strong>计算出的哈希：</strong> ' + spark.end() + '<br/>', 'success'); // compute hash
             registerLog('<strong>耗时：</strong> ' + (new Date().getTime() - time) + 'ms<br/>', 'success');*/
             //返回成功计算出的哈希
-            fileHash = spark.end();
+            fileObj.fileHash = spark.end();
             dfd.resolve();
         }
     };
