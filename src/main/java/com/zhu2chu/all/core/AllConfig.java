@@ -58,7 +58,7 @@ public class AllConfig extends JFinalConfig {
 
     @Override
     public void configRoute(Routes r) {
-        r.add("/test/websocket", WebSocketController.class, "/test/websocket");
+        r.add("/test/websocket", WebSocketController.class, "/induce/front/websocket");
         //RouterKit.scanController(r.getClass(), r);
 
         List<Route> centerRoutes = r.getRouteItemList();
