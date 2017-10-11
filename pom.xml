@@ -123,8 +123,7 @@
             <groupId>com.jfinal</groupId>
             <artifactId>jetty-server</artifactId>
             <version>8.1.8</version>
-            <!-- 此处的 scope 值为 compile 仅为支持 IDEA 下启动项目
-               - 打 war 包时需要改成 provided，以免将一些无用的 jar 打进去 -->
+            <!-- 此处的 scope 值为 compile 仅为支持 IDEA 下启动项目打 war 包时需要改成 provided，以免将一些无用的 jar 打进去 -->
             <scope>compile</scope>
         </dependency>
 		<dependency>
@@ -334,10 +333,12 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<port>9090</port>
+				    不使用默认src/main/webapp的话得用这个节点指定位置
+				    <warSourceDirectory>src/main/config/app</warSourceDirectory>
+					<port>8022</port>
 					<path>/</path>
 					<url>http://localhost:9090/manager/text</url>
-					<server>tomcat8</server>
+					<server>tomcat7</server>
 					<contextReloadable>false</contextReloadable>
 				</configuration>
 			</plugin> -->
@@ -366,13 +367,13 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.6.v20170531</version>
-                官网配置项：http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html
+                -官网配置项：http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html
                 <configuration>
                     <scanIntervalSeconds>5</scanIntervalSeconds>每隔几秒扫描一下文件有没变化以便热加载
                     <httpConnector>
                         <port>8022</port>
                     </httpConnector>
-                    配置项在：Configuring Your WebApp章节
+                    -配置项在：Configuring Your WebApp章节
                     <webApp>
                         <contextPath>/all</contextPath>
                         <baseResource>src/main/config/app</baseResource>指定静态资源路径，默认是src/main/webapp。这是官网的说法，可以我设置这个木有用，设置下面的才有用:s1

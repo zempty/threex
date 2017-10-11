@@ -68,6 +68,7 @@ public class RouterKit {
      * @param route
      *            Routes的具体对象
      */
+    @SuppressWarnings("unchecked")
     private static void addRoute(Class<?> clzz, Class<?> cls, URIMapping urlMapping, Routes route) {
         String clzzName = clzz.getName();
         if (PropKit.getBoolean("devMode")) {

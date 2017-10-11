@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>系统日志实时显示 - 超级日志监控</title>
+#@zuiCSS()
+<style>
+html,body {
+    height:100%;
+}
+#repre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #DDDDDD;
+    font-family: Arial;
+    width: 100%;
+    min-height: 500px;
+    max-height: 600px;
+    border: 0;
+    background-color: #0A0A0A;
+    overflow: auto
+}
+#result{
+    margin-top:-15px;
+    margin-bottom:100px;
+}
+.istyle {
+    font-size: 14px;
+    font-family: Arial;
+}
+</style>
+</head>
+<body style="margin:0; overflow:hidden;">
+    [
+    <font class='istyle' color='red'>Log4j Monitor</font>
+    ]:
+    <span id="nowtime"></span> 正在嗅探,请稍后(Sniffing,please hold on)
+    <span id="waitspan"></span>
+    <div style="display:inline-block;float:right;margin-right:40px;">
+	    <button id="mockData" class="btn btn-primary btn-sm"><i class="icon icon-database"></i> 模拟数据</button>
+	    <button id="lockScroll" class="btn btn-warning btn-sm" data-toggle="tooltip" title="点击锁定滚动条不随内容滚动到底部" data-placement="bottom"><i class="icon icon-lock"></i> 锁定</button>
+	    <button id="clearLog" class="btn btn-danger btn-sm" data-toggle="tooltip" title="点击清空控制台日志" data-placement="bottom"><i class="icon icon-trash"></i> 清空</button>
+    </div>
+    <div id="repre">
+        <div id="result">
+            &nbsp;&nbsp;<span class="waitray">_</span>
+        </div>
+        <div id="scol" style="height:0px; overflow:hidden">
+            <a id="res_end" name="1" href="#1">&nbsp</a>
+        </div>
+    </div>
+#@busJS()#@zuiJS()
+<script>
+    var ws = null;
+    var lockReconnect = false;//避免重复连接
+    var wsUrl = '#(websocketPath)#(CP0)'+"/websocket/log/webpage";
+
+    //创建websocket连接
+    function createWebSocket(url) {
+        try {
+            ws = new WebSocket(url);
+            initEventHandle();
+        } catch (e) {
+            //reconnect(url);
+        }
+    }
+
+    function initEventHandle() {
+        ws.onclose = function () {
+            //reconnect(wsUrl);
+        };
+        ws.onerror = function () {
+            //reconnect(wsUrl);
+        };
+        ws.onopen = function (event) {
+            all.showDanger("日志监控系统连接成功");
+        };
+        ws.onmessage = function (event) {
+            //如果获取到消息，心跳检测重置
+            //拿到任何消息都说明当前连接是正常的
+            //all.showSuccess(event.data);
+            update(event.data);
+        }
+    }
+
+    function setMessageInnerHTML(innerHTML) {
+        //document.getElementById("message").innerHTML += innerHTML + "<br/>";
+    }
+    function closeWebSocket() {
+        ws.close();
+    }
+    function send() {
+        var message = document.getElementById("text").value;
+        ws.send(message);
+    }
+
+    if ('WebSocket' in window) {
+        createWebSocket(wsUrl);
+    } else {
+        all.showMsg("你的浏览器不支持WebSocket",{time:0});
+    }
+
+    //关闭 websocket 连接前的操作
+    ws.onbeforeunload = function () {
+        websocket.close();
+    }
+
+    ////////////////////////////////UI
+    var ray = "<span class=\"waitray\">_</span>";
+    window.setInterval(doRay, 500);
+    var waitray = 0;
+    function doRay(){
+        waitray++;
+        if(waitray == 1) $(".waitray").text("_");
+        else if(waitray == 2) $(".waitray").text(" ");
+        else{
+            waitray = 0;
+            $(".waitray").text("_");
+        }
+    }
+
+    var waitsign = 0;
+    window.setInterval(dowait, 1000);
+    function dowait() {
+        if (waitsign == 6) {
+            waitsign = 1;
+            $("#waitspan").text(".");
+        } else {
+            $("#waitspan").text($("#waitspan").text() + ".");
+            waitsign++;
+        }
+        
+    }
+
+    function printNow(opt) {
+        var day = "";
+        var month = "";
+        var ampm = "";
+        var ampmhour = "";
+        var year = "";
+        var myHours = "";
+        var myMinutes = "";
+        var mySeconds = "";
+        mydate = new Date();
+        mymonth = parseInt(mydate.getMonth() + 1) < 10 ? "0"
+                + (mydate.getMonth() + 1) : mydate.getMonth() + 1;
+        myday = mydate.getDate();
+        myyear = mydate.getYear();
+        myHours = mydate.getHours();
+        myMinutes = mydate.getMinutes();
+        mySeconds = parseInt(mydate.getSeconds()) < 10 ? "0"
+                + mydate.getSeconds() : mydate.getSeconds();
+        year = (myyear > 200) ? myyear : 1900 + myyear;
+        $(opt).text(
+                year + "-" + mymonth + "-" + myday + " " + myHours + ":"
+                        + myMinutes + ":" + mySeconds);
+        setTimeout("printNow(\"" + opt + "\")", 1000);
+    }
+    printNow("#nowtime");
+    var contentData = "";
+    //此方法由window.parent.update进行调用
+    function update(data) {
+        var color = "#00FFFF";
+        if (data.indexOf('[INFO]') >= 0)
+            color = "#3385FF";
+        else if (data.indexOf('[WARN]') >= 0)
+            color = "yellow";
+        else if (data.indexOf('[ERROR]') >= 0)
+            color = "red";
+        data = data.replace("[", " [<font class='istyle' color='"+color+"'>");
+        data = data.replace("]", "</font>]<font class='istyle'>");
+        data += "</font>"
+        var resultArea = $('#result')[0];
+        contentData += data;
+        resultArea.innerHTML = contentData + "&nbsp;&nbsp;"+ ray;
+        contentData += "<br/>";
+        if (!locked) {
+	        boxScroll($("#repre"));
+        }
+    }
+
+    //向后台发送请求打印log
+    $("#mockData").on("click",function(){
+        window.setInterval(testlog, 2000);
+        function testlog(){
+            $.ajax({url:"#(CP0)/logmonitor/mockLog",async:true});
+        }
+    });
+    //向后台发送请求打印log
+    $("#clearLog").on("click",function(){
+        $('#result').text('');
+        contentData = '';
+    });
+     //切换事件
+    //锁定滚动条，有时需要往回滚查看日志
+    $('[data-toggle="tooltip"]').tooltip();
+    var locked = false;
+    $(function(){
+        $("#lockScroll").on('click',function(){
+            var text0 = $(this).text();
+            if (text0.indexOf('解锁')>-1) {
+                $(this).text('');
+                $(this).append('<i class="icon icon-lock"></i> 锁定');
+                $(this).attr("data-original-title","点击锁定滚动条不随内容滚动到底部");
+                locked = false;
+            } else {
+                $(this).text('');
+                $(this).append('<i class"<i class="icon icon-unlock-alt"></i> 解锁');
+                $(this).attr("data-original-title","点击解锁滚动条时时保持底部以便查看最新日志");
+                locked = true;
+            }
+        });
+    });
+
+    //始终保持滚动条在最底部
+    function boxScroll(o){
+        o.scrollTop(o[0].scrollHeight);
+    }
+
+</script>
+</body>
+</html>

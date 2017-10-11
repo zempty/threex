@@ -1,4 +1,4 @@
-package com.zhu2chu.all.test.websocket;
+package com.zhu2chu.all.bus.log4j2.appender.websocket;
 
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -10,7 +10,11 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
+ * 2017年10月11日 09:22:25
  * ━━━━━━神兽出没━━━━━━  
  *　　　┏┓　　　┏┓  
  *　　┏┛┻━━━┛┻┓  
@@ -32,48 +36,50 @@ import javax.websocket.server.ServerEndpoint;
  *  
  * ━━━━━━感觉萌萌哒━━━━━━  
  */
-@ServerEndpoint("/websocket/server")
-public class AllWebSocket {
-    private static int onlineCount = 0;
+@ServerEndpoint("/websocket/log/webpage")
+public class WebPageWebSocket {
 
-    private static CopyOnWriteArraySet<AllWebSocket> webSocketSet = new CopyOnWriteArraySet<AllWebSocket>();
+    private static final Logger log = LogManager.getLogger(WebPageWebSocket.class);
 
+    static CopyOnWriteArraySet<WebPageWebSocket> allSocket = new CopyOnWriteArraySet<WebPageWebSocket>();
     private Session session;
+    private static int onlineCount = 0;
 
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        webSocketSet.add(this);
+        allSocket.add(this);
         addOnlineCount();
-        System.out.println("有新连接加入！当前在线人数为：" + onlineCount);
-        System.out.println(this);
+        if (log.isInfoEnabled()) {
+            log.info("有新连接加入！当前查看日志人数为：" + onlineCount);
+        }
     }
 
     @OnClose
     public void onClose() {
-        webSocketSet.remove(this);
+        allSocket.remove(this);
         subOnlineCount();
-        System.out.println("有一连接掉线！当前在线人数为：" + onlineCount);
+        if (log.isInfoEnabled()) {
+            log.info("有一连接掉线！当前查看日志人数为：" + onlineCount);
+        }
     }
 
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("来自客户端的消息：" + message);
+        if (log.isInfoEnabled()) {
+            log.info("来自客户端的消息：" + message);
+        }
 
-        for (AllWebSocket item : webSocketSet) {
-            if ("HeartBeat".equals(message)) {//如果是心跳包
-                if (this == item) {
-                    item.sendMessage("心跳回复");
-                }
-                continue;
-            }
+        for (WebPageWebSocket item : allSocket) {
             item.sendMessage(message);
         }
     }
 
     @OnError
     public void onError(Session session, Throwable error) {
-        System.out.println("发生错误");
+        if (log.isInfoEnabled()) {
+            log.info("websocket连接发生错误");
+        }
         error.printStackTrace();
     }
 
@@ -90,10 +96,11 @@ public class AllWebSocket {
     }
 
     public static synchronized void addOnlineCount() {
-        AllWebSocket.onlineCount++;
+        WebPageWebSocket.onlineCount++;
     }
 
     public static synchronized void subOnlineCount() {
-        AllWebSocket.onlineCount--;
+        WebPageWebSocket.onlineCount--;
     }
+
 }

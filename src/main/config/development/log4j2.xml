@@ -3,7 +3,7 @@
 <!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出，可用于对log4j2进行故障检测 -->
 <!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，单位是s,最小是5s-->
 <!-- 设置log4j2的自身log级别为warn -->
-<configuration status="WARN" monitorInterval="30">
+<configuration status="WARN" monitorInterval="30" packages="com.zhu2chu.all.bus.log4j2.appender">
     <!-- 正如你所想，这里可以跟maven一样定义一些属性，而后使用 -->
     <properties>
         <property name="projectName">all</property>
@@ -14,9 +14,15 @@
 		<!--这个输出控制台的配置 -->
 		<!-- target:SYSTEM_OUT 或 SYSTEM_ERR,一般只设置默认:SYSTEM_OUT. -->
 		<console name="Console" target="SYSTEM_OUT">
-		    <ThresholdFilter level="error" /><!-- 这里若不设置，将继承ROOT的级别 -->
+		    <ThresholdFilter level="info" /><!-- 这里若不设置，将继承ROOT的级别 -->
 			<!--输出日志的格式 -->
 			<!-- 请注意：[ %l]里面必须以空格开头，不然在eclipse下点击跳不到源码对应的行 -->
+			<!-- %n%-d{yyyy-MM-dd HH:mm:ss.SSS} %n[月步-%p]-[Thread: %t]-[ %logger.%M(%c:%L)]:%n  %m%n -->
+			<!-- log4j1时代能用%l取得日志发生的位置，log4j2时代取得的是jfinal代理类的行号，不科学 -->
+			<!-- %c{1}是取得日志记录所在位置的类名 -->
+			<!-- %logger.%M(%c{1}.java:%L) 没法完全解决问题，只能不用代理类了 -->
+			<!-- 有人说追踪堆栈开销很大的，线上环境要关闭 -->
+			<!-- 线上最简：%d %-5p: %m%n -->
 			<PatternLayout pattern="%n%-d{yyyy-MM-dd HH:mm:ss.SSS} %n[月步-%p]-[Thread: %t]-[ %l]:%n  %m%n" />
 		</console>
 		<!-- File节点用来定义输出到指定位置的文件的Appender -->
@@ -56,14 +62,18 @@
 		</RollingFile>
 		<RollingFile name="RollingFileError" fileName="logs/${projectName}/error.log"
 			filePattern="logs/${projectName}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
-			<ThresholdFilter level="error" onMatch="ACCEPT"
-				onMismatch="DENY" />
+			<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy />
 				<SizeBasedTriggeringPolicy size="100MB" />
 			</Policies>
 		</RollingFile>
+		<!-- 自定义appender -->
+		<WebPage name="com.zhu2chu.webpage">
+		    <ThresholdFilter level="info" />
+		    <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss.SSS} %n[月步-%p]-[Thread: %t]-[ %l]:%n  %m" />
+		</WebPage>
 	</appenders>
 	<!--然后定义logger，只有定义了logger并引入的appender，appender才会生效 -->
 	<!-- Loggers节点，常见的有两种:Root和Logger -->
@@ -74,6 +84,7 @@
 		<root level="all">
 			<appender-ref ref="Console" />
 			<appender-ref ref="log" />
+			<appender-ref ref="com.zhu2chu.webpage" />
 			<appender-ref ref="RollingFileInfo" />
 			<!-- <appender-ref ref="RollingFileWarn" /> -->
 			<appender-ref ref="RollingFileError" />
