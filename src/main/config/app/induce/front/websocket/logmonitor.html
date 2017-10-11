@@ -37,6 +37,8 @@ html,body {
     <span id="nowtime"></span> 正在嗅探,请稍后(Sniffing,please hold on)
     <span id="waitspan"></span>
     <div style="display:inline-block;float:right;margin-right:40px;">
+        <button id="connect" class="btn btn-warning btn-sm"><i class="icon icon-flag"></i> 连接</button>
+        <button id="close" class="btn btn-danger btn-sm"><i class="icon icon-off"></i> 关闭</button>
 	    <button id="mockData" class="btn btn-primary btn-sm"><i class="icon icon-database"></i> 模拟数据</button>
 	    <button id="lockScroll" class="btn btn-warning btn-sm" data-toggle="tooltip" title="点击锁定滚动条不随内容滚动到底部" data-placement="bottom"><i class="icon icon-lock"></i> 锁定</button>
 	    <button id="clearLog" class="btn btn-danger btn-sm" data-toggle="tooltip" title="点击清空控制台日志" data-placement="bottom"><i class="icon icon-trash"></i> 清空</button>
@@ -52,6 +54,7 @@ html,body {
 #@busJS()#@zuiJS()
 <script>
     var ws = null;
+    var lockConnect = false;
     var lockReconnect = false;//避免重复连接
     var wsUrl = '#(websocketPath)#(CP0)'+"/websocket/log/webpage";
 
@@ -180,16 +183,34 @@ html,body {
     }
 
     //向后台发送请求打印log
+    var timer;
     $("#mockData").on("click",function(){
-        window.setInterval(testlog, 2000);
+    	timer = window.setInterval(testlog, 2000);
         function testlog(){
             $.ajax({url:"#(CP0)/logmonitor/mockLog",async:true});
         }
     });
-    //向后台发送请求打印log
+    //清空页面
     $("#clearLog").on("click",function(){
         $('#result').text('');
         contentData = '';
+    });
+    //连接websocket
+    $("#connect").on("click",function(){
+        if (!lockConnect) {
+            ws = new WebSocket(wsUrl);
+            initEventHandle();
+            lockConnect = true;
+        } else {
+            new $.zui.Messager("已连接",{time:1000}).show();
+        }
+    });
+    //断开websocket
+    $("#close").on("click",function(){
+        ws.close();
+        lockConnect = false;
+        new $.zui.Messager("已关闭",{time:1000}).show();
+        clearInterval(timer);
     });
      //切换事件
     //锁定滚动条，有时需要往回滚查看日志
