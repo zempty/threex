@@ -5,7 +5,7 @@
 <title>zui进度条</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-#@zuiCSS()#@fontCSS()
+#@zuiCSS()#@fontCSS()#@paceCSS()
 #@ltIE9()
 </head>
 <body>
@@ -69,7 +69,7 @@
     <button onclick="trickDecode()">trick Base64解码</button>
 	<br>
 	<textarea id="output" cols="80" rows="10" readonly></textarea>
-	#@jqueryJS()#@zuiJS()#@base64JS()#@cryptoJS()
+	#@jqueryJS()#@zuiJS()#@base64JS()#@cryptoJS()#@paceJS()
 	<script>
 	    $(".progress").on("mouseover",function(){
 	        var num = Math.round(Math.random()*100)+"%";
