@@ -652,6 +652,8 @@
         }
     };
 
+    //加载css文件
+
     //绑定扩展的日期对象到misc对象身上
     misc.datee = dateExt;
     // 绑定misc到window对象里，才能在外面使用
