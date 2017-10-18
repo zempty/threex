@@ -14,7 +14,6 @@ import java.util.jar.JarFile;
 
 import com.jfinal.kit.PathKit;
 import com.jfinal.log.Log;
-import com.xiaoleilu.hutool.util.ClassUtil;
 
 public class ClassKit {
 
@@ -153,7 +152,7 @@ public class ClassKit {
 	public static ClassLoader getClassLoader() {
         ClassLoader classLoader = getContextClassLoader();
         if (classLoader == null) {
-            classLoader = ClassUtil.class.getClassLoader();
+            classLoader = ClassKit.class.getClassLoader();
             if(null == classLoader){
                 classLoader = ClassLoader.getSystemClassLoader();
             }
@@ -175,7 +174,7 @@ public class ClassKit {
      * @return 资源URL
      */
     public static URL getURL(String resource) {
-        return ClassUtil.getClassLoader().getResource(resource);
+        return ClassKit.getClassLoader().getResource(resource);
     }
 
     /**

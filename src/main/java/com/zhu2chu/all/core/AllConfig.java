@@ -61,8 +61,8 @@ public class AllConfig extends JFinalConfig {
         r.add("/test/websocket", WebSocketController.class, "/induce/front/websocket");
         //RouterKit.scanController(r.getClass(), r);
 
-        List<Route> centerRoutes = r.getRouteItemList();
-        if (p.getBoolean("devMode")) {// 如果是开发模式，我们就打印中心路由的添加信息
+        if (p.getBoolean("devMode", false)) {// 如果是开发模式，我们就打印中心路由的添加信息
+            List<Route> centerRoutes = r.getRouteItemList();
             for (Route rt : centerRoutes) {
                 Class<? extends Controller> ctlClass = rt.getControllerClass();
                 if (log.isDebugEnabled()) {
