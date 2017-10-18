@@ -69,6 +69,8 @@
     <button onclick="trickDecode()">trick Base64解码</button>
 	<br>
 	<textarea id="output" cols="80" rows="10" readonly></textarea>
+	<button id="progress0" class="btn btn-success">点击载入进度条</button>
+	<button id="progress1" class="btn btn-danger">点击停止进度条</button>
 	#@jqueryJS()#@zuiJS()#@base64JS()#@cryptoJS()#@paceJS()
 	<script>
 	    $(".progress").on("mouseover",function(){
@@ -93,9 +95,11 @@
 	        var $btn = $(this);
 	        $btn.button("loading");
 
+	        Pace.restart();
 	        // 此处使用 setTimeout 来模拟你的复杂功能逻辑
 	        setTimeout(function() {
 	            $btn.button('reset');
+	            Pace.stop();
 	        }, 2000);
 	    });
 
@@ -135,6 +139,17 @@
             var decoded = BASE64.trickDecode(raw);
             document.getElementById("output").value = decoded;
         }
+
+	    /////////////进度条相关
+	    $("#progress0").on("click",function(){
+	        Pace.restart();//开启进度条
+	    });
+	    $("#progress1").on("click",function(){
+            Pace.stop();//如果上面使用Pace.start()，得stop才能再次打开进度条。直接用restart会自动做这个事
+        });
+	    Pace.on("done",function(){
+	        
+	    });
     </script>
 </body>
 </html>

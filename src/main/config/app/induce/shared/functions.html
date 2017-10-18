@@ -51,6 +51,22 @@
 <script src="#(CP0)/assets/modules/sparkmd5/spark-com.js"></script>
 #end
 #define paceJS()
+<script>
+###要“覆盖”属性必须在引入pace.js前加载，因为它是在初始化的时候读取这个变量并拷贝，如果写在后面就没意义了
+window.paceOptions = {
+    ajax: false, // disabled
+    document: true, // enabled
+    eventLag: false, // disabled
+    elements: {
+        #--
+        -数组内一个元素中用逗号分隔的意义.timeline,.timeline-error，前一个是要找的元素，后一个是错误处理状态
+        -一个元素内的逗相当于'或'，只有数组中每个元素中至少找到一个才算加载完成['.htt,body','.ss,dadfs']
+        --#
+        selectors:['.o']
+    },
+    startOnPageLoad:false
+}
+</script>
 <script src="#(CP0)/assets/modules/pace/pace.js"></script>
 #end
 
@@ -69,7 +85,7 @@
 <link rel="stylesheet" href="#(CP0)/assets/central/css/all.css" />
 #end
 #define paceCSS()
-<link rel="stylesheet" href="#(CP0)/assets/modules/pace/themes/black/pace-theme-material.css" />
+<link rel="stylesheet" href="#(CP0)/assets/modules/pace/themes/yellow/pace-theme-loading-bar.css" />
 #end
 
 #define ltIE9()
