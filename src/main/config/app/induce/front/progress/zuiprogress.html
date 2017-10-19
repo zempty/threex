@@ -5,8 +5,26 @@
 <title>zui进度条</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-#@zuiCSS()#@fontCSS()#@paceCSS()
+#@zuiCSS()#@fontCSS()#@paceCSS()#@colpickCSS()
 #@ltIE9()
+<style>
+.color-box {
+    float:left;
+    width:30px;
+    height:30px;
+    margin:5px;
+    border: 1px solid white;
+}
+#picker0 {
+    margin:0;
+    padding:0;
+    border:0;
+    width:90px;
+    height:30px;
+    border-right:18px solid green;
+    line-height:30px;
+}
+</style>
 </head>
 <body>
     <h1>进度条</h1>
@@ -71,7 +89,9 @@
 	<textarea id="output" cols="80" rows="10" readonly></textarea>
 	<button id="progress0" class="btn btn-success">点击载入进度条</button>
 	<button id="progress1" class="btn btn-danger">点击停止进度条</button>
-	#@jqueryJS()#@zuiJS()#@base64JS()#@cryptoJS()#@paceJS()
+	<div class="color-box"></div>
+	<input type="text" id="picker0" class="btn"></input>
+	#@jqueryJS()#@zuiJS()#@base64JS()#@cryptoJS()#@paceJS()#@colpickJS()
 	<script>
 	    $(".progress").on("mouseover",function(){
 	        var num = Math.round(Math.random()*100)+"%";
@@ -149,6 +169,50 @@
         });
 	    Pace.on("done",function(){
 	        
+	    });
+	    //颜色选择器
+	    $(".color-box").colpick({
+	        flat:false,//true直接展示为颜色选择器，false展示为选择的按钮。对input初始化的似乎没效果
+	        layout:'rgbhex',//三种模式 full/rgbhex/hex
+	        colorScheme:'dark',//light或dark
+	        submit:true,//true显示OK按钮
+	        submitText:'确定',//OK按钮的值。默认值：'OK'
+	        color:'ef32aa',//颜色选择器弹出后的默认颜色
+	        showEvent:'click',//触发元素的什么事件弹出选择器，默认值'click'
+	        livePreview:false,//不懂
+	        onBeforeShow:function(el) {//展现颜色选择器前发生的事件
+	        },
+	        onShow:function(el){//颜色选择器现身后发生的事件
+	        },
+	        onHide:function(el){//颜色选择器隐藏时发生的事件
+            },
+            onChange:function(hsb,hex,rgb,el,bySetColor){//颜色选择器的颜色改变时发生的事件
+                /**回调传进的参数(同onSubmit)
+                HSB object (如 {h:0, s:100, b:100})
+                HEX string (没有'#'开头的16进制颜色值)
+                RGB object(如 {r:255, g:0, b:0})
+                el element, the parent element on which colorpicker() was called. Use it to modify this parent element on change (see first example below).
+                bySetColor flag: if true, the onChange callback was fired by the colpickSetColor function and not by the user changing the color directly in the picker. There are some cases in which you'll want a different behaviour in this case (see last example).
+                */
+            },
+	        onSubmit:function(hsb,hex,rgb,el){//点击OK按钮发生的事。如果submit不为true，则不会触发
+	            debugger;
+	            $(el).css('background-color','#'+hex);
+	            $(el).colpickHide();//点击OK按钮隐藏面板
+	        }
+	    }).css('background-color', '#ff8800');
+	    $("#picker0").colpick({
+	        flat:false,
+	        layout:'full',
+	        submit:0,//true为展示OK按钮
+	        colorScheme:'dark',
+	        onChange:function(hsb,hex,rgb,el,bySetColor) {
+	            $(el).css('border-color','#'+hex);
+	            // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
+	            if(!bySetColor) $(el).val('#'+hex);
+	        }
+	    }).keyup(function(){
+	        $(this).colpickSetColor(this.value);
 	    });
     </script>
 </body>
