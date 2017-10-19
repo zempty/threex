@@ -1136,4 +1136,25 @@
 	};
 	//暴露给window
 	window['Bee'] = Bee;
+
+	////////下面是扩展的方法
+	//根据月份返回季度
+	Bee.DateUtils.getQuarter = function (month) {
+	    if (month <= 3) {
+	        return 1;
+	    } else if (month <= 6) {
+	        return 2;
+	    } else if (month <= 9) {
+	        return 3;
+	    } else if (month <= 12) {
+	        return 4;
+	    }
+	};
+	//获取当前季度
+	Bee.DateUtils.getCrtQuarter = function () {
+	    var now = new Date();
+	    var month = now.getMonth()+1;
+
+	    return this.getQuarter(month);
+	};
 })();
