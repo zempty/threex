@@ -18,7 +18,7 @@
 		<jfinal-mail-plugin.version>2.2</jfinal-mail-plugin.version>
 		<cron4j.version>2.2.5</cron4j.version>
 		<dom4j.version>1.6.1</dom4j.version>
-		<joda.version>2.9.7</joda.version>
+		<joda.version>2.9.9</joda.version>
 		<netty.version>4.1.10.Final</netty.version>
 		<tomcat.embed.version>8.0.45</tomcat.embed.version>
 		<tomcat.embed.scope>compile</tomcat.embed.scope>
