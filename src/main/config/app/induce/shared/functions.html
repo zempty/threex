@@ -72,6 +72,9 @@ window.paceOptions = {
 #define colpickJS()
 <script src="#(CP0)/assets/modules/color/colpick/js/colpick.js"></script>
 #end
+#define easyuiJS()
+<script src="#(CP0)/assets/modules/ui/easyui/jquery.easyui.min.js"></script>
+#end
 
 ###下面是css文件
 #define zuiCSS()
@@ -95,6 +98,36 @@ window.paceOptions = {
 #end
 #define colpickCSS()
 <link rel="stylesheet" href="#(CP0)/assets/modules/color/colpick/css/colpick.css" />
+#end
+#define easyuiCSS()
+<link rel="stylesheet" href="#(CP0)/assets/modules/ui/easyui/themes/material/easyui.css" />
+<link rel="stylesheet" href="#(CP0)/assets/modules/ui/easyui/themes/icon.css" />
+<style>
+body {
+    font-family:verdana,helvetica,arial,sans-serif;
+    padding:20px;
+    font-size:12px;
+    margin:0;
+}
+h2 {
+    font-size:18px;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+.demo-info{
+    padding:0 0 12px 0;
+}
+.demo-tip{
+    display:none;
+}
+.label-top{
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    vertical-align: middle;
+}
+</style>
 #end
 
 #define ltIE9()
