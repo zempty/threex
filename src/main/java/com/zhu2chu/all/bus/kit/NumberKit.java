@@ -63,6 +63,9 @@ public class NumberKit {
     public static boolean isDecimalNoSign(String orginal) {
         return isPositiveDecimalNoSign(orginal) || isNegativeDecimal(orginal);
     }
+    public static boolean isRealNumberNoSign(String orginal) {
+        return isWholeNumberNoSign(orginal) || isDecimalNoSign(orginal);
+    }
 
     /////////////////////////////以下是其它功能
     /**
