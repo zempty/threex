@@ -1,12 +1,11 @@
 package com.zhu2chu.all.bus.directive.assets;
 
-import java.io.Writer;
-
 import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.Const;
 import com.jfinal.template.expr.ast.Expr;
 import com.jfinal.template.expr.ast.ExprList;
+import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.ParseException;
 import com.jfinal.template.stat.Scope;
 
