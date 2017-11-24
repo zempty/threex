@@ -22,46 +22,84 @@ public class NumberKit {
         return isNum.matches();
     }
 
+    /**
+     * 是正整数吗?
+     * 
+     * @param orginal
+     * @return
+     */
     public static boolean isPositiveInteger(String orginal) {
         return isMatch("^\\+{0,1}[1-9]\\d*", orginal);
     }
 
+    /**
+     * 是负整数吗?
+     * 
+     * @param orginal
+     * @return
+     */
     public static boolean isNegativeInteger(String orginal) {
         return isMatch("^-[1-9]\\d*", orginal);
     }
 
+    /**
+     * 是正数字吗?
+     * @param orginal
+     * @return
+     */
     public static boolean isWholeNumber(String orginal) {
         return isMatch("[+-]{0,1}0", orginal) || isPositiveInteger(orginal) || isNegativeInteger(orginal);
     }
 
+    /**
+     * 是正小数吗?
+     * 
+     * @param orginal
+     * @return
+     */
     public static boolean isPositiveDecimal(String orginal) {
         return isMatch("\\+{0,1}[0]\\.[1-9]*|\\+{0,1}[1-9]\\d*\\.\\d*", orginal);
     }
 
+    /**
+     * 是负小数吗?
+     * @param orginal
+     * @return
+     */
     public static boolean isNegativeDecimal(String orginal) {
         return isMatch("^-[0]\\.[1-9]*|^-[1-9]\\d*\\.\\d*", orginal);
     }
 
+    /**
+     * 是小数吗?
+     * @param orginal
+     * @return
+     */
     public static boolean isDecimal(String orginal) {
         return isMatch("[-+]{0,1}\\d+\\.\\d*|[-+]{0,1}\\d*\\.\\d+", orginal);
     }
 
+    /**
+     * 是数字吗?
+     * @param orginal
+     * @return
+     */
     public static boolean isRealNumber(String orginal) {
         return isWholeNumber(orginal) || isDecimal(orginal);
     }
 
     ////////////////无符号，有时我们不需要+号来判断正数，即使是+5.6这样的数我们也认为不合法，则使用如下方法
     public static boolean isPositiveIntegerNoSign(String orginal) {
-        return isMatch("^[1-9]\\d*", orginal);
+        return isMatch("^\\+{0}[1-9]\\d*", orginal);
     }
     public static boolean isPositiveDecimalNoSign(String orginal) {
-        return isMatch("[0]\\.[1-9]*|[1-9]\\d*\\.\\d*", orginal);
+        return isMatch("\\+{0}[0]\\.[1-9]*|\\+{0}[1-9]\\d*\\.\\d*", orginal);
     }
     public static boolean isWholeNumberNoSign(String orginal) {
         return isMatch("[-]{0,1}0", orginal) || isPositiveIntegerNoSign(orginal) || isNegativeInteger(orginal);
     }
     public static boolean isDecimalNoSign(String orginal) {
-        return isPositiveDecimalNoSign(orginal) || isNegativeDecimal(orginal);
+        return isMatch("[-]{0,1}\\d+\\.\\d*|[-]{0,1}\\d*\\.\\d+", orginal);
     }
     public static boolean isRealNumberNoSign(String orginal) {
         return isWholeNumberNoSign(orginal) || isDecimalNoSign(orginal);
