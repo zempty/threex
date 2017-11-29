@@ -8,7 +8,9 @@
 <style>
 html,body {
     height:100%;
-    color: #2f332a;font: 15px/21px Arial, Helvetica, simsun, sans-serif;background: #528036 url(http://www.treejs.cn/v3/img/background.jpg) no-repeat fixed 0 0;
+    color: #2f332a;
+    font: 15px/21px Arial, Helvetica, simsun, sans-serif;
+    background: #528036 url(http://www.treejs.cn/v3/img/background.jpg) no-repeat fixed 0 0;
 }
 #bg {
     width:600px;
@@ -20,15 +22,21 @@ html,body {
 <body>
  <div id="demo">可以了吗</div>
  <div id="bg" class="content-box round clearfix">这是背景颜色</div>
+ <textarea id="editor" style="display:none;"></textarea>
 <!-- 你的HTML代码 -->
  
 #@layuiJS()
 <script>
 //一般直接写在一个js文件中
-layui.use(['layer', 'form'], function(){
+layui.use(['layer','form','layedit'], function(){
   var layer = layui.layer
-  ,form = layui.form;
-  
+  ,form = layui.form
+  ,layedit = layui.layedit;
+
+  layedit.build("editor", {
+      width:'400px',
+      height:'200px'
+  });
 
   var index = layer.msg("请稍等...", {
       icon:16,
