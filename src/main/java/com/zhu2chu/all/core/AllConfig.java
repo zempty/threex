@@ -52,7 +52,7 @@ public class AllConfig extends JFinalConfig {
     @Override
     public void configConstant(Constants c) {
         c.setDevMode(p.getBoolean("devMode", false));
-        c.setLogFactory(new Log4j2LogFactory());
+        //c.setLogFactory(new Log4j2LogFactory());
         //c.setViewType(ViewType.FREE_MARKER);
     }
 
