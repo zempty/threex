@@ -1,9 +1,11 @@
 package com.zhu2chu.all.test.file;
 
-import java.io.File;
-import java.io.FileFilter;
+import java.io.UnsupportedEncodingException;
 
 import com.jfinal.log.Log;
+import com.xiaoleilu.hutool.lang.Base64;
+import com.xiaoleilu.hutool.util.NumberUtil;
+import com.zhu2chu.all.bus.kit.NumberKit;
 
 public class FileMain {
 
@@ -19,7 +21,7 @@ public class FileMain {
         FileKit.writeBase64(srcFilename, srcFilename2, 1024);*/
         // FileKit.readBase64(srcFilename2, srcFilename3);
 
-        File file = new File("D:\\360Downloads\\wu_1bpo6fihe16jd1jlr1eo1jc1k30ta");
+        /*File file = new File("D:\\360Downloads\\wu_1bpo6fihe16jd1jlr1eo1jc1k30ta");
         File[] array = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
@@ -34,7 +36,9 @@ public class FileMain {
         String s = "D:\\360Downloads\\"+"\u0000"+"wu_1bpo6fihe16jd1jlr1eo1jc1k30ta";
         //FileKit.nioTransferCopy(srcFilename, srcFilename3);
         System.out.println(s.indexOf("\u0000")<0);
-        System.out.println("file.exists:"+file.exists());
+        System.out.println("file.exists:"+file.exists());*/
+
+        System.out.println(NumberKit.isPositiveIntegerNoSign("99.0"));
     }
 
 }
