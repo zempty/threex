@@ -1,5 +1,8 @@
 package com.zhu2chu.all.bus.kit;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -98,6 +101,31 @@ public class TimeKit {
      */
     public static String millisToDateTime(long timeMillis) {
         return millisToDateTime("yyyy-MM-dd HH:mm:ss", timeMillis);
+    }
+
+    /**
+     * 是否有效的指定的日期格式
+     * 
+     * @param dateStr
+     * @param format
+     * @return
+     */
+    public static boolean isValidDateFormat(String dateStr, String format) {
+        boolean convertSuccess = true;
+        if (format==null || "".equals(format)) {
+            return false;
+        }
+        // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            // 设置lenient为false. 否则SimpleDateFormat会比较宽松地验证日期，比如2007/02/29会被接受，并转换成2007/03/01
+            sdf.setLenient(false);
+            sdf.parse(dateStr);
+        } catch (ParseException e) {
+            convertSuccess = false;
+        }
+
+        return convertSuccess;
     }
 
 }
