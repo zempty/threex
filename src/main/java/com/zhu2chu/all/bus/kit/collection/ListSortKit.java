@@ -1,12 +1,15 @@
-package com.zhu2chu.all.bus.kit;
+package com.zhu2chu.all.bus.kit.collection;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import com.jfinal.plugin.activerecord.Record;
 
 /**
  * 2017年10月22日 17:41:19 来自：http://blog.csdn.net/lk_blog/article/details/12804873
@@ -293,8 +296,43 @@ public class ListSortKit {
         return flag;
     }
 
-    public static void main(String[] args) throws Exception {
-
+    /**
+     * 对jfinal的Record进行排序，只支持数字型字段
+     * 
+     * @param list
+     * @param sortColunm
+     * @param asc true为升序，false为降序
+     * @return
+     */
+    public static List<Record> sort(List<Record> list, String sortColunm, boolean asc) {
+        if (list != null) {
+            if (asc) {
+                for (int i = 0; i < list.size(); i++) {
+                    for (int j = 0; j < list.size() - i - 1; j++) {
+                        float a = new BigDecimal(list.get(j).get(sortColunm).toString().trim()).floatValue();
+                        float b = new BigDecimal(list.get(j + 1).get(sortColunm).toString().trim()).floatValue();
+                        if (a > b) {
+                            Record r = list.get(j);
+                            list.set(j, list.get(j + 1));
+                            list.set(j + 1, r);
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i < list.size(); i++) {
+                    for (int j = 0; j < list.size() - 1; j++) {
+                        float a = new BigDecimal(list.get(i).get(sortColunm).toString().trim()).floatValue();
+                        float b = new BigDecimal(list.get(j).get(sortColunm).toString().trim()).floatValue();
+                        if (a > b) {
+                            Record r = list.get(i);
+                            list.set(i, list.get(j));
+                            list.set(j, r);
+                        }
+                    }
+                }
+            }
+        }
+        return list;
     }
 
 }
