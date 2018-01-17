@@ -43,7 +43,7 @@ public class NumberKit {
     }
 
     /**
-     * 是正数字吗?
+     * 是整数吗?
      * @param orginal
      * @return
      */
@@ -76,7 +76,7 @@ public class NumberKit {
      * @return
      */
     public static boolean isDecimal(String orginal) {
-        return isMatch("[-+]{0,1}\\d+\\.\\d*|[-+]{0,1}\\d*\\.\\d+", orginal);
+        return isPositiveDecimal(orginal) || isNegativeDecimal(orginal);
     }
 
     /**
@@ -86,23 +86,6 @@ public class NumberKit {
      */
     public static boolean isRealNumber(String orginal) {
         return isWholeNumber(orginal) || isDecimal(orginal);
-    }
-
-    ////////////////无符号，有时我们不需要+号来判断正数，即使是+5.6这样的数我们也认为不合法，则使用如下方法
-    public static boolean isPositiveIntegerNoSign(String orginal) {
-        return isMatch("^\\+{0}[1-9]\\d*", orginal);
-    }
-    public static boolean isPositiveDecimalNoSign(String orginal) {
-        return isMatch("\\+{0}[0]\\.[1-9]*|\\+{0}[1-9]\\d*\\.\\d*", orginal);
-    }
-    public static boolean isWholeNumberNoSign(String orginal) {
-        return isMatch("[-]{0,1}0", orginal) || isPositiveIntegerNoSign(orginal) || isNegativeInteger(orginal);
-    }
-    public static boolean isDecimalNoSign(String orginal) {
-        return isMatch("[-]{0,1}\\d+\\.\\d*|[-]{0,1}\\d*\\.\\d+", orginal);
-    }
-    public static boolean isRealNumberNoSign(String orginal) {
-        return isWholeNumberNoSign(orginal) || isDecimalNoSign(orginal);
     }
 
     /////////////////////////////以下是其它功能
