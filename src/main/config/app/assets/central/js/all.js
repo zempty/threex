@@ -52,7 +52,7 @@
                 var top = getTopWinow();
                 var yes = confirm('由于您长时间没有操作，session已过期，请重新登录');
                 if (yes) {
-                    top.location.href = '/login';
+                    top.location.replace('/login');
                 }
             }
         }
