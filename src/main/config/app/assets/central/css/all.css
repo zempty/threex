@@ -17,3 +17,15 @@ body .clearfix {
 	display: block;
 }
 /*透明圆角背景end*/
+
+/*css3边框呼吸*/
+@-webkit-keyframes shineBlue {
+    from { -webkit-box-shadow: 0 0 9px #333; }
+    50% { -webkit-box-shadow: 0 0 18px #2413a2; }
+    to { -webkit-box-shadow: 0 0 9px #333; }
+}
+.shine-blue{
+-webkit-animation-name: shineBlue; 
+-webkit-animation-duration: 3s;
+-webkit-animation-iteration-count: infinite; 
+}
