@@ -1,6 +1,8 @@
 package com.zhu2chu.all.bus.kit;
 
-import com.xiaoleilu.hutool.lang.Base64;
+import java.nio.charset.Charset;
+
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * 一些小技巧2017年10月6日 23:33:37
@@ -24,7 +26,7 @@ public class Base64Kit {
         for (String[] pair : escapes) {
             base64Str = base64Str.replace(pair[1], pair[0]);
         }
-        return Base64.decodeStr(base64Str);
+        return new String(Base64.decodeBase64(base64Str));
     }
 
     /**
@@ -35,7 +37,7 @@ public class Base64Kit {
      * @return
      */
     public static String trick(String str) {
-        str = Base64.encode(str);
+        str = Base64.encodeBase64String(str.getBytes());
         for (String[] pair : escapes) {
             str = str.replace(pair[0], pair[1]);
         }

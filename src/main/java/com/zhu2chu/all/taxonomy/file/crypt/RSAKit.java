@@ -16,7 +16,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
-import com.xiaoleilu.hutool.lang.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * 2017年11月29日 16:52:10<br>
@@ -55,9 +55,9 @@ public class RSAKit {
         // 私钥
         PrivateKey privateKey = keyPair.getPrivate();
         //得到公钥字符串
-        String publicKeyString = Base64.encode(publicKey.getEncoded());
+        String publicKeyString = Base64.encodeBase64String(publicKey.getEncoded());
         //得到私钥字符串
-        String privateKeyString = Base64.encode(privateKey.getEncoded());
+        String privateKeyString = Base64.encodeBase64String(privateKey.getEncoded());
 
         //将密钥对写入到文件
         FileWriter pubfw = new FileWriter(dir + ".pubkey");
@@ -105,7 +105,7 @@ public class RSAKit {
      * @throws Exception
      */
     public static PublicKey getPublicKey(String publicKeyString) throws Exception {
-        byte[] keyBytes = Base64.decode(publicKeyString);
+        byte[] keyBytes = Base64.decodeBase64(publicKeyString);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePublic(keySpec);
@@ -139,7 +139,7 @@ public class RSAKit {
      * @throws Exception
      */
     public static PrivateKey getPrivateKey(String privateKeyString) throws Exception {
-        byte[] keyBytes = Base64.decode(privateKeyString);
+        byte[] keyBytes = Base64.decodeBase64(privateKeyString);
         PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePrivate(spec);

@@ -1,11 +1,6 @@
 package com.zhu2chu.all.test.file;
 
-import java.io.UnsupportedEncodingException;
-
 import com.jfinal.log.Log;
-import com.xiaoleilu.hutool.lang.Base64;
-import com.xiaoleilu.hutool.util.NumberUtil;
-import com.zhu2chu.all.bus.kit.NumberKit;
 
 public class FileMain {
 
@@ -38,7 +33,7 @@ public class FileMain {
         System.out.println(s.indexOf("\u0000")<0);
         System.out.println("file.exists:"+file.exists());*/
 
-        System.out.println(NumberKit.isPositiveIntegerNoSign("99.0"));
+        System.out.println();
     }
 
 }

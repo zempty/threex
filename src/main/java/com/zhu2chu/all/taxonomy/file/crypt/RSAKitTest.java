@@ -3,9 +3,8 @@ package com.zhu2chu.all.taxonomy.file.crypt;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
-
-import com.xiaoleilu.hutool.lang.Base64;
 
 /**
  * RSA加解密工具类
@@ -40,9 +39,9 @@ public class RSAKitTest {
         // 数据加密
         byte[] encryptData = RSAKit.encrypt(privateKey, data.getBytes());
         // 数据传输使用Base64编码传输字符串
-        String encryptDataString = Base64.encode(encryptData);
+        String encryptDataString = Base64.encodeBase64String(encryptData);
         // 数据解密
-        byte[] decryptData = RSAKit.decrypt(publicKey, Base64.decode(encryptDataString));
+        byte[] decryptData = RSAKit.decrypt(publicKey, Base64.decodeBase64(encryptDataString));
         System.out.println("加密前:" + data);
         System.out.println("加密后:" + encryptDataString);
         System.out.println("解密后:" + new String(decryptData));

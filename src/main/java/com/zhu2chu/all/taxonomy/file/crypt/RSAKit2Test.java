@@ -5,9 +5,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.UUID;
 
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
-
-import com.xiaoleilu.hutool.lang.Base64;
 
 /**
  * RSA加解密工具测试类
@@ -39,14 +38,14 @@ public class RSAKit2Test {
         // RSA加密Key
         byte[] encryptKeyBytes = RSAKit2.encrypt(privateKey, aesKey.getBytes());
         // Base64编码后传输
-        String encryptKey = Base64.encode(encryptKeyBytes);
+        String encryptKey = Base64.encodeBase64String(encryptKeyBytes);
         // AES加密Data
         byte[] encryptDataBytes = AESKit.encrypt(data.getBytes(), aesKey.getBytes(), iv.getBytes());
         // Base64编码后传输
-        String encryptData = Base64.encode(encryptDataBytes);
+        String encryptData = Base64.encodeBase64String(encryptDataBytes);
 
         // RSA解密Key
-        byte[] decryptKey = RSAKit2.decrypt(publicKey_client, Base64.decode(encryptKey));
+        byte[] decryptKey = RSAKit2.decrypt(publicKey_client, Base64.decodeBase64(encryptKey));
         byte[] decryptData = AESKit.decrypt(encryptDataBytes, decryptKey, iv.getBytes());
 
         System.out.println("明文key：\n" + aesKey);
