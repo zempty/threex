@@ -1,7 +1,7 @@
 package com.zhu2chu.all.bus.log4j2.appender.websocket;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jfinal.core.Controller;
 import com.zhu2chu.all.bus.router.URIMapping;
@@ -16,7 +16,7 @@ import com.zhu2chu.all.front.FrontRoutes;
 @URIMapping(uri="/logmonitor",routeClass=FrontRoutes.class,viewPath="/websocket")
 public class LogMonitorController extends Controller {
 
-    private static final Logger log = LogManager.getLogger(LogMonitorController.class);
+    private static final Logger log = LoggerFactory.getLogger(LogMonitorController.class);
 
     public void index() {
         render("logmonitor.html");

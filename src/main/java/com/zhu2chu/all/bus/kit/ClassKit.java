@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jfinal.kit.PathKit;
-import com.jfinal.log.Log;
 
 public class ClassKit {
 
-	private static final Log log = Log.getLog(ClassKit.class);
+	private static final Logger log = LoggerFactory.getLogger(ClassKit.class);
 
 	public static <T> List<Class<T>> scanSubClass(Class<T> pclazz) {
 		return scanSubClass(pclazz, false);
@@ -25,7 +27,9 @@ public class ClassKit {
 
 	public static <T> List<Class<T>> scanSubClass(Class<T> pclazz, boolean mustbeCanNewInstance) {
 		if (pclazz == null) {
-			log.error("scanClass: parent class is null");
+		    if (log.isWarnEnabled()) {
+		        log.warn("scanClass: parent class is null");
+		    }
 			return null;
 		}
 
@@ -75,7 +79,9 @@ public class ClassKit {
 
 	public static <T> List<Class<T>> scanSubClass(Class<T> pclazz, File f, boolean mustbeCanNewInstance) {
 		if (pclazz == null) {
-			log.error("scanClass: parent clazz is null");
+		    if (log.isWarnEnabled()) {
+		        log.warn("scanClass: parent clazz is null");
+		    }
 			return null;
 		}
 
@@ -127,7 +133,9 @@ public class ClassKit {
 			ClassLoader cl = Thread.currentThread().getContextClassLoader();
 			clazz = (Class<T>) Class.forName(className, false, cl);
 		} catch (Throwable e) {
-			log.error("classForName is error，className:" + className);
+		    if (log.isWarnEnabled()) {
+		        log.warn("classForName is error，className:" + className);
+		    }
 		}
 		return clazz;
 	}

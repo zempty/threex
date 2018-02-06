@@ -10,8 +10,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 2017年10月11日 09:22:25
@@ -39,7 +39,7 @@ import org.apache.logging.log4j.Logger;
 @ServerEndpoint("/websocket/log/webpage")
 public class WebPageWebSocket {
 
-    private static final Logger log = LogManager.getLogger(WebPageWebSocket.class);
+    private static final Logger log = LoggerFactory.getLogger(WebPageWebSocket.class);
 
     static CopyOnWriteArraySet<WebPageWebSocket> allSocket = new CopyOnWriteArraySet<WebPageWebSocket>();
     private Session session;
