@@ -17,7 +17,7 @@
 		<servlet.api.version>3.1.0</servlet.api.version>
 		<jfinal-mail-plugin.version>2.2</jfinal-mail-plugin.version>
 		<cron4j.version>2.2.5</cron4j.version>
-		<dom4j.version>1.6.1</dom4j.version>
+		<dom4j.version>2.1.0</dom4j.version>
 		<joda.version>2.9.9</joda.version>
 		<netty.version>4.1.10.Final</netty.version>
 		<tomcat.embed.version>8.0.45</tomcat.embed.version>
@@ -78,7 +78,7 @@
             <version>${cron4j.version}</version>
         </dependency>
         <dependency>
-		    <groupId>dom4j</groupId>
+		    <groupId>org.dom4j</groupId>
 		    <artifactId>dom4j</artifactId>
 		    <version>${dom4j.version}</version>
 		</dependency>
